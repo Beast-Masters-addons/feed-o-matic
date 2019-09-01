@@ -1321,6 +1321,7 @@ function GFW_FeedOMatic:SetupOptions()
 	
 	local titleText = GetAddOnMetadata(addonName, "Title");
 	titleText = string.gsub(titleText, "Fizzwidget", "GFW");		-- shorter so it fits in the list width
+	titleText = string.gsub(titleText, "classic", "");		-- shorter so it fits in the list width
 
 	-- Setup Blizzard option frames
 	self.optionsFrames = {}
