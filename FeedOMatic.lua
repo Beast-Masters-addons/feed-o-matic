@@ -1355,5 +1355,7 @@ end
 
 function GFW_FeedOMatic:ShowConfig()
 	InterfaceOptionsFrame_OpenToCategory(self.optionsFrames.general)
+	--Call a second time to work around bug: https://www.wowinterface.com/forums/showthread.php?t=54599
+	InterfaceOptionsFrame_OpenToCategory(self.optionsFrames.general)
 end
 
