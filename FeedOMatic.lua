@@ -1331,7 +1331,9 @@ function GFW_FeedOMatic:SetupOptions()
 	FOM_BuildFoodsUI(self.optionsFrames.general);
 	local aceRefresh = self.optionsFrames.general.refresh;
 	self.optionsFrames.general.refresh = function(...)
-		aceRefresh(...);
+		if ... ~= nil then
+			aceRefresh(...);
+		end
 		FOM_FoodListUI_UpdateList();
 	end;
 end
