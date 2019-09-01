@@ -1,9 +1,9 @@
-## Interface: 80000
-## Version: 8.0
-## Author: Gazmik Fizzwidget
+## Interface: 11302
+## Version: 1.0
+## Author: Gazmik Fizzwidget/datagutten
 ## X-Website: http://fizzwidget.com/feedomatic
 ## X-Appcast: http://fizzwidget.com/notes/feedomatic/feed
-## Title: Fizzwidget Feed-O-Matic
+## Title: Fizzwidget Feed-O-Matic classic
 ## Notes: Helps a Hunter keep his pets well fed (and the food in his inventory under control).
 ## X-Category: Hunter
 ## SavedVariables: GFW_FeedOMatic_DB, FOM_Cooking
