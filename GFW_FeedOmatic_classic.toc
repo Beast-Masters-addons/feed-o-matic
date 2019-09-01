@@ -1,5 +1,5 @@
 ## Interface: 11302
-## Version: 1.0
+## Version: 0.1
 ## Author: Gazmik Fizzwidget/datagutten
 ## X-Website: http://fizzwidget.com/feedomatic
 ## X-Appcast: http://fizzwidget.com/notes/feedomatic/feed
