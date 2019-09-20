@@ -325,10 +325,10 @@ function FOM_Initialize(self)
 	
 	-- create feed button
 	FOM_FeedButton = CreateFrame("Button", "FOM_FeedButton", PetFrame, "ActionButtonTemplate,SecureActionButtonTemplate");
-	FOM_FeedButton:SetWidth(24);
-	FOM_FeedButton:SetHeight(23);
+	FOM_FeedButton:SetWidth(21);
+	FOM_FeedButton:SetHeight(20);
 	FOM_FeedButtonNormalTexture:SetTexture("");
-	FOM_FeedButton:SetPoint("LEFT", PetFrame, "RIGHT", -7, -4);
+	FOM_FeedButton:SetPoint("LEFT", PetFrame, "RIGHT", 20, -4);
 	FOM_FeedButton:RegisterForClicks("LeftButtonUp", "RightButtonUp");
 	FOM_FeedButton:SetScript("PostClick", FOM_FeedButton_PostClick);
 	FOM_FeedButton:SetScript("OnEnter", FOM_FeedButton_OnEnter);
