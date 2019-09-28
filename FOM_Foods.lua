@@ -406,7 +406,6 @@ FOM_Foods = {
 		[  6317] = F.INEDIBLE,
 		[  6361] = F.INEDIBLE,
 		[  6362] = F.INEDIBLE,
-		[  6889] = F.INEDIBLE,
 		[  7974] = F.INEDIBLE,
 		[  8365] = F.INEDIBLE,
 		[ 12206] = F.INEDIBLE,
