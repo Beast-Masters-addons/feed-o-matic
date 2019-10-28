@@ -19,6 +19,9 @@ MAX_KEEPOPEN_SLOTS = 150;
 FOM_FEED_PET_SPELL_ID = 6991;
 FOM_COOKING_SPELL_ID = 2550;
 
+-- defined in LibProfessions.lua
+local WoWClassic = WoWClassic
+
 -- Variables
 FOM_LastPetName = nil;
 
@@ -46,6 +49,13 @@ FOM_DietColors = { -- convenient reuse of familiar colors?
 	[FOM_DIET_FUNGUS]	= RAID_CLASS_COLORS.WARLOCK,
 	[FOM_DIET_MECH]		= RAID_CLASS_COLORS.PRIEST,
 };
+
+if WoWClassic then
+	--@debug@
+	print('WoW classic detected, using classic food list')
+	--@end-debug@
+	FOM_Foods = FOM_Foods_classic
+end
 
 function FOM_FeedButton_PostClick(self, button, down)
 	if (not FOM_GetFeedPetSpellName()) then

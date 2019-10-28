@@ -18,6 +18,7 @@ Libs.xml
 LocaleSupport.lua
 localization.lua
 FOM_Foods.lua
+FOM_Foods_classic.lua
 FeedOMatic_Emotes.lua
 FOM_CookingScan.lua
 FeedOMatic.lua
