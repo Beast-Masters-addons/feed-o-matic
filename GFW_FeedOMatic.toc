@@ -1,6 +1,12 @@
-## Interface: 80000
-## Version: 8.0
-## Author: Gazmik Fizzwidget
+#@retail@
+## Interface: 80205
+#@end-retail@
+#@non-retail@
+# ## Interface: 11302
+#@end-non-retail@
+
+## Version: 9.0
+## Author: Gazmik Fizzwidget/datagutten
 ## X-Website: http://fizzwidget.com/feedomatic
 ## X-Appcast: http://fizzwidget.com/notes/feedomatic/feed
 ## Title: Fizzwidget Feed-O-Matic
@@ -9,6 +15,11 @@
 ## SavedVariables: GFW_FeedOMatic_DB, FOM_Cooking
 ## LoadManagers: AddonLoader
 ## X-LoadOn-Class: Hunter
+
+libs\LibStub\LibStub.lua
+libs\LibProfessions\LibProfessions.lua
+libs\LibProfessions\ProfessionApi.lua
+libs\LibProfessions\CurrentProfession.lua
 
 GFWUtils.lua
 GFWTable.lua
