@@ -332,6 +332,10 @@ function FOM_Initialize(self)
 	-- events for managing feed button
 	self:RegisterEvent("SPELL_UPDATE_COOLDOWN");
 	self:RegisterEvent("SPELL_UPDATE_USABLE");
+
+	if (XPerl_Player_Pet ~= nil) then
+		PetFrame = XPerl_Player_Pet
+	end
 	
 	-- create feed button
 	FOM_FeedButton = CreateFrame("Button", "FOM_FeedButton", PetFrame, "ActionButtonTemplate,SecureActionButtonTemplate");
