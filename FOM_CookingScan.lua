@@ -2,7 +2,7 @@
 -- FOM_CookingScan.lua
 ------------------------------------------------------
 
-local COOKING_SKILL_ID = 185;
+local profession = LibStub("LibProfessions-1.0")
 
 FOM_Cooking = {};
 
@@ -19,33 +19,23 @@ local DifficultyToNum = {
 }
 
 function FOM_ScanTradeSkill()
-	
-	local tradeSkillID, skillLineName, skillLineRank, skillLineMaxRank, skillLineModifier = C_TradeSkillUI.GetTradeSkillLine();	
-	if not C_TradeSkillUI.IsTradeSkillReady() 
-	  or C_TradeSkillUI.IsDataSourceChanging() 
-	  or tradeSkillID ~= COOKING_SKILL_ID then
+	if not profession:IsReady()
+	  or profession:GetName() ~= "Cooking" then
 		return -- should just get called again when ready
 	end
-		
-	local allRecipeIDs = C_TradeSkillUI.GetAllRecipeIDs(FOM_RecipeIDs);
-	for _, recipeID in pairs(allRecipeIDs) do
-		
-		local recipeInfo = C_TradeSkillUI.GetRecipeInfo(recipeID);
-		local difficulty;
-		if recipeInfo.learned then
-			difficulty = DifficultyToNum[recipeInfo.difficulty];
-		else
-			difficulty = 5;
-		end
-		
-		local createdItemLink = C_TradeSkillUI.GetRecipeItemLink(recipeID);
+
+	for recipeID, recipeInfo in pairs(profession:GetRecipes()) do
+
+		local difficulty = DifficultyToNum[recipeInfo["difficulty"]];
+
+		local createdItemLink = recipeInfo["link"]
 		local _, _, id = string.find(createdItemLink, "item:(%d+)");
 		local createdItemID = tonumber(id);
-		
-		local numReagents = C_TradeSkillUI.GetRecipeNumReagents(recipeID);
-		if numReagents > 0 then
-			for reagentIndex = 1, numReagents do
-				local reagentLink = C_TradeSkillUI.GetRecipeReagentItemLink(recipeID, reagentIndex);
+
+		local reagents = profession:GetReagents(recipeID)
+
+			for _, reagent in pairs(reagents) do
+				local reagentLink = reagent["reagentLink"]
 				if reagentLink then
 					local _, _, itemID = string.find(reagentLink, "item:(%d+)");
 					local reagentItemID = tonumber(itemID);
@@ -55,6 +45,5 @@ function FOM_ScanTradeSkill()
 					FOM_Cooking[reagentItemID][createdItemID] = difficulty;
 				end		
 			end
-		end
 	end
 end
