@@ -213,8 +213,10 @@ function FOM_OnLoad(self)
 	end
 		
 	BINDING_HEADER_GFW_FEEDOMATIC = GetAddOnMetadata(addonName, "Title"); -- gets us the localized title if needed
-	
-	--GFWUtils.Debug = true;
+
+	--@debug@
+	GFWUtils.Debug = true;
+	--@end-debug@
 
 end
 
