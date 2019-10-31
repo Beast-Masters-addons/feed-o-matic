@@ -631,3 +631,71 @@ FOM_STAG						= "雄鹿"					-- Warlords
 FOM_WATER_STRIDER				= "水黾"					-- Mists exotic
 
 end
+
+------------------------------------------------------
+
+if (GetLocale() == "zhCN") then
+-- Diet names. These should be the seven possible diets returned from GetPetFoodTypes() and shown in the Pet tab of the character window (when mousing over the food icon). 
+-- (Want to get them all nice and quick for your localization? Go tame a bear or boar... they eat anything.)
+-- THESE STRINGS MUST BE LOCALIZED for Feed-O-Matic to work properly in other locales.
+FOM_DIET_MEAT					= "肉"
+FOM_DIET_FISH					= "鱼"
+FOM_DIET_BREAD					= "面包"
+FOM_DIET_CHEESE					= "奶酪"
+FOM_DIET_FRUIT					= "水果"
+FOM_DIET_FUNGUS					= "蘑菇"
+
+-- Beast family names; we use these to provide optional pet-specific feeding emotes (see FeedOMatic_Emotes.lua)
+FOM_BASILISK					= "石化蜥蜴"				-- Mists
+FOM_BAT							= "蝙蝠"
+FOM_BEAR						= "熊"
+FOM_BEETLE						= "甲虫"                  -- Cataclysm
+FOM_BIRD_OF_PREY				= "猛禽"        	-- WotLK
+FOM_BOAR						= "野猪"                	
+FOM_CARRION_BIRD				= "食腐鸟"        	
+FOM_CAT							= "豹"                 	
+FOM_CHIMAERA					= "奇美拉"            	-- WotLK exotic
+FOM_CLEFTHOOF					= "裂蹄牛"				-- Warlords
+FOM_CORE_HOUND					= "熔岩犬"          	-- WotLK exotic
+FOM_CRAB						= "螃蟹"                	
+FOM_CRANE						= "鹤"					-- Mists
+FOM_CROCOLISK					= "鳄鱼"           	
+FOM_DEVILSAUR					= "魔暴龙"           	-- WotLK exotic
+FOM_DIREHORN					= "恐角龙"				-- Warlords
+FOM_DOG							= "狗"                     -- Cataclysm
+FOM_DRAGONHAWK					= "龙鹰"          	-- BC
+FOM_FOX							= "狐狸"                     -- Cataclysm
+FOM_GOAT						= "山羊"					-- Mists
+FOM_GORILLA						= "猩猩"             	
+FOM_HYENA						= "土狼"               	
+FOM_HYDRA						= "九头蛇"					-- Warlords
+FOM_MECHANICAL					= "机械"				-- Legion special
+FOM_MONKEY						= "猴子"                  -- Cataclysm
+FOM_MOTH						= "蛾子"                	-- WotLK
+FOM_NETHER_RAY					= "鳐鱼"          	-- BC
+FOM_OXEN						= "牛"					-- Legion
+FOM_PORCUPINE					= "啮齿动物"				-- Mists 
+FOM_QUILEN						= "魁麟"					-- Mists exotic
+FOM_RAPTOR						= "迅猛龙"              	
+FOM_RAVAGER						= "掠食者"             	-- BC
+FOM_RIVERBEAST					= "淡水兽"				-- Warlords
+FOM_RYLAK						= "双头飞龙"					-- Warlords  [not sure]
+FOM_SCALEHIDE					= "鳞甲类"				-- Legion
+FOM_SCORPID						= "蝎子"             	
+FOM_SERPENT						= "蛇"             	-- BC
+FOM_SHALE_SPIDER				= "页岩蛛"            -- Cataclysm exotic
+FOM_SILITHID					= "异种虫"            	-- WotLK exotic
+FOM_SPIDER						= "蜘蛛"              	
+FOM_SPIRIT_BEAST				= "灵魂兽"        	-- WotLK exotic
+FOM_SPOREBAT					= "孢子蝠"            	-- BC
+FOM_STAG						= "雄鹿"					-- Warlords
+FOM_TALLSTRIDER					= "陆行鸟"         	
+FOM_TURTLE						= "海龟"              	
+FOM_WARP_STALKER				= "迁跃捕猎者"			-- BC
+FOM_WASP						= "巨蜂"                	-- WotLK
+FOM_WATER_STRIDER				= "水黾"			-- Mists exotic
+FOM_WIND_SERPENT				= "风蛇"        	
+FOM_WOLF						= "狼"                	
+FOM_WORM						= "蠕虫"                	-- WotLK exotic
+
+end
