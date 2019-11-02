@@ -16,15 +16,16 @@
 ## LoadManagers: AddonLoader
 ## X-LoadOn-Class: Hunter
 
+#@no-lib-strip@
 libs\LibStub\LibStub.lua
 libs\LibProfessions\LibProfessions.lua
 libs\LibProfessions\ProfessionApi.lua
 libs\LibProfessions\CurrentProfession.lua
+Libs.xml
+#@end-no-lib-strip@
 
 GFWUtils.lua
 GFWTable.lua
-
-Libs.xml
 
 LocaleSupport.lua
 localization.lua
