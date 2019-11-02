@@ -42,6 +42,12 @@ CAVEATS, ETC.:
 ------------------------------------------------------
 VERSION HISTORY
 
+v. 9.0 - 2019/11/02
+- Added support for WoW Classic
+- Updated TOC to indicate compatibility with WoW Patch 8.2.5
+- Show feed button when using Z-perl unit frames
+- Open the correct settings page at first attempt
+
 v. 8.0 - 2018/08/08
 - Updated to support WoW Patch 8.0. 
 - Added Battle for Azeroth foods. (For many new foods, the category/diet is an untested guess. If you encounter issues, please send feedback at https://github.com/fizzwidget/feed-o-matic/issues.)
