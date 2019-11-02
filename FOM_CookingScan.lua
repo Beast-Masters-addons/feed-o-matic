@@ -2,7 +2,8 @@
 -- FOM_CookingScan.lua
 ------------------------------------------------------
 
-local profession = LibStub("LibProfessions-1.0")
+local profession = LibStub("LibCurrentProfession-1.0")
+local profession_api = LibStub("LibProfessionAPI-1.0")
 
 FOM_Cooking = {};
 
@@ -19,8 +20,8 @@ local DifficultyToNum = {
 }
 
 function FOM_ScanTradeSkill()
-	if not profession:IsReady()
-	  or profession:GetName() ~= "Cooking" then
+	if not profession_api:IsReady()
+	  or profession_api:GetName() ~= "Cooking" then
 		return -- should just get called again when ready
 	end
 
