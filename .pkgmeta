@@ -24,3 +24,11 @@ externals:
   libs/LibProfessions:
     url: https://github.com/datagutten/wow-LibProfessions.git
     tag: latest
+  libs/BM-utils:
+    url: https://github.com/Beast-Masters-addons/BM-utils.git
+    tag: latest
+
+ignore:
+  - libs/BM-utils/tests
+  - libs/LibStub/tests
+  - scripts

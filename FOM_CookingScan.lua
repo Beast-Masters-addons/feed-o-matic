@@ -2,22 +2,11 @@
 -- FOM_CookingScan.lua
 ------------------------------------------------------
 
-local profession = LibStub("LibCurrentProfession-1.0")
+local profession = LibStub("LibCurrentProfession-1.1")
 local profession_api = LibStub("LibProfessionAPI-1.0")
+local utils = LibStub("BM-utils-1.0")
 
 FOM_Cooking = {};
-
-local DifficultyToNum = {
-	["optimal"]	= 4,
-	["orange"]	= 4,
-	["medium"]	= 3,
-	["yellow"]	= 3,
-	["easy"]	= 2,
-	["green"]	= 2,
-	["trivial"]	= 1,
-	["gray"]	= 1,
-	["grey"]	= 1,
-}
 
 function FOM_ScanTradeSkill()
 	if not profession_api:IsReady()
@@ -27,7 +16,7 @@ function FOM_ScanTradeSkill()
 
 	for recipeID, recipeInfo in pairs(profession:GetRecipes()) do
 
-		local difficulty = DifficultyToNum[recipeInfo["difficulty"]];
+		local difficulty = utils:DifficultyToNum(recipeInfo["difficulty"]);
 
 		local createdItemLink = recipeInfo["link"]
 		local _, _, id = string.find(createdItemLink, "item:(%d+)");
