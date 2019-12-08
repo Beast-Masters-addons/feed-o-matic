@@ -25,7 +25,6 @@ Libs.xml
 #@end-no-lib-strip@
 
 GFWUtils.lua
-GFWTable.lua
 
 LocaleSupport.lua
 localization.lua
@@ -35,3 +34,5 @@ FeedOMatic_Emotes.lua
 FOM_CookingScan.lua
 FeedOMatic.lua
 FeedOMatic.xml
+
+addon\table_utils.lua

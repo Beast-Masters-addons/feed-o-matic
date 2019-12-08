@@ -1,7 +1,8 @@
 ------------------------------------------------------
 -- FeedOMatic.lua
 ------------------------------------------------------
-local addonName, addonTable = ...; 
+local addonName, addonTable = ...;
+local tableUtils = addonTable
 
 -- letting these be global inside Ace callbacks causes bugs
 local FOM_Config, FOM_IsInDiet, FOM_IsKnownFood, FOM_CategoryNames, FOM_FoodsUIList
@@ -648,22 +649,22 @@ function FOM_RandomEmote(foodLink)
 	if (localeEmotes) then
 		local randomEmotes = {};
 		if (UnitSex("pet") == 2) then
-			randomEmotes = GFWTable.Merge(randomEmotes, localeEmotes["male"]);
+			randomEmotes = tableUtils:Merge(randomEmotes, localeEmotes["male"]);
 		elseif (UnitSex("pet") == 3) then
-			randomEmotes = GFWTable.Merge(randomEmotes, localeEmotes["female"]);
+			randomEmotes = tableUtils.Merge(randomEmotes, localeEmotes["female"]);
 		end
 		
 		local itemID = FOM_IDFromLink(foodLink);
 		if (itemID) then
-			randomEmotes = GFWTable.Merge(randomEmotes, localeEmotes[itemID]);
+			randomEmotes = tableUtils.Merge(randomEmotes, localeEmotes[itemID]);
 
 			local diet = FOM_DietForFood(itemID);
-			randomEmotes = GFWTable.Merge(randomEmotes, localeEmotes[diet]);
+			randomEmotes = tableUtils.Merge(randomEmotes, localeEmotes[diet]);
 		end
 			
-		randomEmotes = GFWTable.Merge(randomEmotes, localeEmotes[UnitCreatureFamily("pet")]);
-		randomEmotes = GFWTable.Merge(randomEmotes, localeEmotes["any"]);
-	
+		randomEmotes = tableUtils.Merge(randomEmotes, localeEmotes[UnitCreatureFamily("pet")]);
+		randomEmotes = tableUtils.Merge(randomEmotes, localeEmotes["any"]);
+
 		return randomEmotes[math.random(table.getn(randomEmotes))];
 	else
 		return "";
