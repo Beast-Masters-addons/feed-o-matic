@@ -3,6 +3,7 @@
 ------------------------------------------------------
 local addonName, addonTable = ...;
 local tableUtils = addonTable
+local utils = LibStub("BM-utils-1.0")
 
 -- letting these be global inside Ace callbacks causes bugs
 local FOM_Config, FOM_IsInDiet, FOM_IsKnownFood, FOM_CategoryNames, FOM_FoodsUIList
@@ -18,7 +19,6 @@ FOM_DELTA_LOVES = 10;   -- 10 >= levelDelta = 35 happiness per tick
 -- constants
 MAX_KEEPOPEN_SLOTS = 150;
 FOM_FEED_PET_SPELL_ID = 6991;
-FOM_COOKING_SPELL_ID = 2550;
 
 -- defined in LibProfessions.lua
 local WoWClassic = WoWClassic
@@ -235,7 +235,7 @@ function FOM_OnTooltipSetItem(self)
 		local _, link = self:GetItem();
 		if not link then return false; end
 		
-		local itemID = FOM_IDFromLink(link);
+		local itemID = utils:ItemIdFromLink(link);
 		local foodDiet = FOM_IsKnownFood(itemID);
 		if not foodDiet then return false; end
 	
@@ -433,7 +433,7 @@ function FOM_OnEvent(self, event, arg1, arg2)
 		local _, _, foodEaten = string.find(arg1, FOM_FEEDPET_LOG_FIRSTPERSON);
 		if (foodEaten) then
 			local foodName = foodEaten;
-			if (FOM_NextFoodLink and FOM_NameFromLink(FOM_NextFoodLink) == foodEaten) then
+			if (FOM_NextFoodLink and utils:ItemNameFromLink(FOM_NextFoodLink) == foodEaten) then
 				foodName = FOM_NextFoodLink;
 			end
 			local pet = UnitName("pet");
@@ -493,7 +493,7 @@ function FOM_ScanQuests()
 						local _, link = GetItemInfo(objectiveName);
 						-- not guaranteed to get us a link if we don't have the item,
 						-- but we shouldn't be here unless we have the item anyway.
-						local itemID = FOM_IDFromLink(link);
+						local itemID = utils:ItemIdFromLink(link);
 						if (itemID and FOM_IsKnownFood(itemID)) then
 							if (FOM_QuestFood == nil) then
 								FOM_QuestFood = { };
@@ -654,7 +654,7 @@ function FOM_RandomEmote(foodLink)
 			randomEmotes = tableUtils.Merge(randomEmotes, localeEmotes["female"]);
 		end
 		
-		local itemID = FOM_IDFromLink(foodLink);
+		local itemID = utils:ItemIdFromLink(foodLink);
 		if (itemID) then
 			randomEmotes = tableUtils.Merge(randomEmotes, localeEmotes[itemID]);
 
@@ -679,10 +679,8 @@ function FOM_FlatFoodList(fallback)
 		-- skip bags that can't contain food
 			for itemNum = 1, GetContainerNumSlots(bagNum) do
 				local itemLink = GetContainerItemLink(bagNum, itemNum);
-				local itemID = FOM_IDFromLink(itemLink);
-				-- debug
-				--if (bagNum == 0 and itemNum == 1) then _, itemLink = GetItemInfo(21023); end
-				if (itemID) then
+				if itemLink ~= nil then
+					local itemID = utils:ItemIdFromLink(itemLink);
 					local itemIcon, itemCount = GetContainerItemInfo(bagNum, itemNum);
 					-- debug
 					--if (bagNum == 0 and itemNum == 1) then itemCount = 10; end
@@ -829,25 +827,6 @@ function FOM_IsSpecialBag(bagNum)
 	if (bagNum == 0) then return false; end
 	local _, bagType = GetContainerNumFreeSlots(bagNum);
 	return bagType ~= 0; 	
-end
-
-function FOM_IDFromLink(itemLink)
-	if (itemLink == nil) then return nil; end
-	local _, _, itemID  = string.find(itemLink, "item:(%d+)");
-	if (tonumber(itemID)) then
-		return tonumber(itemID);
-	else
-		return nil;
-	end
-end
-
-function FOM_NameFromLink(itemLink)
-	if (itemLink == nil) then return nil; end
-	local _, _, name = string.find(itemLink, "%[(.-)%]"); 
-	if (name) then
-		return name;
-	end
-	return itemLink;
 end
 
 ------------------------------------------------------
