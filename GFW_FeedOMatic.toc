@@ -15,6 +15,7 @@
 ## SavedVariables: GFW_FeedOMatic_DB, FOM_Cooking
 ## LoadManagers: AddonLoader
 ## X-LoadOn-Class: Hunter
+## X-WoWI-ID: 25427
 
 #@no-lib-strip@
 libs\LibStub\LibStub.lua
