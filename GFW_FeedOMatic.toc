@@ -5,7 +5,7 @@
 # ## Interface: 11305
 #@end-non-retail@
 
-## Version: 9.0
+## Version: @project-version@
 ## Author: Gazmik Fizzwidget/datagutten
 ## X-Website: http://fizzwidget.com/feedomatic
 ## X-Appcast: http://fizzwidget.com/notes/feedomatic/feed
