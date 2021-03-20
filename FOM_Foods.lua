@@ -686,6 +686,7 @@ FOM_Foods = {
 		[ 70925] = F.CONJURED,
 		[ 70926] = F.CONJURED,
 		[ 70927] = F.CONJURED,
+		[  8076] = F.CONJURED, -- Conjured Sweet Roll, issue #10
 		[  4540] = F.BASIC,
 		[  4541] = F.BASIC,
 		[  4542] = F.BASIC,
