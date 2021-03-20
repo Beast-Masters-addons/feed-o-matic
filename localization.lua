@@ -295,3 +295,75 @@ if (GetLocale() == "zhTW") then
 
 
 end
+
+------------------------------------------------------
+
+if (GetLocale() == "zhCN") then
+
+FOM_BUTTON_TOOLTIP1             = "左键点击喂养宠物:"
+FOM_BUTTON_TOOLTIP1_FALLBACK    = "Alt-左键点击喂养宠物:"
+FOM_BUTTON_TOOLTIP2             = "<右键点击进行设置>"
+FOM_BUTTON_TOOLTIP_NOFOOD       = "不能喂养宠物"
+FOM_BUTTON_TOOLTIP_DIET         = "%s 吃:"
+
+-- Used in tooltips to indicate food quality.
+FOM_QUALITY_UNDER               = "%s 不喜欢这种食物。"
+FOM_QUALITY_WILL                = "%s 可以吃这种食物。"
+FOM_QUALITY_LIKE                = "%s 愿意吃这种食物。"
+FOM_QUALITY_LOVE                = "%s 喜欢吃这种食物。"
+
+-- User-visible errors
+FOM_ERROR_NO_FOOD               = "没有食物给 %s。"
+FOM_ERROR_NO_FOOD_NO_FALLBACK   = "没有食物给 %s （还未指定需要避免的食物）。"
+FOM_FALLBACK_MESSAGE            = "按住 Alt 再点击喂养按钮或使用快捷键。"
+
+-- Feeding status messages
+FOM_FEEDING_EAT                 = "喂 %s %s..."
+FOM_FEEDING_FEED                = "喂 %s %s。"
+
+-- Options panel
+FOM_OPTIONS_GENERAL             = "常规选项"
+FOM_OPTIONS_PROFILE             = "选项配置"
+FOM_OPTIONS_SUBTEXT             = "喂养宠物时请单击宠物血条旁边的按钮，或为喂养宠物绑定一个快捷键，或将'/ click FOM_FeedButton'放在宏中。"
+
+FOM_FOOD_QUALITY_INFO           = "接近宠物等级的食物可以恢复更多的生命值。\n"
+FOM_OPTIONS_TOOLTIP             = "在鼠标提示中显示食品质量"
+FOM_OPTIONS_TOOLTIP_TIP         = FOM_FOOD_QUALITY_INFO.."开启后鼠标提示中讲显示该食物可以恢复宠物多少生命值。"
+FOM_OPTIONS_LOW_LVL_1ST         = "优先使用低等级食物"
+FOM_OPTIONS_LOW_LVL_1ST_TIP     = FOM_FOOD_QUALITY_INFO.."开启后将默认使用低等级食物（需要更频繁地喂食）。\n禁用后将可以减少喂食频率（无法更快清空低等级食物）。"
+FOM_OPTIONS_AVOID_QUEST         = "避免任务所需物品"
+FOM_OPTIONS_AVOID_QUEST_TIP     = "有些任务所需物品也可以用于喂养宠物。开启后可以防止喂养宠物干扰任务进度。"
+FOM_OPTIONS_NO_BUTTON           = "隐藏宠物喂养按钮"
+FOM_OPTIONS_NO_BUTTON_TIP       = "不要在宠物血条边显示宠物喂养按钮。\n(用于有插件改变/隐藏系统默认宠物头像时。)"
+
+FOM_OPTIONS_FEED_NOTIFY         = "喂养时提示:"
+FOM_OPTIONS_NOTIFY_EMOTE        = "通过表情"
+FOM_OPTIONS_NOTIFY_TEXT         = "通过聊天窗口"
+FOM_OPTIONS_NOTIFY_NONE         = "不提示"
+
+FOM_OPTIONS_FOODS_TITLE         = "食物偏好"
+FOM_OPTIONS_FOODS_TEXT          = "取消下面选中的食物（或食物类别），可以避免将它们喂给宠物。\n否则将优先使用更接近列表顶部类别的食物。"
+
+FOM_OPTIONS_FOODS_NAME          = "食物"
+FOM_OPTIONS_FOODS_COOKING       = "成分"
+
+FOM_OPTIONS_FOODS_CONJURED      = "魔法制造物"
+FOM_OPTIONS_FOODS_CONJ_COMBO    = "同时恢复法力的食物"
+FOM_OPTIONS_FOODS_BASIC         = "普通食物"
+FOM_OPTIONS_FOODS_COMBO         = "恢复法力的食物"
+FOM_OPTIONS_FOODS_BONUS         = "能喂饱的食物"
+FOM_OPTIONS_FOODS_INEDIBLE      = "生食"
+
+FOM_OPTIONS_FOODS_ONLY_PET      = "仅显示喂养宠物的食物"
+FOM_OPTIONS_FOODS_ONLY_PET_TIP  = "只显示%d级 %s 可以吃的食物" -- e.g. level 80 Gorilla
+FOM_OPTIONS_FOODS_ONLY_LVL_TIP  = "只显示%d宠物可以吃的食物"
+FOM_OPTIONS_FOODS_ONLY_INV      = "仅显示包裹里的食物"
+
+FOM_DIFFICULTY_HEADER           = "配方状态:"
+FOM_DIFFICULTY_1                = "不重要的"
+FOM_DIFFICULTY_2                = "容易的"
+FOM_DIFFICULTY_3                = "中等的"
+FOM_DIFFICULTY_4                = "困难的"
+FOM_DIFFICULTY_5                = "未知的"
+
+end
