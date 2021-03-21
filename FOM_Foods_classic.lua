@@ -178,6 +178,13 @@ FOM_Foods_classic = {
 		[  2683] = F.BONUS,
 		[  3666] = F.BONUS,
 		[ 17197] = F.BONUS,
+		[  1113] = F.CONJURED, --Conjured Bread
+		[  1114] = F.CONJURED, --Conjured Rye
+		[  1487] = F.CONJURED, --Conjured Pumpernickel
+		[  5349] = F.CONJURED, --Conjured Muffin
+		[  8075] = F.CONJURED, --Conjured Sourdough
+		[  8076] = F.CONJURED, --Conjured Sweet Roll
+		[ 22895] = F.CONJURED, --Conjured Cinnamon Roll
 	},
 	[FOM_DIET_CHEESE] = {
 		-- Mists and before
