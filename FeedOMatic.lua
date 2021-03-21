@@ -770,10 +770,10 @@ function FOM_NewFindFood(fallback)
 	end
 	for _, foodInfo in pairs(SortedFoodList) do
 		local foodItemID = utils:ItemIdFromLink(foodInfo.link)
-		if _G['FOMFoodLogger'].is_good(foodItemID) == false then
-			return --Food item is logged as not eaten by current pet
+		--Check if food item is logged as not eaten by current pet
+		if _G['FOMFoodLogger'].is_good(foodItemID) ~= false then
+			return foodInfo.bag, foodInfo.slot, foodInfo.link, foodInfo.icon;
 		end
-		return foodInfo.bag, foodInfo.slot, foodInfo.link, foodInfo.icon;
 	end
 	
 	return nil;
