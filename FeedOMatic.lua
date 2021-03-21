@@ -10,6 +10,8 @@ if not utils:IsWoWClassic() then
 	function GetPetFoodTypes()
 		return 'Meat'
 	end
+else
+	GetPetFoodTypes = _G.GetPetFoodTypes
 end
 
 -- letting these be global inside Ace callbacks causes bugs
@@ -505,6 +507,10 @@ function FOM_ScanQuests()
 	local GetNumQuestLogEntries, GetQuestLogTitle, GetNumQuestLeaderBoards
 	if not utils:IsWoWClassic() then
 		return --TODO: Add correct API calls for retail (issue #16)
+	else
+		GetNumQuestLogEntries = _G.GetNumQuestLogEntries
+		GetQuestLogTitle = _G.GetQuestLogTitle
+		GetNumQuestLeaderBoards = _G.GetNumQuestLeaderBoards
 	end
 
 	for questNum = 1, GetNumQuestLogEntries() do
