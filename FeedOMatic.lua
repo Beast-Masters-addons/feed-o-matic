@@ -495,6 +495,11 @@ end
 
 -- Update our list of quest objectives so we can avoid consuming food we want to accumulate for a quest.
 function FOM_ScanQuests()
+	local GetNumQuestLogEntries, GetQuestLogTitle, GetNumQuestLeaderBoards
+	if not utils:IsWoWClassic() then
+		return --TODO: Add correct API calls for retail (issue #16)
+	end
+
 	for questNum = 1, GetNumQuestLogEntries() do
 		local _, _, _, _, isHeader, isCollapsed, isComplete  = GetQuestLogTitle(questNum);
 		if (not isHeader) then
