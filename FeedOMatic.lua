@@ -58,6 +58,18 @@ if WoWClassic then
 	FOM_Foods = FOM_Foods_classic
 end
 
+function FOM_FeedButton_PreClick(self)
+	local bag = self:GetAttribute('target-bag')
+	local slot = self:GetAttribute('target-slot')
+	if bag == nil or slot == nil then
+		return
+	end
+	local _, _, _, _, _, _, itemLink, _, _, itemID = _G.GetContainerItemInfo(bag, slot)
+	_G['FOMFeedItemId'] = itemID
+	_G['FOMFeedItemLink'] = itemLink
+	_G['FOMButtonPressed'] = true
+end
+
 function FOM_FeedButton_PostClick(self, button, down)
 	if (not FOM_GetFeedPetSpellName()) then
 		local version = GetAddOnMetadata(addonName, "Version");
@@ -356,6 +368,7 @@ function FOM_Initialize(self)
 	end
 	FOM_FeedButtonNormalTexture:SetTexture("");
 	FOM_FeedButton:RegisterForClicks("LeftButtonUp", "RightButtonUp");
+	FOM_FeedButton:SetScript("PreClick", FOM_FeedButton_PreClick)
 	FOM_FeedButton:SetScript("PostClick", FOM_FeedButton_PostClick);
 	FOM_FeedButton:SetScript("OnEnter", FOM_FeedButton_OnEnter);
 	FOM_FeedButton:SetScript("OnLeave", FOM_FeedButton_OnLeave);
@@ -751,6 +764,10 @@ function FOM_NewFindFood(fallback)
 		end
 	end
 	for _, foodInfo in pairs(SortedFoodList) do
+		local foodItemID = utils:ItemIdFromLink(foodInfo.link)
+		if _G['FOMFoodLogger'].is_good(foodItemID) == false then
+			return --Food item is logged as not eaten by current pet
+		end
 		return foodInfo.bag, foodInfo.slot, foodInfo.link, foodInfo.icon;
 	end
 	
