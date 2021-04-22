@@ -4,7 +4,7 @@
 
 local profession = LibStub("LibCurrentProfession-1.1")
 local profession_api = LibStub("LibProfessionAPI-1.0")
-local utils = LibStub("BM-utils-1.0")
+local utils = _G.LibStub('BM-utils-1', 5)
 
 FOM_Cooking = {};
 

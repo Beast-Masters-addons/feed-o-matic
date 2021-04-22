@@ -21,6 +21,7 @@ libs\LibProfessions\LibProfessions.lua
 libs\LibProfessions\ProfessionApi.lua
 libs\LibProfessions\CurrentProfession.lua
 Libs.xml
+libs\BM-utils\addon\version.lua
 libs\BM-utils\addon\utils.lua
 #@end-no-lib-strip@
 

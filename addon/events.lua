@@ -1,7 +1,7 @@
 _G['FOMEvents'] = {}
 local events = _G['FOMEvents']
 local fom_utils = _G['FOMUtils']
-local utils = _G.LibStub("BM-utils-1.0")
+local utils = _G.LibStub('BM-utils-1', 5)
 
 local frame = _G.CreateFrame("Frame")
 frame:RegisterEvent("ADDON_LOADED")
