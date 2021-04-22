@@ -3,7 +3,7 @@
 ------------------------------------------------------
 local addonName, addonTable = ...;
 local tableUtils = addonTable
-local utils = LibStub("BM-utils-1.0")
+local utils = LibStub('BM-utils-1', 5)
 local GetPetFoodTypes
 if not utils:IsWoWClassic() then
 	--Workaround for bug causing all pets to only eat meat (issue #15)
