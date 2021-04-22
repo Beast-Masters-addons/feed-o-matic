@@ -20,7 +20,7 @@ function log.is_good(itemId, species)
     if species == nil then
         species = _G.UnitCreatureFamily("pet")
     end
-    if _G['FOM_FoodLog'][species] == nil then
+    if _G['FOM_FoodLog'] == nil or _G['FOM_FoodLog'][species] == nil then
         return
     end
 
