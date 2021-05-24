@@ -1,6 +1,6 @@
 ## Interface: 90005
 ## Interface-Classic: 11307
-## Interface-BC: 20501
+## Interface-BCC: 20501
 
 ## Version: @project-version@
 ## Author: Gazmik Fizzwidget/datagutten
@@ -17,14 +17,10 @@
 
 #@no-lib-strip@
 libs\LibStub\LibStub.lua
-libs\LibProfessions\LibProfessions.lua
-libs\LibProfessions\ProfessionApi.lua
-libs\LibProfessions\CurrentProfession.lua
 Libs.xml
-libs\BM-utils\addon\version.lua
-libs\BM-utils\addon\utils.lua
 #@end-no-lib-strip@
 
+addon\common.lua
 addon\utils.lua
 addon\food_log.lua
 addon\events.lua

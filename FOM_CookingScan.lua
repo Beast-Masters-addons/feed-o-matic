@@ -2,9 +2,11 @@
 -- FOM_CookingScan.lua
 ------------------------------------------------------
 
-local profession = LibStub("LibCurrentProfession-1.1")
-local profession_api = LibStub("LibProfessionAPI-1.0")
-local utils = _G.LibStub('BM-utils-1', 5)
+---@type FeedOMatic
+local _, addon = ...
+local profession = addon.professions.currentProfession
+local profession_api = addon.professions.api
+local utils = addon.utils
 
 FOM_Cooking = {};
 
