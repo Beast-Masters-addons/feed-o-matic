@@ -111,7 +111,7 @@ end
 function FOM_GetColoredDiet()
 	local dietList = {GetPetFoodTypes()};
 	local coloredDiets = {};
-	for _, dietName in pairs(dietList) do 
+	for _, dietName in pairs(dietList) do
 		local color = FOM_DietColors[dietName];
 		local coloredText = CreateColor(color.r, color.g, color.b):WrapTextInColorCode(dietName);
 		table.insert(coloredDiets, coloredText);
@@ -121,7 +121,7 @@ end
 
 function FOM_FeedButton_OnEnter()
 	if (FOM_Config.NoFeedButtonTooltip) then return; end
-	
+
 	FOM_FeedTooltip:SetOwner(FOM_FeedButton, "ANCHOR_RIGHT");
 	local blankLine = false;
 	local linesAdded = 0;
@@ -131,7 +131,7 @@ function FOM_FeedButton_OnEnter()
 		local bag = FOM_FeedButton:GetAttribute("target-bag");
 		local slot = FOM_FeedButton:GetAttribute("target-slot");
 		FOM_FeedTooltip:SetBagItem(bag,slot);
-		
+
 		if (FOM_NoFoodError) then
 			-- fallback instructions
 			FOM_FeedTooltipHeader:SetText(FOM_BUTTON_TOOLTIP1_FALLBACK);
@@ -153,7 +153,7 @@ function FOM_FeedButton_OnEnter()
 	if (not blankLine) then
 		FOM_FeedTooltip:AddLine(" ");
 	end
-	
+
 	-- diet summary
 	FOM_FeedTooltip:AddDoubleLine(string.format(FOM_BUTTON_TOOLTIP_DIET, UnitName("pet")), FOM_GetColoredDiet());
 	linesAdded = linesAdded + 1;
@@ -161,7 +161,7 @@ function FOM_FeedButton_OnEnter()
 	-- right click for options
 	FOM_FeedTooltip:AddLine(FOM_BUTTON_TOOLTIP2, GRAY_FONT_COLOR.r, GRAY_FONT_COLOR.g, GRAY_FONT_COLOR.b);
 	linesAdded = linesAdded + 1;
-	
+
 	-- putting an item in the tooltip shrinks all further text
 	-- set it back only if we've set an item
 	if (FOM_NextFoodLink) then
@@ -174,7 +174,7 @@ function FOM_FeedButton_OnEnter()
 		end
 	end
 	FOM_TooltipDebug();
-	
+
 	FOM_FeedTooltip:Show();
 
 	-- muck with our special tooltip so it looks right
@@ -186,11 +186,11 @@ function FOM_FeedButton_OnEnter()
 	FOM_FeedTooltipTextLeft2:SetJustifyH("LEFT");
 	FOM_FeedTooltipTextLeft3:SetJustifyH("LEFT");
 	FOM_FeedTooltipTextLeft4:SetJustifyH("LEFT");
-	
+
 end
 
-function FOM_TooltipDebug()	
-	-- old	
+function FOM_TooltipDebug()
+	-- old
 	if (FOM_Debug) then
 		FOM_FeedTooltip:AddLine(" ");
 		FOM_FeedTooltip:AddLine("Next Foods:");
@@ -236,7 +236,7 @@ function FOM_OnLoad(self)
 	SlashCmdList["FEEDOMATIC"] = function(msg)
 		FOM_ChatCommandHandler(msg);
 	end
-		
+
 	BINDING_HEADER_GFW_FEEDOMATIC = GetAddOnMetadata(addonName, "Title"); -- gets us the localized title if needed
 
 	--@debug@
@@ -258,18 +258,18 @@ function FOM_OnTooltipSetItem(self)
 	if FOM_Config.Tooltip then
 		local _, link = self:GetItem();
 		if not link then return false; end
-		
+
 		local itemID = utils:ItemIdFromLink(link);
 		local foodDiet = FOM_IsKnownFood(itemID);
 		if not foodDiet then return false; end
-	
+
 		-- if edible at all, label diet in tooltip
 		local color = FOM_DietColors[foodDiet];
 		local coloredText = CreateColor(color.r, color.g, color.b):WrapTextInColorCode(foodDiet);
 		local label = _G[self:GetName().."TextRight1"]
 		label:SetText(coloredText);
 		label:Show();
-		
+
 		-- if edible by current pet, add line for quality
 		if (link and UnitExists("pet")) then
 			for _, petDiet in pairs({GetPetFoodTypes()}) do
@@ -282,7 +282,7 @@ function FOM_OnTooltipSetItem(self)
 	else
 		return false;
 	end
-	
+
 end
 
 function FOM_TooltipAddFoodQuality(self, itemID)
@@ -314,28 +314,28 @@ function FOM_GetFeedPetSpellName()
 	-- we can get the spell name from the ID
 	local _;
 	FOM_FeedPetSpellName, _, FOM_FeedPetSpellIcon = GetSpellInfo(FOM_FEED_PET_SPELL_ID);
-	
+
 	BINDING_NAME_FOM_FEED = FOM_FeedPetSpellName;
-	
-	-- but we also want to know whether the player knows the spell	
+
+	-- but we also want to know whether the player knows the spell
 	if (IsPlayerSpell(FOM_FEED_PET_SPELL_ID)) then
 		return FOM_FeedPetSpellName;
 	end
-	
+
 	return nil;
 end
 
 function FOM_Initialize(self)
-	
+
 	local _, realClass = UnitClass("player");
 	if (realClass ~= "HUNTER") then
 	 	self:UnregisterAllEvents();
 		return;
 	end
-	
+
 	if (UnitLevel("player") < 10) then return; end
-		
-	-- track whether foods are useful for Cooking 
+
+	-- track whether foods are useful for Cooking
 	self:RegisterEvent("TRADE_SKILL_SHOW");
 	self:RegisterEvent("TRADE_SKILL_DATA_SOURCE_CHANGED");
 	self:RegisterEvent("TRADE_SKILL_LIST_UPDATE");
@@ -343,7 +343,7 @@ function FOM_Initialize(self)
 
 	-- Catch when feeding happened so we can notify/emote
 	self:RegisterEvent("CHAT_MSG_PET_INFO");
-	
+
 	-- Only subscribe to inventory updates once we're in the world
 	self:RegisterEvent("PLAYER_ENTERING_WORLD");
 	self:RegisterEvent("PLAYER_LEAVING_WORLD");
@@ -363,7 +363,7 @@ function FOM_Initialize(self)
 	if (XPerl_Player_Pet ~= nil) then
 		PetFrame = XPerl_Player_Pet
 	end
-	
+
 	-- create feed button
 	FOM_FeedButton = CreateFrame("Button", "FOM_FeedButton", PetFrame, "ActionButtonTemplate,SecureActionButtonTemplate");
 	if (XPerl_Player_Pet ~= nil) then
@@ -388,37 +388,37 @@ function FOM_Initialize(self)
 		FOM_FeedButton:Hide();
 	end
 
-	
+
 	-- set key binding to click FOM_FeedButton
 	FOM_UpdateBindings();
 	self:RegisterEvent("UPDATE_BINDINGS");
-	
+
 	FOM_HookTooltip(GameTooltip);
 	FOM_HookTooltip(ItemRefTooltip);
 	FOM_HookTooltip(FOM_FeedTooltip);
-	
+
 	Frame_GFW_FeedOMatic:SetScript("OnUpdate", FOM_OnUpdate);
 
 	self:UnregisterEvent("VARIABLES_LOADED");
 	self:UnregisterEvent("SPELLS_CHANGED");
 
 	FOM_Initialized = true;
-		
+
 end
 
 function FOM_OnEvent(self, event, arg1, arg2)
 	--print(event)
 
 	if ( event == "VARIABLES_LOADED" or event == "SPELLS_CHANGED") then
-				
+
 		if (not FOM_Initialized) then FOM_Initialize(self); end
 		FOM_PickFoodQueued = true;
-		
+
 	elseif ( event == "UPDATE_BINDINGS" ) then
 
 		FOM_UpdateBindings();
 		return;
-		
+
 	elseif ( event == "PLAYER_ENTERING_WORLD" ) then
 
 		self:RegisterEvent("BAG_UPDATE");
@@ -432,18 +432,18 @@ function FOM_OnEvent(self, event, arg1, arg2)
 	elseif ( event == "PLAYER_LEAVING_WORLD" ) then
 
 		self:UnregisterEvent("BAG_UPDATE");
-		
+
 	elseif (event == "BAG_UPDATE" ) then
-		
+
 		if (arg1 < 0 or arg1 > 4) then return; end	-- don't bother looking in keyring, bank, etc for food
 		if (FOM_IsSpecialBag(arg1)) then return; end	-- don't look in bags that can't hold food, either
-		
+
 		FOM_PickFoodQueued = true;
-	
+
 	elseif ((event == "UNIT_NAME_UPDATE" and arg1 == "pet") or event == "PET_BAR_UPDATE" or event == "PLAYER_REGEN_ENABLED") then
-	
+
 		FOM_PickFoodQueued = true;
-	
+
 	elseif event == "TRADE_SKILL_SHOW"
 	  or event == "TRADE_SKILL_DETAILS_UPDATE"
 	  or event == "TRADE_SKILL_LIST_UPDATE"
@@ -481,9 +481,9 @@ function FOM_OnEvent(self, event, arg1, arg2)
 			FOM_FeedButtonIcon:SetVertexColor(0.5, 0.5, 0.1);
 		else
 			FOM_FeedButtonIcon:SetVertexColor(1, 1, 1);
-		end		
+		end
 	end
-	
+
 	if (FOM_PickFoodQueued and not InCombatLockdown()) then
 		FOM_PickFoodForButton();
 	end
@@ -492,7 +492,7 @@ function FOM_OnEvent(self, event, arg1, arg2)
 		FOM_FoodListUI_UpdateList();
 		FOM_FoodsPanel.refresh();
 	end
-	
+
 end
 
 function FOM_UpdateBindings()
@@ -534,7 +534,7 @@ function FOM_ScanQuests()
 							end
 							if (FOM_QuestFood[itemID] == nil) then
 								FOM_QuestFood[itemID] = tonumber(numRequired);
-							else             
+							else
 								FOM_QuestFood[itemID] = max(FOM_QuestFood[itemID], tonumber(numRequired));
 							end
 						end
@@ -551,7 +551,7 @@ function FOM_ChatCommandHandler(msg)
 		GFW_FeedOMatic:ShowConfig();
 		return;
 	end
-		
+
 	-- Print Help
 	if ( msg == "help" ) then
 		local version = GetAddOnMetadata(addonName, "Version");
@@ -578,7 +578,7 @@ function FOM_ChatCommandHandler(msg)
 		FOM_Config.NoFeedButtonTooltip = not FOM_Config.NoFeedButtonTooltip;
 		GFWUtils.Print((FOM_Config.NoFeedButtonTooltip and "Not " or "").."Showing feed button tooltip.");
 	end
-	
+
 	-- Reset Variables
 	if ( msg == "reset" ) then
 		GFW_FeedOMatic.db:ResetProfile();
@@ -586,7 +586,7 @@ function FOM_ChatCommandHandler(msg)
 		GFWUtils.Print("Feed-O-Matic configuration reset.");
 		return;
 	end
-	
+
 	-- if we got down to here, we got bad input
 	FOM_ChatCommandHandler("help");
 end
@@ -597,7 +597,7 @@ function FOM_PickFoodForButton()
 		return;
 	end
 	local pet = UnitName("pet");
-	if (not pet) then 
+	if (not pet) then
 		FOM_PickFoodQueued = true;
 		return;
 	end
@@ -609,11 +609,11 @@ function FOM_PickFoodForButton()
 	elseif (not FOM_Config.NoButton) then
 		FOM_FeedButton:Show();
 	end
-	
+
 	local foodBag, foodSlot, foodIcon;
 	foodBag, foodSlot, FOM_NextFoodLink, foodIcon = FOM_NewFindFood();
 	FOM_SetupButton(foodBag, foodSlot);
-	
+
 	if ( foodBag == nil) then
 		local fallbackBag, fallbackSlot;
 		fallbackBag, fallbackSlot, FOM_NextFoodLink, foodIcon = FOM_NewFindFood(1);
@@ -630,18 +630,18 @@ function FOM_PickFoodForButton()
 			--GFWUtils.Print("Can't feed? #SortedFoodList:"..#SortedFoodList);
 			--DevTools_Dump(GetPetFoodTypes());
 			FOM_FeedButtonCount:SetText("")
-			
+
 		end
-		
+
 		FOM_FeedButtonIcon:SetVertexColor(0.5, 0.5, 1);
 	else
 		FOM_NoFoodError = nil;
 		FOM_FeedButtonIcon:SetVertexColor(1, 1, 1);
 		FOM_FeedButtonIcon:SetTexture(foodIcon);
 		FOM_FeedButtonCount:SetText(GetItemCount(FOM_NextFoodLink))
-		
+
 	end
-	
+
 	-- debug
 	if (false and FOM_NextFoodLink) then
 		if (FOM_NoFoodError) then
@@ -678,7 +678,7 @@ function FOM_SetupButton(bag, slot, modifier)
 end
 
 function FOM_RandomEmote(foodLink)
-	
+
 	local localeEmotes = FOM_Emotes[GetLocale()];
 	if (localeEmotes) then
 		local randomEmotes = {};
@@ -687,7 +687,7 @@ function FOM_RandomEmote(foodLink)
 		elseif (UnitSex("pet") == 3) then
 			randomEmotes = tableUtils.Merge(randomEmotes, localeEmotes["female"]);
 		end
-		
+
 		local itemID = utils:ItemIdFromLink(foodLink);
 		if (itemID) then
 			randomEmotes = tableUtils.Merge(randomEmotes, localeEmotes[itemID]);
@@ -695,7 +695,7 @@ function FOM_RandomEmote(foodLink)
 			local diet = FOM_DietForFood(itemID);
 			randomEmotes = tableUtils.Merge(randomEmotes, localeEmotes[diet]);
 		end
-			
+
 		randomEmotes = tableUtils.Merge(randomEmotes, localeEmotes[UnitCreatureFamily("pet")]);
 		randomEmotes = tableUtils.Merge(randomEmotes, localeEmotes["any"]);
 
@@ -753,7 +753,7 @@ function FOM_NewFindFood(fallback)
 	if (table.getn(tempFoodsOnly) > 0) then
 		SortedFoodList = tempFoodsOnly;
 	end
-	
+
 	local function sortCount(a, b)
 		return a.count < b.count;
 	end
@@ -773,7 +773,7 @@ function FOM_NewFindFood(fallback)
 		table.sort(SortedFoodList, sortQualityAscending); -- lower quality first
 	end
 	table.sort(SortedFoodList, sortPriority); -- category priorities (conjured ahead of normal ahead of bonus etc)
-	
+
 	if (GFWUtils.Debug) then
 		if (fallback) then
 			GFWUtils.DebugLog("Food list (with fallback):")
@@ -791,7 +791,7 @@ function FOM_NewFindFood(fallback)
 			return foodInfo.bag, foodInfo.slot, foodInfo.link, foodInfo.icon;
 		end
 	end
-	
+
 	return nil;
 end
 
@@ -842,14 +842,14 @@ function FOM_IsInDiet(foodItemID, dietList)
 	if (type(dietList) ~= "table") then
 		dietList = {dietList};
 	end
-	
+
 	for _, diet in pairs(dietList) do
 		local table = FOM_Foods[diet];
 		if (table and table[foodItemID] ~= nil) then
 			return diet;
 		end
 	end
-	
+
 	return nil;
 
 end
@@ -864,7 +864,7 @@ function FOM_IsSpecialBag(bagNum)
 	-- other special bags can't contain food, though, so we may as well skip 'em
 	if (bagNum == 0) then return false; end
 	local _, bagType = GetContainerNumFreeSlots(bagNum);
-	return bagType ~= 0; 	
+	return bagType ~= 0;
 end
 
 ------------------------------------------------------
@@ -876,15 +876,15 @@ local FOM_MAX_LIST_DISPLAYED = 10;
 local MAX_COOKING_RESULTS = 6;
 
 function FOM_BuildFoodsUI(panel)
-	
+
 	FOM_FoodsPanel = panel;
-		
+
 	local borderFrame = CreateFrame("Frame", "FOM_FoodListBorder", panel, "OptionsBoxTemplate");
 	borderFrame:SetHeight(273);
 	borderFrame:SetPoint("BOTTOMLEFT", panel, "BOTTOMLEFT", 15, 15);
 	borderFrame:SetPoint("RIGHT", panel, -15, 0);
 	borderFrame:Show();
-	
+
 	local headerBgLeft = panel:CreateTexture("FOM_FoodList_HeaderBGLeft", "ARTWORK");
 	headerBgLeft:SetTexture("Interface\\TokenFrame\\UI-TokenFrame-CategoryButton");
 	headerBgLeft:SetDesaturated(1);
@@ -901,15 +901,15 @@ function FOM_BuildFoodsUI(panel)
 	headerBgRight:SetWidth(61);
 	headerBgRight:SetHeight(24);
 	headerBgRight:SetPoint("TOPRIGHT",borderFrame,"TOPRIGHT",-5,-5);
-	
+
 	local s = panel:CreateFontString("FOM_FoodList_NameHeader", "OVERLAY", "GameFontNormalSmall");
 	s:SetPoint("TOPLEFT", borderFrame, "TOPLEFT", 53, -12);
 	s:SetText(FOM_OPTIONS_FOODS_NAME);
-	
+
 	s = panel:CreateFontString("FOM_FoodList_CookingHeader", "OVERLAY", "GameFontNormalSmall");
 	s:SetPoint("TOPRIGHT", borderFrame, "TOPRIGHT", -26, -12);
 	s:SetText(FOM_OPTIONS_FOODS_COOKING);
-	
+
 	local listItem = CreateFrame("Button", "FOM_FoodList1", panel, "FOM_FoodListItemTemplate");
 	listItem:SetPoint("TOPLEFT", borderFrame, "TOPLEFT", 5, -29);
 	listItem:SetPoint("TOPRIGHT", borderFrame, "TOPRIGHT", -24, -29);
@@ -918,26 +918,26 @@ function FOM_BuildFoodsUI(panel)
 		listItem:SetPoint("TOPLEFT", "FOM_FoodList" .. (i - 1), "BOTTOMLEFT", 0, 0);
 		listItem:SetPoint("TOPRIGHT", "FOM_FoodList" .. (i - 1), "BOTTOMRIGHT", 0, 0);
 	end
-	
+
 	local scrollFrame = CreateFrame("ScrollFrame", "FOM_FoodListScrollFrame", panel, "FauxScrollFrameTemplate");
 	scrollFrame:SetHeight(240);
 	scrollFrame:SetPoint("TOPLEFT", borderFrame, "TOPLEFT", 5, -29);
 	scrollFrame:SetPoint("RIGHT", borderFrame, -27, 0);
 	scrollFrame:SetFrameLevel(scrollFrame:GetFrameLevel() + 5);
-	scrollFrame:SetScript("OnVerticalScroll", function(self, offset) 
+	scrollFrame:SetScript("OnVerticalScroll", function(self, offset)
 		FauxScrollFrame_OnVerticalScroll(self, offset, FOM_LIST_HEIGHT, FOM_FoodListUIUpdate);
 	end);
-		
+
 end
 
 function FOM_FoodListShowTooltip(button)
 	if not button.item then return; end
-	
+
 	GameTooltip:SetHyperlink("item:"..button.item);
 	if (button.recipe) then
 		local c = FOM_DifficultyColors[button.difficulty];
 		GameTooltip:AddDoubleLine(FOM_DIFFICULTY_HEADER, getglobal("FOM_DIFFICULTY_"..button.difficulty), c.r,c.g,c.b, c.r,c.g,c.b);
-	end	
+	end
 	GameTooltip:Show();
 end
 
@@ -1011,7 +1011,7 @@ function FOM_FoodListUI_UpdateList()
 							skip = true;
 						end
 					end
-				
+
 					if (not skip) then
 						if (not uniqueList[itemID]) then
 							tinsert(list, itemID);
@@ -1067,9 +1067,9 @@ function FOM_FoodListUIUpdate()
 		listOffset = math.max(0, numListItems - FOM_MAX_LIST_DISPLAYED);
 		FauxScrollFrame_SetOffset(FOM_FoodListScrollFrame, listOffset);
 	end
-	
+
 	FauxScrollFrame_Update(FOM_FoodListScrollFrame, numListItems, FOM_MAX_LIST_DISPLAYED, FOM_LIST_HEIGHT);
-	
+
 	local petLevel = UnitLevel("player"); -- pet level is always == player level now
 	if (UnitExists("pet")) then
 		petLevel = UnitLevel("pet");
@@ -1078,18 +1078,18 @@ function FOM_FoodListUIUpdate()
 		local listIndex = i + listOffset;
 		local listItem = FOM_FoodsUIList[listIndex];
 		local listButton = getglobal("FOM_FoodList"..i);
-		
-		if ( listIndex <= numListItems ) then	
+
+		if ( listIndex <= numListItems ) then
 			-- Set button widths if scrollbar is shown or hidden
 			if ( FOM_FoodListScrollFrame:IsShown() ) then
 				listButton:SetWidth(350);
 			else
 				listButton:SetWidth(368);
 			end
-							
+
 			listButton:SetID(listIndex);
 			listButton:Show();
-			
+
 			if ( type(listItem) == "number" ) then
 				-- it's a header
 				listButton.header = listItem;
@@ -1100,23 +1100,23 @@ function FOM_FoodListUIUpdate()
 				listButton.icon:SetTexture("");
 				listButton.name:SetText("");
 				listButton:SetText(FOM_CategoryNames[listItem]);
-				
+
 				for iconIndex = 1, MAX_COOKING_RESULTS do
 					listButton.cookingIcons[iconIndex]:SetTexture("");
 					listButton.cookingItems[iconIndex]:Hide();
 				end
-				
+
 				if (FOM_Config.excludedCategories[listItem]) then
 					listButton.check:Hide();
 				else
 					listButton.check:Show();
 				end
 				listButton:SetAlpha(1);
-				
+
 			else
 				listButton.header = listItem.header;
 				listButton.item = listItem.id;
-		
+
 				listButton.categoryLeft:Hide();
 				listButton.categoryRight:Hide();
 
@@ -1165,25 +1165,25 @@ function FOM_FoodListUIUpdate()
 						resultIndex = resultIndex + 1;
 					end
 				end
-							
+
 				if (FOM_Config.excludedFoods[listItem.id] or FOM_Config.excludedCategories[listItem.header]) then
 					listButton.check:Hide();
 				else
 					listButton.check:Show();
 				end
-				
+
 				if (FOM_Config.excludedCategories[listItem.header]) then
 					listButton:SetAlpha(0.5);
 				else
 					listButton:SetAlpha(1);
 				end
 			end
-			
+
 		else
 			listButton:Hide();
 		end
 	end
-	
+
 end
 
 ------------------------------------------------------
@@ -1227,7 +1227,7 @@ local function setProfileOption(info, value)
 	else
 		FOM_PickFoodForButton();
 	end
-	
+
 	if (info.arg == "NoButton") then
 		if (FOM_Config.NoButton) then
 			FOM_FeedButton:Hide();
@@ -1235,7 +1235,7 @@ local function setProfileOption(info, value)
 			FOM_FeedButton:Show();
 		end
 	end
-	
+
 end
 
 local titleText = GetAddOnMetadata(addonName, "Title");
@@ -1342,10 +1342,10 @@ local profileDefault = {
 	UseLowLevelFirst	= true,
 	AvoidQuestFood		= true,
 	AlertType			= 1,
-	
+
 	ShowOnlyPetFoods	= false,
 	ShowOnlyInventory	= false,
-	
+
 	excludedCategories = {
 		["Consumable.Food.Edible.Bonus"] = 1;
 	},
@@ -1358,10 +1358,10 @@ function GFW_FeedOMatic:SetupOptions()
 	-- Inject profile options
 	options.args.profile = LibStub("AceDBOptions-3.0"):GetOptionsTable(self.db)
 	options.args.profile.order = -2
-	
+
 	-- Register options table
 	AceConfig:RegisterOptionsTable(addonName, options)
-	
+
 	local titleText = GetAddOnMetadata(addonName, "Title");
 	titleText = string.gsub(titleText, "Fizzwidget", "GFW");		-- shorter so it fits in the list width
 
@@ -1370,7 +1370,7 @@ function GFW_FeedOMatic:SetupOptions()
 	-- The ordering here matters, it determines the order in the Blizzard Interface Options
 	self.optionsFrames.general = AceConfigDialog:AddToBlizOptions(addonName, titleText, nil, "general")
 	self.optionsFrames.profile = AceConfigDialog:AddToBlizOptions(addonName, FOM_OPTIONS_PROFILE, titleText, "profile")
-	
+
 	FOM_BuildFoodsUI(self.optionsFrames.general);
 	local aceRefresh = self.optionsFrames.general.refresh;
 	self.optionsFrames.general.refresh = function(...)
@@ -1393,7 +1393,7 @@ function GFW_FeedOMatic:OnInitialize()
 	self.db.RegisterCallback(self, "OnProfileChanged", "OnProfileChanged")
 	self.db.RegisterCallback(self, "OnProfileCopied", "OnProfileChanged")
 	self.db.RegisterCallback(self, "OnProfileReset", "OnProfileChanged")
-	
+
 	FOM_Config = self.db.profile
 	self:SetupOptions()
 end
