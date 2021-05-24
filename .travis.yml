@@ -12,7 +12,7 @@ jobs:
 
     - name: 'TBC'
       install:
-        - export GAME_VERSION="bc"
+        - export GAME_VERSION="bcc"
 
 addons:
   apt:
