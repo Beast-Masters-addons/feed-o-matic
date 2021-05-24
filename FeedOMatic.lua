@@ -1,11 +1,14 @@
 ------------------------------------------------------
 -- FeedOMatic.lua
 ------------------------------------------------------
-local addonName, addonTable = ...;
-local tableUtils = addonTable
-local utils = LibStub('BM-utils-1', 5)
+---@type FeedOMatic
+local addonName, addon = ...
+_G['FeedOMatic'] = {}
+
+local tableUtils = addon.tableUtils
+local utils = addon.utils
 local GetPetFoodTypes
-if not utils:IsWoWClassic() then
+if not addon.utils:IsWoWClassic() then
 	--Workaround for bug causing all pets to only eat meat (issue #15)
 	function GetPetFoodTypes()
 		return 'Meat'

@@ -1,4 +1,8 @@
-local _, tableUtils = ...
+---@type FeedOMatic
+local _, addon = ...
+---@class TableUtils
+local tableUtils = addon.tableUtils
+
 -- Merge: returns the union of two tables (without repeated elements)
 function tableUtils:Merge(table1, table2)
     local newTable = { };
