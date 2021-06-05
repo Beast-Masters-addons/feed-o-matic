@@ -1,12 +1,15 @@
 ---@class FeedOMatic
 local addonName, addon = ...
+
+local minor
 ---@type string Addon name
 addon.name = addonName
 addon.version = '@project-version@'
 ---@type BMUtils
 addon.utils = _G.LibStub("BM-utils-1")
 ---@type LibProfessions
-addon.professions = _G.LibStub('LibProfessions-0', 10)
+addon.professions, minor = _G.LibStub('LibProfessions-0')
+assert(minor >= 10, ('LibProfessions 0.10 or higher is required, found 0.%d'):format(minor))
 addon.is_classic = addon.utils:IsWoWClassic()
 ---@type TableUtils
 addon.tableUtils = {}
