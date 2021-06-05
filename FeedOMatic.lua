@@ -31,6 +31,7 @@ FOM_DELTA_LOVES = 10;   -- 10 >= levelDelta = 35 happiness per tick
 -- constants
 MAX_KEEPOPEN_SLOTS = 150;
 FOM_FEED_PET_SPELL_ID = 6991;
+addon.utils:SetDefaultFontColor {0.25, 1.0, 1.0};
 
 -- defined in LibProfessions.lua
 local WoWClassic = WoWClassic
