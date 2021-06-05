@@ -28,3 +28,6 @@ Temporary Items
 
 .idea
 .release
+
+test/build_utils
+libs
