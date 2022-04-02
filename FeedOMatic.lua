@@ -7,15 +7,6 @@ _G['FeedOMatic'] = {}
 
 local tableUtils = addon.tableUtils
 local utils = addon.utils
-local GetPetFoodTypes
-if not addon.utils:IsWoWClassic() then
-	--Workaround for bug causing all pets to only eat meat (issue #15)
-	function GetPetFoodTypes()
-		return 'Meat'
-	end
-else
-	GetPetFoodTypes = _G.GetPetFoodTypes
-end
 
 -- letting these be global inside Ace callbacks causes bugs
 local FOM_Config, FOM_IsInDiet, FOM_IsKnownFood, FOM_CategoryNames, FOM_FoodsUIList
