@@ -1,0 +1,110 @@
+name: Test and package
+
+on:
+  push:
+    branches: [ master ]
+    tags:
+      - '**'
+  pull_request:
+    branches: [ master ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        game_version: [ 'classic', 'bcc', 'retail' ]
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Get build utils
+        uses: actions/checkout@v2
+        with:
+          repository: Beast-Masters-addons/build_utils
+          path: tests/build_utils
+
+      - run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends apt-utils
+        env:
+          DEBIAN_FRONTEND: noninteractive
+
+      - name: Install lua dependencies
+        run: |
+          sudo apt-get -y install luarocks
+          sudo luarocks install luaunit
+          sudo luarocks install luacov
+          sudo luarocks install luacheck
+
+      - name: Run luacheck
+        run: |
+          luacheck --no-self -a addon
+          luacheck -g FOM_CookingScan.lua
+          luacheck --ignore 612 611 -g FeedOMatic_Emotes.lua
+          luacheck --no-unused --ignore 631 542 431 -g FeedOMatic.lua
+          luacheck -g FOM_Foods_classic.lua
+          luacheck --no-unused --ignore 614 611 -g FOM_Foods.lua
+          luacheck --no-unused --ignore 631 614 612 611 -g LocaleSupport.lua
+          luacheck --no-unused --ignore 631 614 612 611 542 -g localization.lua
+
+      - name: Build the addon
+        uses: BigWigsMods/packager@v1.0.1
+        with:
+          args: -g ${{ matrix.game_version }} -z -d
+
+      - name: Move libraries and compiled metadata files
+        run: |
+          mv .release/GFW_FeedOMatic/libs .
+          mv .release/GFW_FeedOMatic/GFW_FeedOMatic.toc .
+          mv .release/GFW_FeedOMatic/Libs.xml .
+
+      - name: Resolve toc
+        run: python tests/build_utils/utils/parse_toc.py GFW_FeedOMatic.toc
+
+      - name: Run tests
+        run: for test in test*.lua; do lua -lluacov "$test"; done
+        working-directory: tests
+        env:
+          GAME_VERSION: ${{ matrix.game_version }}
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v1
+
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        game_version: [ 'classic', 'bcc', 'retail' ]
+
+    needs:
+      - test
+
+    env:
+      CF_API_KEY: ${{ secrets.CF_API_KEY }}
+      WOWI_API_TOKEN: ${{ secrets.WOWI_API_TOKEN }}
+      GITHUB_OAUTH: ${{ secrets.GITHUB_TOKEN }}
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Get build utils
+        uses: actions/checkout@v2
+        with:
+          repository: Beast-Masters-addons/build_utils
+          path: tests/build_utils
+
+      - name: WoW Packager
+        uses: BigWigsMods/packager@v1.0.1
+        with:
+          args: -g ${{ matrix.game_version }}
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: ${{ matrix.game_version }}
+          path: .release
