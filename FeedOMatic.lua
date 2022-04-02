@@ -497,15 +497,40 @@ function FOM_UpdateBindings()
 	end
 end
 
+local function FOM_SetQuestFood(itemID, numRequired)
+    if (FOM_QuestFood == nil) then
+        FOM_QuestFood = { };
+    end
+    if (FOM_QuestFood[itemID] == nil) then
+        FOM_QuestFood[itemID] = tonumber(numRequired);
+    else
+        FOM_QuestFood[itemID] = max(FOM_QuestFood[itemID], tonumber(numRequired));
+    end
+end
+
+local function FOM_ScanQuests_retail()
+    local _, numQuests = _G.C_QuestLog.GetNumQuestLogEntries()
+    for questLogIndex = 1, numQuests do
+        local questID = _G.C_QuestLog.GetQuestIDForLogIndex(questLogIndex)
+        local objectives = _G.C_QuestLog.GetQuestObjectives(questID)
+        if objectives then
+            for _, objective in ipairs(objectives) do
+                if objective['type'] == 'item' then
+                    local _, _, _, numRequired, itemName = objective['text']:find("(%d+)/(%d+) (.+)");
+                    local itemID, _, _, _, _, _, _ = _G.GetItemInfoInstant(itemName)
+                    if itemID and FOM_IsKnownFood(itemID) then
+                        FOM_SetQuestFood(itemID, numRequired)
+                    end
+                end
+            end
+        end
+    end
+end
+
 -- Update our list of quest objectives so we can avoid consuming food we want to accumulate for a quest.
 function FOM_ScanQuests()
-	local GetNumQuestLogEntries, GetQuestLogTitle, GetNumQuestLeaderBoards
 	if not utils:IsWoWClassic() then
-		return --TODO: Add correct API calls for retail (issue #16)
-	else
-		GetNumQuestLogEntries = _G.GetNumQuestLogEntries
-		GetQuestLogTitle = _G.GetQuestLogTitle
-		GetNumQuestLeaderBoards = _G.GetNumQuestLeaderBoards
+		return FOM_ScanQuests_retail()
 	end
 
 	for questNum = 1, GetNumQuestLogEntries() do
@@ -521,14 +546,7 @@ function FOM_ScanQuests()
 						-- but we shouldn't be here unless we have the item anyway.
 						local itemID = utils:ItemIdFromLink(link);
 						if (itemID and FOM_IsKnownFood(itemID)) then
-							if (FOM_QuestFood == nil) then
-								FOM_QuestFood = { };
-							end
-							if (FOM_QuestFood[itemID] == nil) then
-								FOM_QuestFood[itemID] = tonumber(numRequired);
-							else
-								FOM_QuestFood[itemID] = max(FOM_QuestFood[itemID], tonumber(numRequired));
-							end
+                            FOM_SetQuestFood(itemID, numRequired)
 						end
 					end
 				end
