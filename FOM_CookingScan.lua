@@ -35,7 +35,7 @@ function FOM_ScanTradeSkill()
 						FOM_Cooking[reagentItemID] = {};
 					end
 					FOM_Cooking[reagentItemID][createdItemID] = difficulty;
-				end		
+				end
 			end
 	end
 end

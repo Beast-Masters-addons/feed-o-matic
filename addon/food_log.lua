@@ -4,7 +4,7 @@ local log = _G['FOMFoodLogger']
 function log.get(species, itemId)
     local statuses = {}
     for status, items in pairs(_G['FOM_FoodLog'][species]) do
-        for itemId_iter, itemName in pairs(items) do
+        for itemId_iter, _ in pairs(items) do
             if itemId_iter == itemId then
                 statuses:insert(status)
             end

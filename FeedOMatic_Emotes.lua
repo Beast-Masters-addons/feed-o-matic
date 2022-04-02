@@ -12,7 +12,7 @@ FOM_Emotes.enUS = {
 		"Burp!",
 		"Yay, bag space!",
 	},
-	
+
 	["male"] = { -- emotes for any male pet (don't localize this line!)
 		"Good boy!",
 		"Atta boy!",
@@ -23,7 +23,7 @@ FOM_Emotes.enUS = {
 		"Atta girl!",
 		"No more Miss Grumpy!",
 	},
-	
+
 	-- emotes for when eating specific foods
 	-- number on first line is itemID (use an addon or Wowhead to find it)
 	[7974] = {	-- Zesty Clam Meat
@@ -68,7 +68,7 @@ FOM_Emotes.enUS = {
 	[43647] = { -- Shimmering Minnow
 		"Can has bigger fish?",
 	},
-	
+
 	-- emotes for categories of items
 	-- use keys from LibPeriodicTable's Consumable.Food section
 	-- TODO: need a PT-less way to key on both food diet and what we now call food type
@@ -81,7 +81,7 @@ FOM_Emotes.enUS = {
 	-- ["Consumable.Food.Inedible.Fish"] = {
 	-- 	"Mmm, sashimi!",
 	-- },
-	
+
 	-- emotes for entire diets
 	[FOM_DIET_FUNGUS] = {
 		"Trippy...",
@@ -89,29 +89,29 @@ FOM_Emotes.enUS = {
 
 	-- emotes for specific pet families
 	-- use keys from localization.lua
-	[FOM_BOAR] = { 
+	[FOM_BOAR] = {
 		"Good piggy!"
 	},
-	[FOM_CAT] = { 
-		"Nice kitty!", 
+	[FOM_CAT] = {
+		"Nice kitty!",
 	},
-	[FOM_HYENA] = { 
-		"Good dog!", 
+	[FOM_HYENA] = {
+		"Good dog!",
 	},
-	[FOM_WOLF] = { 
-		"Good dog!", 
+	[FOM_WOLF] = {
+		"Good dog!",
 	},
-	[FOM_SPIDER] = { 
-		"Do you really have to wrap it up before eating it?", 
+	[FOM_SPIDER] = {
+		"Do you really have to wrap it up before eating it?",
 	},
-	[FOM_RAPTOR] = { 
-		"Down, dino!", 
+	[FOM_RAPTOR] = {
+		"Down, dino!",
 	},
-	[FOM_DEVILSAUR] = { 
-		"Down, dino!", 
+	[FOM_DEVILSAUR] = {
+		"Down, dino!",
 	},
-	[FOM_CROCOLISK] = { 
-		"Crikey, it snapped that up fast!", 
+	[FOM_CROCOLISK] = {
+		"Crikey, it snapped that up fast!",
 	},
 	[FOM_CORE_HOUND] = {
 		"What a good little puppy!",
@@ -121,9 +121,9 @@ FOM_Emotes.enUS = {
 	[FOM_CHIMAERA] = {
 		"Hey, don't fight over it!",
 	},
-	
-	
-	
+
+
+
 };
 
 FOM_Emotes.esES = {
@@ -137,14 +137,14 @@ FOM_Emotes.esES = {
 		"Mmm, delicioso.",
 		"¡Gurps!",
 	},
-	
+
 	["male"] = { -- emotes for any male pet (don't localize this line!)
 		"¡Buen chico!",
 	},
 	["female"] = { -- emotes for any female pet (don't localize this line!)
 		"¡Buena chica!",
 	},
-	
+
 	-- emotes for when eating specific foods
 	-- number on first line is itemID (use an addon or Wowhead to find it)
 	[7974] = {	-- Zesty Clam Meat
@@ -162,32 +162,32 @@ FOM_Emotes.esES = {
 	[4538] = { -- Snapvine Watermelon
 		"¡Vaya bocaza!",
 	},
-	
-	
+
+
 	-- emotes for specific pet families
 	-- use keys from localization.lua
-	[FOM_BOAR] = { 
+	[FOM_BOAR] = {
 		"¡Buen cerdito!"
 	},
-	[FOM_CAT] = { 
-		"¡Buen gatito!", 
+	[FOM_CAT] = {
+		"¡Buen gatito!",
 	},
-	[FOM_HYENA] = { 
-		"¡Buen perro!", 
+	[FOM_HYENA] = {
+		"¡Buen perro!",
 	},
-	[FOM_WOLF] = { 
-		"¡Buen perro!", 
+	[FOM_WOLF] = {
+		"¡Buen perro!",
 	},
-	[FOM_RAPTOR] = { 
-		"¡Abajo, dino!", 
+	[FOM_RAPTOR] = {
+		"¡Abajo, dino!",
 	},
-	[FOM_DEVILSAUR] = { 
-		"¡Abajo, dino!", 
+	[FOM_DEVILSAUR] = {
+		"¡Abajo, dino!",
 	},
 	[FOM_CORE_HOUND] = {
 		"¡Qué chiquitín más bueno!",
 	},
-		
+
 };
 FOM_Emotes.esMX = FOM_Emotes.esES;
 
@@ -203,7 +203,7 @@ FOM_Emotes.frFR = {
 		"Burp!",
 		"Oui, un peu plus de place dans le sac!",
 	},
-	
+
 	["male"] = { -- emotes for any male pet (don't localize this line!)
 		"Bon gar\195\167on!",
 		"Attrape gar\195\167on!",
@@ -214,7 +214,7 @@ FOM_Emotes.frFR = {
 		"Attrape ma fille!",
 		"Pas plus madame la goinfre!",
 	},
-	
+
 	-- emotes for when eating specific foods
 	-- number on first line is itemID (use an addon or Wowhead to find it)
 	[7974] = {	-- Zesty Clam Meat
@@ -244,8 +244,8 @@ FOM_Emotes.frFR = {
 	[43647] = { -- Shimmering Minnow
 		"On dirait de la friture, T'as pas un plus gros poisson?",
 	},
-	
-	
+
+
 	-- emotes for specific pet families
 	-- use keys from localization.lua
 	[FOM_BOAR] = {
@@ -263,7 +263,7 @@ FOM_Emotes.frFR = {
 	[FOM_SPIDER] = {
 		"Tu veux vraiment le recouvrir de bave avant de manger \195\167a ?",
 	},
-	[FOM_RAPTOR] = { 
+	[FOM_RAPTOR] = {
 		"Baisse toi, dino!",
 	},
 	[FOM_DEVILSAUR] = {
@@ -295,7 +295,7 @@ FOM_Emotes.koKR = {
 		"꺼억~!",
 		"어예~, 가방 한칸 빈다!",
 	},
-	
+
 	["male"] = { -- emotes for any male pet (don't localize this line!)
 		"잘했어!",
 		"남기지마 시키야!",
@@ -306,7 +306,7 @@ FOM_Emotes.koKR = {
 		"착하네!",
 		"이 보잘 것 없는 먹이로 얼마나 버틸성 싶으냐!",
 	},
-	
+
 	-- emotes for when eating specific foods
 	-- number on first line is itemID (use an addon or Wowhead to find it)
 	[7974] = {	-- Zesty Clam Meat
@@ -345,7 +345,7 @@ FOM_Emotes.koKR = {
 	[43647] = { -- Shimmering Minnow
 		"좀 더 큰걸로 줘?",
 	},
-	
+
 	-- emotes for categories of items
 	-- use keys from LibPeriodicTable's Consumable.Food section
 	["Consumable.Food.Edible.Bread.Conjured"] = {
@@ -363,29 +363,29 @@ FOM_Emotes.koKR = {
 
 	-- emotes for specific pet families
 	-- use keys from localization.lua
-	[FOM_BOAR] = { 
+	[FOM_BOAR] = {
 		"잘했어 뚱띠!"
 	},
-	[FOM_CAT] = { 
-		"착하다 야옹이!", 
+	[FOM_CAT] = {
+		"착하다 야옹이!",
 	},
-	[FOM_HYENA] = { 
-		"잘먹네, 우리 메리해피도꾸워리쫑!", 
+	[FOM_HYENA] = {
+		"잘먹네, 우리 메리해피도꾸워리쫑!",
 	},
-	[FOM_WOLF] = { 
-		"잘먹네, 우리 메리해피도꾸워리쫑!", 
+	[FOM_WOLF] = {
+		"잘먹네, 우리 메리해피도꾸워리쫑!",
 	},
-	[FOM_SPIDER] = { 
-		"먹기전에 꼭 거미줄로 감아야 되?", 
+	[FOM_SPIDER] = {
+		"먹기전에 꼭 거미줄로 감아야 되?",
 	},
-	[FOM_RAPTOR] = { 
-		"맛있냐!", 
+	[FOM_RAPTOR] = {
+		"맛있냐!",
 	},
-	[FOM_DEVILSAUR] = { 
-		"맛있냐!", 
+	[FOM_DEVILSAUR] = {
+		"맛있냐!",
 	},
-	[FOM_CROCOLISK] = { 
-		"깨물어! 깨물어!", 
+	[FOM_CROCOLISK] = {
+		"깨물어! 깨물어!",
 	},
 	[FOM_CORE_HOUND] = {
 		"착하네, 우리 메리해피도꾸워리쫑!",
@@ -395,9 +395,9 @@ FOM_Emotes.koKR = {
 	[FOM_CHIMAERA] = {
 		"그만 날고 얼른 먹어!",
 	},
-	
-	
-	
+
+
+
 };
 
 FOM_Emotes.ruRU = {
@@ -412,7 +412,7 @@ FOM_Emotes.ruRU = {
 		"Отрыгивает!",
 		"Чумааа!",
 	},
-	
+
 	["male"] = { -- emotes for any male pet (don't localize this line!)
 		"Хороший мальчик!",
 		"Ах ты май малыш!",
@@ -423,7 +423,7 @@ FOM_Emotes.ruRU = {
 		"Ух ты мая малышка!",
 		"Умница!",
 	},
-	
+
 	-- emotes for when eating specific foods
 	-- number on first line is itemID (use an addon or Wowhead to find it)
 	[7974] = {	-- Zesty Clam Meat
@@ -456,13 +456,13 @@ FOM_Emotes.ruRU = {
 	[41808] = { -- Bonescale Snapper
 		"Хрущащий!",
 	},
-	[41814] = { -- Glassfin Minnnow 
+	[41814] = { -- Glassfin Minnnow
 		"Может есть рыбешка побольше?",
 	},
 	[43647] = { -- Shimmering Minnow
 		"Может есть рыбешка побольше?",
 	},
-	
+
 	-- emotes for categories of items
 	-- use keys from LibPeriodicTable's Consumable.Food section
 	["Consumable.Food.Edible.Bread.Conjured"] = {
@@ -479,30 +479,30 @@ FOM_Emotes.ruRU = {
 	},
 
 	-- emotes for specific pet families
-	-- use keys from localization.lua 
-	[FOM_BOAR] = { 
+	-- use keys from localization.lua
+	[FOM_BOAR] = {
 		"Хорошая свинка!",
 	},
-	[FOM_CAT] = { 
-		"Славная киска!", 
+	[FOM_CAT] = {
+		"Славная киска!",
 	},
-	[FOM_HYENA] = { 
-		"Хороший пёсик!", 
+	[FOM_HYENA] = {
+		"Хороший пёсик!",
 	},
-	[FOM_WOLF] = { 
-		"Хороший пёсик!", 
+	[FOM_WOLF] = {
+		"Хороший пёсик!",
 	},
-	[FOM_SPIDER] = { 
-		"Ты серьёзна бедешь окутывать это перед едой?", 
+	[FOM_SPIDER] = {
+		"Ты серьёзна бедешь окутывать это перед едой?",
 	},
-	[FOM_RAPTOR] = { 
-		"Пригнись, дино!", 
+	[FOM_RAPTOR] = {
+		"Пригнись, дино!",
 	},
-	[FOM_DEVILSAUR] = { 
-		"Пригнись, дино!", 
+	[FOM_DEVILSAUR] = {
+		"Пригнись, дино!",
 	},
-	[FOM_CROCOLISK] = { 
-		"Ну надо же, как быстро слопал!", 
+	[FOM_CROCOLISK] = {
+		"Ну надо же, как быстро слопал!",
 	},
 	[FOM_CORE_HOUND] = {
 		"Хороший маленький щеночек!",
@@ -512,5 +512,5 @@ FOM_Emotes.ruRU = {
 	[FOM_CHIMAERA] = {
 		"Эй вы оба, не деритесь!",
 	},
-	
+
 };

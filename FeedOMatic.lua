@@ -321,7 +321,7 @@ function FOM_Initialize(self)
 
 	local _, realClass = UnitClass("player");
 	if (realClass ~= "HUNTER") then
-	 	self:UnregisterAllEvents();
+		self:UnregisterAllEvents();
 		return;
 	end
 
@@ -1321,23 +1321,23 @@ local options = {
 					type = "description",
 					name = FOM_OPTIONS_FOODS_TEXT,
 					order = 11,
-							   	},
-							   	showOnlyPetFoods = {
-							   	    type = 'toggle',
-							   	    order = 12,
-							   	    width = "double",
-							   	    name = FOM_OPTIONS_FOODS_ONLY_PET,
+				},
+				showOnlyPetFoods = {
+					type = 'toggle',
+					order = 12,
+					width = "double",
+					name = FOM_OPTIONS_FOODS_ONLY_PET,
 					desc = function()
 						if (UnitExists("pet")) then
-							return format(FOM_OPTIONS_FOODS_ONLY_PET_TIP, UnitLevel("pet"), UnitCreatureFamily("pet")) .. "\n(".. FOM_GetColoredDiet()..")";
+							return format(FOM_OPTIONS_FOODS_ONLY_PET_TIP, UnitLevel("pet"), UnitCreatureFamily("pet")) .. "\n(" .. FOM_GetColoredDiet() .. ")";
 						else
 							return format(FOM_OPTIONS_FOODS_ONLY_LVL_TIP, UnitLevel("player"));
 						end
 					end,
-							   	    arg = "ShowOnlyPetFoods",
-							   	},
-							   	showOnlyInventory = {
-							   	    type = 'toggle',
+					arg = "ShowOnlyPetFoods",
+				},
+				showOnlyInventory = {
+					type = 'toggle',
 					order = 13,
 					width = "double",
 					name = FOM_OPTIONS_FOODS_ONLY_INV,
