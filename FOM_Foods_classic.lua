@@ -21,8 +21,6 @@ FOM_Foods_classic = {
 		[  7097] = F.BASIC,
 		[  8952] = F.BASIC,
 		[  9681] = F.BASIC,
-		[  9681] = F.BASIC,
-		[ 11444] = F.BASIC,
 		[ 11444] = F.BASIC,
 		[ 17119] = F.BASIC,
 		[ 17407] = F.BASIC,
@@ -93,13 +91,11 @@ FOM_Foods_classic = {
 		[ 12223] = F.INEDIBLE,
 		[ 20424] = F.INEDIBLE,
 		[ 21024] = F.INEDIBLE,
-		
 	},
 	[FOM_DIET_FISH] = {
 		-- Mists and before
 		[   787] = F.BASIC,
 		[  1326] = F.BASIC,
-		[  2682] = F.BASIC,
 		[  2682] = F.BASIC,
 		[  4592] = F.BASIC,
 		[  4593] = F.BASIC,
