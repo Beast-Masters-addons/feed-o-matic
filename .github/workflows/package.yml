@@ -28,14 +28,9 @@ jobs:
           repository: Beast-Masters-addons/build_utils
           path: tests/build_utils
 
-      - run: |
-          sudo apt-get update
-          sudo apt-get install -y --no-install-recommends apt-utils
-        env:
-          DEBIAN_FRONTEND: noninteractive
-
       - name: Install lua dependencies
         run: |
+          sudo apt-get update
           sudo apt-get -y install luarocks
           sudo luarocks install luaunit
           sudo luarocks install luacov
