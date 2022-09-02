@@ -4,27 +4,28 @@
 
 ---@type FeedOMatic
 local _, addon = ...
-local profession = addon.professions.currentProfession
-local profession_api = addon.professions.api
-local utils = addon.utils
 
 FOM_Cooking = {};
 
 function FOM_ScanTradeSkill()
-	if not profession_api:IsReady()
-	  or profession_api:GetName() ~= "Cooking" then
-		return -- should just get called again when ready
+	if not addon.professions then
+		return nil
 	end
 
-	for recipeID, recipeInfo in pairs(profession:GetRecipes()) do
+	if not addon.professions.api:IsReady()
+	  or addon.professions.api:GetName() ~= "Cooking" then
+		return nil -- should just get called again when ready
+	end
 
-		local difficulty = utils:DifficultyToNum(recipeInfo["difficulty"]);
+	for recipeID, recipeInfo in pairs(addon.professions.currentProfession:GetRecipes()) do
+
+		local difficulty = addon.utils:DifficultyToNum(recipeInfo["difficulty"]);
 
 		local createdItemLink = recipeInfo["link"]
 		local _, _, id = string.find(createdItemLink, "item:(%d+)");
 		local createdItemID = tonumber(id);
 
-		local reagents = profession:GetReagents(recipeID)
+		local reagents = addon.utils.professions.currentProfession:GetReagents(recipeID)
 
 			for _, reagent in pairs(reagents) do
 				local reagentLink = reagent["reagentLink"]
