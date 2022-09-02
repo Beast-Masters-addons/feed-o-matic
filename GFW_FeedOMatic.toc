@@ -15,6 +15,7 @@
 ## OptionalDeps: BM-utils
 ## X-LoadOn-Class: Hunter
 ## X-WoWI-ID: 25427
+## X-Wago-ID: qv63XBKb
 
 #@no-lib-strip@
 libs\LibStub\LibStub.lua
