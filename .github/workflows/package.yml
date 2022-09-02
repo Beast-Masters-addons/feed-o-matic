@@ -72,10 +72,6 @@ jobs:
 
   build:
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        game_version: [ 'classic', 'bcc', 'retail' ]
 
     needs:
       - test
