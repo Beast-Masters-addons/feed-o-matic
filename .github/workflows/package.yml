@@ -48,7 +48,7 @@ jobs:
           luacheck --no-unused --ignore 631 614 612 611 542 -g localization.lua
 
       - name: Build the addon
-        uses: BigWigsMods/packager@v1.0.1
+        uses: BigWigsMods/packager@v2
         with:
           args: -g ${{ matrix.game_version }} -z -d
 
@@ -88,18 +88,10 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Get build utils
-        uses: actions/checkout@v2
-        with:
-          repository: Beast-Masters-addons/build_utils
-          path: tests/build_utils
-
       - name: WoW Packager
-        uses: BigWigsMods/packager@v1.0.1
-        with:
-          args: -g ${{ matrix.game_version }}
+        uses: BigWigsMods/packager@v2
 
       - uses: actions/upload-artifact@v3
         with:
-          name: ${{ matrix.game_version }}
+          name: 'Feed-O-Matic'
           path: .release
