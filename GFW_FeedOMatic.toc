@@ -1,6 +1,7 @@
-## Interface: 90200
-## Interface-Classic: 11402
+## Interface-Retail: 90207
+## Interface-Classic: 11403
 ## Interface-BCC: 20504
+## Interface-Wrath: 30400
 
 ## Version: @project-version@
 ## Author: Gazmik Fizzwidget/datagutten
