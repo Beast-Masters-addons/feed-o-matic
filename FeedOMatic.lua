@@ -6,6 +6,7 @@ local addonName, addon = ...
 _G['FeedOMatic'] = {}
 
 local tableUtils = addon.tableUtils
+---@type BMUtils
 local utils = addon.utils
 
 -- letting these be global inside Ace callbacks causes bugs
@@ -23,9 +24,6 @@ FOM_DELTA_LOVES = 10;   -- 10 >= levelDelta = 35 happiness per tick
 MAX_KEEPOPEN_SLOTS = 150;
 FOM_FEED_PET_SPELL_ID = 6991;
 addon.utils:SetDefaultFontColor {0.25, 1.0, 1.0};
-
--- defined in LibProfessions.lua
-local WoWClassic = WoWClassic
 
 -- Variables
 FOM_LastPetName = nil;
@@ -55,11 +53,19 @@ FOM_DietColors = { -- convenient reuse of familiar colors?
 	[FOM_DIET_MECH]		= RAID_CLASS_COLORS.PRIEST,
 };
 
-if WoWClassic then
+if _G.WOW_PROJECT_ID == _G.WOW_PROJECT_CLASSIC then
 	--@debug@
 	print('WoW classic detected, using classic food list')
 	--@end-debug@
-	FOM_Foods = FOM_Foods_classic
+	FOM_Foods = _G.FOM_Foods_classic
+elseif _G.WOW_PROJECT_ID == _G.WOW_PROJECT_WRATH_CLASSIC then
+	--@debug@
+	print('WoW wrath classic detected, using wrath food list')
+	--@end-debug@
+	FOM_Foods = _G.FOM_Foods_wrath
+end
+if utils:empty(FOM_Foods) then
+	error('Food list empty')
 end
 
 function FOM_FeedButton_PreClick(self)
