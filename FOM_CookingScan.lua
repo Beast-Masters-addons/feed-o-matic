@@ -25,7 +25,7 @@ function FOM_ScanTradeSkill()
 		local _, _, id = string.find(createdItemLink, "item:(%d+)");
 		local createdItemID = tonumber(id);
 
-		local reagents = addon.utils.professions.currentProfession:GetReagents(recipeID)
+		local reagents = addon.professions.currentProfession:GetReagents(recipeID)
 
 			for _, reagent in pairs(reagents) do
 				local reagentLink = reagent["reagentLink"]
