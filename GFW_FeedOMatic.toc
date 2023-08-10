@@ -5,8 +5,8 @@
 
 ## Version: @project-version@
 ## Author: Gazmik Fizzwidget/datagutten
-## X-Website: http://fizzwidget.com/feedomatic
-## X-Appcast: http://fizzwidget.com/notes/feedomatic/feed
+## X-URL: https://github.com/Beast-Masters-addons/feed-o-matic
+## X-Original-Website: http://fizzwidget.com/feedomatic
 ## Title: Fizzwidget Feed-O-Matic
 ## Notes: Helps a Hunter keep his pets well fed (and the food in his inventory under control).
 ## X-Category: Hunter
