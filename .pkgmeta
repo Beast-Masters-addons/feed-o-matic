@@ -27,7 +27,7 @@ externals:
     tag: v0.11
   libs/BM-utils:
     url: https://github.com/Beast-Masters-addons/BM-utils.git
-    tag: latest
+    tag: v1.10
 
 ignore:
   - libs/BM-utils/tests

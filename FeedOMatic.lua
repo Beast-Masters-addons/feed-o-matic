@@ -9,6 +9,13 @@ local tableUtils = addon.tableUtils
 ---@type BMUtils
 local utils = addon.utils
 
+local C_Container
+if _G.GetContainerNumSlots ~= nil then
+    C_Container = utils.container
+else
+    C_Container = _G.C_Container
+end
+
 -- letting these be global inside Ace callbacks causes bugs
 local FOM_Config, FOM_IsInDiet, FOM_IsKnownFood, FOM_CategoryNames, FOM_FoodsUIList
 
@@ -74,9 +81,9 @@ function FOM_FeedButton_PreClick(self)
 	if bag == nil or slot == nil then
 		return
 	end
-	local _, _, _, _, _, _, itemLink, _, _, itemID = _G.GetContainerItemInfo(bag, slot)
-	_G['FOMFeedItemId'] = itemID
-	_G['FOMFeedItemLink'] = itemLink
+	local itemInfo = C_Container.GetContainerItemInfo(bag, slot)
+	_G['FOMFeedItemId'] = itemInfo['itemID']
+	_G['FOMFeedItemLink'] = itemInfo['hyperlink']
 	_G['FOMButtonPressed'] = true
 end
 
@@ -727,11 +734,11 @@ function FOM_FlatFoodList(fallback)
 	for bagNum = 0, 4 do
 		if (not FOM_IsSpecialBag(bagNum)) then
 		-- skip bags that can't contain food
-			for itemNum = 1, GetContainerNumSlots(bagNum) do
-				local itemLink = GetContainerItemLink(bagNum, itemNum);
-				if itemLink ~= nil then
-					local itemID = utils:ItemIdFromLink(itemLink);
-					local itemIcon, itemCount = GetContainerItemInfo(bagNum, itemNum);
+			for itemNum = 1, C_Container.GetContainerNumSlots(bagNum) do
+				local itemInfo = C_Container.GetContainerItemInfo(bagNum, itemNum);
+				if itemInfo ~= nil then
+					local itemID = utils:ItemIdFromLink(itemInfo['hyperlink']);
+
 					-- debug
 					--if (bagNum == 0 and itemNum == 1) then itemCount = 10; end
 					local _, _, _, level = GetItemInfo(itemID);
@@ -742,10 +749,10 @@ function FOM_FlatFoodList(fallback)
 					elseif (petLevel - level < FOM_DELTA_EATS) then
 						local diet = FOM_IsInDiet(itemID);
 						if ( diet ) then
-							local avoid = FOM_ShouldAvoidFood(itemID, itemCount, diet);
+							local avoid = FOM_ShouldAvoidFood(itemID, itemInfo['stackCount'], diet);
 							if (fallback or not avoid) then
 								local categoryIndex = FOM_Foods[diet][itemID];
-								table.insert(foodList, {bag=bagNum, slot=itemNum, link=itemLink, count=itemCount, delta=(petLevel - level), priority=categoryIndex, icon=itemIcon});
+								table.insert(foodList, {bag=bagNum, slot=itemNum, link=itemInfo['hyperlink'], count=itemInfo['stackCount'], delta=(petLevel - level), priority=categoryIndex, icon=itemInfo['iconFileID']});
 							end
 						end
 					end
@@ -879,7 +886,7 @@ function FOM_IsSpecialBag(bagNum)
 	-- this used to be for quivers, but they're obsolete (and gone?) now
 	-- other special bags can't contain food, though, so we may as well skip 'em
 	if (bagNum == 0) then return false; end
-	local _, bagType = GetContainerNumFreeSlots(bagNum);
+	local _, bagType = C_Container.GetContainerNumFreeSlots(bagNum);
 	return bagType ~= 0;
 end
 
