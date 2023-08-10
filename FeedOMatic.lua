@@ -89,6 +89,7 @@ end
 
 function FOM_FeedButton_PostClick(self, button, down)
 	if (not FOM_GetFeedPetSpellName()) then
+		local GetAddOnMetadata = C_AddOns and C_AddOns.GetAddOnMetadata or GetAddOnMetadata
 		local version = GetAddOnMetadata(addonName, "Version");
 		local level = GetSpellLevelLearned(slotID);
 		local diagnostic = "";
