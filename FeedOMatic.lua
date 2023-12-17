@@ -372,6 +372,18 @@ function FOM_Initialize(self)
 
 	-- create feed button
 	FOM_FeedButton = CreateFrame("Button", "FOM_FeedButton", PetFrame, "ActionButtonTemplate,SecureActionButtonTemplate");
+	FOM_FeedButton:SetMovable(true)
+	FOM_FeedButton:EnableMouse(true)
+	FOM_FeedButton:SetClampedToScreen(true)
+	FOM_FeedButton:RegisterForDrag("LeftButton")
+	FOM_FeedButton:SetScript("OnDragStart", function(self2)
+		self2:StartMoving()
+	end)
+	FOM_FeedButton:SetScript("OnDragStop", function(self,button)
+		self:StopMovingOrSizing()
+	end)
+
+
 	if (XPerl_Player_Pet ~= nil) then
 		--@debug@
 		print('Z-perl detected')
