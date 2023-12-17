@@ -373,6 +373,17 @@ function FOM_Initialize(self)
 		PetFrame = XPerl_Player_Pet
 	end
 
+	local feedButtonParentFrame, feedButtonX, feedButtonY
+	if FOM_Config.buttonX == nil or FOM_Config.buttonY == nil then
+		local defaultPosition = feedButton.getDefaultPosition()
+		feedButtonParentFrame = defaultPosition['frame']
+		feedButtonX = defaultPosition['x']
+		feedButtonY = defaultPosition['y']
+	else
+		feedButtonX = FOM_Config.buttonX
+		feedButtonY = FOM_Config.buttonY
+	end
+
 	-- create feed button
 	FOM_FeedButton = CreateFrame("Button", "FOM_FeedButton", PetFrame, "ActionButtonTemplate,SecureActionButtonTemplate");
 	FOM_FeedButton:SetMovable(true)
@@ -396,12 +407,13 @@ function FOM_Initialize(self)
 		--@end-debug@
 		FOM_FeedButton:SetWidth(27);
 		FOM_FeedButton:SetHeight(27);
-		FOM_FeedButton:SetPoint("LEFT", PetFrame, "RIGHT", -10, -15);
 	else
 		FOM_FeedButton:SetWidth(21);
 		FOM_FeedButton:SetHeight(20);
-		FOM_FeedButton:SetPoint("LEFT", PetFrame, "RIGHT", 20, -4);
 	end
+
+	feedButton.setPosition(feedButtonX, feedButtonY, feedButtonParentFrame)
+
 	FOM_FeedButtonNormalTexture:SetTexture("");
 	FOM_FeedButton:RegisterForClicks("LeftButtonUp", "RightButtonUp");
 	FOM_FeedButton:SetScript("PreClick", FOM_FeedButton_PreClick)
