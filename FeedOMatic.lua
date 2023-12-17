@@ -16,6 +16,9 @@ else
     C_Container = _G.C_Container
 end
 
+---@type feedButtonHelper
+local feedButton = _G.GFW_FeedOMatic:GetModule("feedButtonHelper")
+
 -- letting these be global inside Ace callbacks causes bugs
 local FOM_Config, FOM_IsInDiet, FOM_IsKnownFood, FOM_CategoryNames, FOM_FoodsUIList
 
@@ -379,8 +382,11 @@ function FOM_Initialize(self)
 	FOM_FeedButton:SetScript("OnDragStart", function(self2)
 		self2:StartMoving()
 	end)
-	FOM_FeedButton:SetScript("OnDragStop", function(self,button)
-		self:StopMovingOrSizing()
+	FOM_FeedButton:SetScript("OnDragStop", function(self2)
+        local offsetX, offsetY = feedButton.getPosition()
+		FOM_Config.buttonX = offsetX
+		FOM_Config.buttonY = offsetY
+		self2:StopMovingOrSizing()
 	end)
 
 

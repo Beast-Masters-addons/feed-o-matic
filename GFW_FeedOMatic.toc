@@ -26,6 +26,7 @@ addon\common.lua
 addon\utils.lua
 addon\food_log.lua
 addon\events.lua
+addon\feedButtonHelper.lua
 GFWUtils.lua
 addon\table_utils.lua
 
