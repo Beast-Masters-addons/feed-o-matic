@@ -1405,7 +1405,7 @@ function GFW_FeedOMatic:SetupOptions()
 	self.optionsFrames = {}
 	-- The ordering here matters, it determines the order in the Blizzard Interface Options
 	self.optionsFrames.general = AceConfigDialog:AddToBlizOptions(addonName, titleText, nil, "general")
-	self.optionsFrames.profile = AceConfigDialog:AddToBlizOptions(addonName, FOM_OPTIONS_PROFILE, titleText, "profile")
+	self.optionsFrames.profile = AceConfigDialog:AddToBlizOptions(addonName, options.args.profile.name, titleText, "profile")
 
 	FOM_BuildFoodsUI(self.optionsFrames.general);
 	local aceRefresh = self.optionsFrames.general.refresh;

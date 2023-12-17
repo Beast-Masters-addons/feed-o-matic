@@ -29,7 +29,6 @@ FOM_FEEDING_FEED				= "feeds %s a %s. "
 
 -- Options panel
 FOM_OPTIONS_GENERAL				= "General Options"
-FOM_OPTIONS_PROFILE				= "Options Profile"
 FOM_OPTIONS_SUBTEXT				= "To feed your pet with Feed-O-Matic, click the button next to your pet's health bar, bind a key to Feed Pet in the Key Bindings menu, or put '/click FOM_FeedButton' in a macro."
 
 FOM_FOOD_QUALITY_INFO			= "Foods of a level closer to your pet's restore more health.\n"
@@ -105,7 +104,6 @@ FOM_FEEDING_FEED				= "donne à %s à manger un(e) %s. "
                         		
 -- Options panel
 FOM_OPTIONS_GENERAL				= "Options générales"
-FOM_OPTIONS_PROFILE				= "Options du profil"
 FOM_OPTIONS_SUBTEXT				= "Pour nourrir votre familier avec Feed-O-Matic, cliquez sur l'icone de satisfaction, associez une touche dans le menu des raccourcis, ou mettez '/click FOM_FeedButton' dans une macro."
 
 FOM_OPTIONS_TOOLTIP				= "Afficher la qualité des nourritures dans l'infobulle"
@@ -323,7 +321,6 @@ FOM_FEEDING_FEED                = "喂 %s %s。"
 
 -- Options panel
 FOM_OPTIONS_GENERAL             = "常规选项"
-FOM_OPTIONS_PROFILE             = "选项配置"
 FOM_OPTIONS_SUBTEXT             = "喂养宠物时请单击宠物血条旁边的按钮，或为喂养宠物绑定一个快捷键，或将'/ click FOM_FeedButton'放在宏中。"
 
 FOM_FOOD_QUALITY_INFO           = "接近宠物等级的食物可以恢复更多的生命值。\n"
