@@ -6,6 +6,9 @@ local addon = _G.GFW_FeedOMatic
 
 local function getProfileOption(info)
     --print('Get option', info.arg, addon.db.profile[info.arg])
+    if info.type == 'input' and type(addon.db.profile[info.arg]) == 'number' then
+        return tostring(addon.db.profile[info.arg])
+    end
     return addon.db.profile[info.arg]
 end
 
