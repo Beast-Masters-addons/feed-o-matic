@@ -1248,9 +1248,6 @@ local AceConfig = LibStub("AceConfig-3.0")
 local AceConfigDialog = LibStub("AceConfigDialog-3.0")
 local AceDB = LibStub("AceDB-3.0")
 
--- AceAddon Initialization
-GFW_FeedOMatic = LibStub("AceAddon-3.0"):NewAddon(addonName)
-GFW_FeedOMatic.date = gsub("$Date: 2012-12-27 22:17:15 -0800 (Thu, 27 Dec 2012) $", "^.-(%d%d%d%d%-%d%d%-%d%d).-$", "%1")
 
 function GFW_FeedOMatic:OnProfileChanged(event, database, newProfileKey)
 	-- this is called every time our profile changes (after the change)

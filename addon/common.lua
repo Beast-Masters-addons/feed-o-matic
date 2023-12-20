@@ -14,3 +14,6 @@ assert(minor >= 10, ('LibProfessions 0.10 or higher is required, found 0.%d'):fo
 addon.is_classic = addon.utils:IsWoWClassic()
 ---@type TableUtils
 addon.tableUtils = {}
+
+-- AceAddon Initialization
+_G.GFW_FeedOMatic = _G.LibStub("AceAddon-3.0"):NewAddon(addonName)
