@@ -13,16 +13,27 @@ function feedButtonHelper.getDefaultPosition()
             w = 27,
             h = 27,
             x = 20,
-            y = -4,
+            y = 0,
             addon = 'Z-Perl',
             frame = _G.XPerl_Player_Pet
         }
-    else
+    end
+    if _G.PetFrameHappiness ~= nil then
+        --Classic with happiness
         return {
-            w = 21,
-            h = 20,
-            x = -10,
-            y = -15,
+            w = _G.PetFrameHappiness:GetWidth(),
+            h = _G.PetFrameHappiness:GetHeight(),
+            x = 5,
+            y = 0,
+            frame = _G.PetFrameHappiness
+        }
+    else
+        -- Retail without happiness
+        return {
+            w = 25,
+            h = 25,
+            x = 10,
+            y = 0,
             frame = _G.PetFrame,
         }
     end
