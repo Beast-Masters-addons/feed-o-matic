@@ -1,7 +1,11 @@
 ---@class feedButtonHelper
 local feedButtonHelper = _G.GFW_FeedOMatic:NewModule("feedButtonHelper", "AceEvent-3.0")
 
-local FOM_FeedButton = _G.FOM_FeedButton
+local FOM_FeedButton
+
+function feedButtonHelper.OnEnable()
+    FOM_FeedButton = _G.FOM_FeedButton
+end
 
 function feedButtonHelper.getDefaultPosition()
     if (_G.XPerl_Player_Pet ~= nil) then

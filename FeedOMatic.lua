@@ -412,6 +412,7 @@ function FOM_Initialize(self)
 		FOM_FeedButton:SetHeight(20);
 	end
 
+	feedButton.OnEnable()
 	feedButton.setPosition(feedButtonX, feedButtonY, feedButtonParentFrame)
 
 	FOM_FeedButtonNormalTexture:SetTexture("");
