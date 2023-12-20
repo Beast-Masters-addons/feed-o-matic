@@ -32,6 +32,7 @@ addon\table_utils.lua
 
 LocaleSupport.lua
 localization.lua
+addon\options.lua
 FOM_Foods.lua
 FOM_Foods_classic.lua
 FOM_Foods_wrath.lua

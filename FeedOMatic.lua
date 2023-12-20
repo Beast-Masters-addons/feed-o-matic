@@ -21,7 +21,8 @@ local feedButton = _G.GFW_FeedOMatic:GetModule("feedButtonHelper")
 
 -- letting these be global inside Ace callbacks causes bugs
 local FOM_Config, FOM_IsInDiet, FOM_IsKnownFood, FOM_CategoryNames, FOM_FoodsUIList
-
+---@type FOMOptions
+local FOMOptions = _G.GFW_FeedOMatic:GetModule("FOMOptions")
 -- Food quality by itemLevel
 --
 -- levelDelta = petLevel - foodItemLevel
@@ -1264,131 +1265,10 @@ function GFW_FeedOMatic:OnProfileChanged(event, database, newProfileKey)
 	end
 end
 
-local function getProfileOption(info)
-	return FOM_Config[info.arg]
-end
-
-local function setProfileOption(info, value)
-	FOM_Config[info.arg] = value
-
-	if (FOM_FoodListBorder and FOM_FoodListBorder:IsVisible()) then
-		FOM_FoodListUI_UpdateList();
-	end
-	if (InCombatLockdown()) then
-		FOM_PickFoodQueued = true;
-	else
-		FOM_PickFoodForButton();
-	end
-
-	if (info.arg == "NoButton") then
-		if (FOM_Config.NoButton) then
-			FOM_FeedButton:Hide();
-		else
-			FOM_FeedButton:Show();
-		end
-	end
-
-end
-
 local titleText = GetAddOnMetadata(addonName, "Title");
 local version = GetAddOnMetadata(addonName, "Version");
 titleText = titleText .. " " .. version;
 
-local options = {
-	type = 'group',
-	get = getProfileOption,
-	set = setProfileOption,
-	name = titleText,
-	args = {
-		general = {
-			type = 'group',
-			order = -1,
-			name = FOM_OPTIONS_GENERAL,
-			desc = "foo",
-			args = {
-				tips = {
-					type = "description",
-					name = FOM_OPTIONS_SUBTEXT,
-					order = 1,
-				},
-				tooltip = {
-					type = 'toggle',
-					order = 2,
-					width = "double",
-					name = FOM_OPTIONS_TOOLTIP,
-					desc = FOM_OPTIONS_TOOLTIP_TIP,
-					arg = "Tooltip",
-				},
-				useLowLevelFirst = {
-					type = 'toggle',
-					order = 3,
-					width = "double",
-					name = FOM_OPTIONS_LOW_LVL_1ST,
-					desc = FOM_OPTIONS_LOW_LVL_1ST_TIP,
-					arg = "UseLowLevelFirst",
-				},
-				avoidQuestFood = {
-					type = 'toggle',
-					order = 4,
-					width = "double",
-					name = FOM_OPTIONS_AVOID_QUEST,
-					desc = FOM_OPTIONS_AVOID_QUEST_TIP,
-					arg = "AvoidQuestFood",
-				},
-				alertType = {
-					type = 'select',
-					order = 5,
-					name = FOM_OPTIONS_FEED_NOTIFY,
-					values = {
-						[1] = FOM_OPTIONS_NOTIFY_EMOTE,
-						[2] = FOM_OPTIONS_NOTIFY_TEXT,
-						[3] = FOM_OPTIONS_NOTIFY_NONE,
-					},
-					arg = "AlertType",
-				},
-				noButton = {
-					type = 'toggle',
-					order = 6,
-					width = "double",
-					name = FOM_OPTIONS_NO_BUTTON,
-					desc = FOM_OPTIONS_NO_BUTTON_TIP,
-					arg = "NoButton",
-				},
-				blank = {
-					type = "header",
-					name = FOM_OPTIONS_FOODS_TITLE,
-					order = 10,
-				},
-				tips = {
-					type = "description",
-					name = FOM_OPTIONS_FOODS_TEXT,
-					order = 11,
-				},
-				showOnlyPetFoods = {
-					type = 'toggle',
-					order = 12,
-					width = "double",
-					name = FOM_OPTIONS_FOODS_ONLY_PET,
-					desc = function()
-						if (UnitExists("pet")) then
-							return format(FOM_OPTIONS_FOODS_ONLY_PET_TIP, UnitLevel("pet"), UnitCreatureFamily("pet")) .. "\n(" .. FOM_GetColoredDiet() .. ")";
-						else
-							return format(FOM_OPTIONS_FOODS_ONLY_LVL_TIP, UnitLevel("player"));
-						end
-					end,
-					arg = "ShowOnlyPetFoods",
-				},
-				showOnlyInventory = {
-					type = 'toggle',
-					order = 13,
-					width = "double",
-					name = FOM_OPTIONS_FOODS_ONLY_INV,
-					arg = "ShowOnlyInventory",
-				},
-			},
-		},
-	},
-}
 local profileDefault = {
 	Tooltip				= true,
 	UseLowLevelFirst	= true,
@@ -1407,6 +1287,7 @@ local defaults = {}
 defaults.profile = profileDefault
 
 function GFW_FeedOMatic:SetupOptions()
+	local options = FOMOptions.options
 	-- Inject profile options
 	options.args.profile = LibStub("AceDBOptions-3.0"):GetOptionsTable(self.db)
 	options.args.profile.order = -2
