@@ -822,14 +822,20 @@ function FOM_NewFindFood(fallback)
 	local function sortCount(a, b)
 		return a.count < b.count;
 	end
-	local function sortQualityDescending(a, b)
-		return a.delta < b.delta;
-	end
-	local function sortQualityAscending(a, b)
-		return a.delta > b.delta;
-	end
 	local function sortPriority(a, b)
 		return a.priority < b.priority;
+	end
+	local function sortQualityDescending(a, b)
+		if (a.priority == b.priority) then
+			return a.delta < b.delta;
+		end
+		return sortPriority(a, b)
+	end
+	local function sortQualityAscending(a, b)
+		if (a.priority == b.priority) then
+			return a.delta > b.delta;
+		end
+		return sortPriority(a, b)
 	end
 	table.sort(SortedFoodList, sortCount); -- small stacks first
 	if (not FOM_Config.UseLowLevelFirst) then
@@ -837,7 +843,7 @@ function FOM_NewFindFood(fallback)
 	else
 		table.sort(SortedFoodList, sortQualityAscending); -- lower quality first
 	end
-	table.sort(SortedFoodList, sortPriority); -- category priorities (conjured ahead of normal ahead of bonus etc)
+	--table.sort(SortedFoodList, sortPriority); -- category priorities (conjured ahead of normal ahead of bonus etc)
 
 	if (GFWUtils.Debug) then
 		if (fallback) then
