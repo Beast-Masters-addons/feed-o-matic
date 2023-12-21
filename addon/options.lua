@@ -1,5 +1,8 @@
 ---@class FOMOptions
 local options = _G.GFW_FeedOMatic:NewModule("FOMOptions", "AceEvent-3.0")
+---@type feedButtonHelper
+local feedButton = _G.GFW_FeedOMatic:GetModule("feedButtonHelper")
+local reg = _G.LibStub("AceConfigRegistry-3.0")
 
 local titleText = 'Feed-O-Matic'
 local addon = _G.GFW_FeedOMatic
@@ -23,6 +26,10 @@ local function setProfileOption(info, value)
     else
         _G.FOM_PickFoodForButton();
     end
+end
+
+function options.notifyChange()
+    reg:NotifyChange('Feed Button')
 end
 
 options.options = {
@@ -128,5 +135,86 @@ options.options = {
                 },
             },
         },
+    },
+}
+
+options.feedButtonOptions = {
+    type = "group",
+    set = setProfileOption,
+    get = getProfileOption,
+    name = "Feed Pet button",
+    args = {
+        noButton = {
+            type = 'toggle',
+            order = 6,
+            width = "double",
+            name = _G.FOM_OPTIONS_NO_BUTTON,
+            desc = _G.FOM_OPTIONS_NO_BUTTON_TIP,
+            arg = "NoButton",
+            set = function()
+                feedButton.toggle()
+            end
+        },
+        buttonX = {
+            type = "input",
+            name = "Feed button X position",
+            arg = 'buttonX',
+            order = 10,
+        },
+        buttonY = {
+            type = "input",
+            name = "Feed button Y position",
+            arg = 'buttonY',
+            order = 11,
+        },
+        buttonH = {
+            type = 'range',
+            name = "Height",
+            arg = 'buttonH',
+            order = 20,
+            min = 10,
+            max = 60,
+            step = 1,
+            set = function(info, value)
+                local width = addon.db.profile['buttonW']
+                setProfileOption(info, value)
+                feedButton.setSize(value, width)
+            end
+        },
+        buttonW = {
+            type = 'range',
+            name = "Width",
+            arg = 'buttonW',
+            order = 21,
+            min = 10,
+            max = 60,
+            step = 1,
+            set = function(info, value)
+                local height = addon.db.profile['buttonH']
+                setProfileOption(info, value)
+                feedButton.setSize(height, value)
+            end
+        },
+
+        resetPosition = {
+            type = 'execute',
+            name = 'Reset button position',
+            order = 30,
+            func = function()
+                local default = feedButton.getDefaultPosition()
+                feedButton.setPosition(default['x'], default['y'], default['frame'])
+                reg:NotifyChange('Feed Button')
+            end
+        },
+        resetSize = {
+            type = 'execute',
+            name = 'Reset button size',
+            order = 31,
+            func = function()
+                local default = feedButton.getDefaultPosition()
+                feedButton.setSize(default['h'], default['w'])
+                reg:NotifyChange('Feed Button')
+            end
+        }
     },
 }

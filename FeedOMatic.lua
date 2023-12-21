@@ -1294,6 +1294,7 @@ function GFW_FeedOMatic:SetupOptions()
 
 	-- Register options table
 	AceConfig:RegisterOptionsTable(addonName, options)
+	AceConfig:RegisterOptionsTable('Feed Button', FOMOptions.feedButtonOptions)
 
 	local titleText = GetAddOnMetadata(addonName, "Title");
 	titleText = string.gsub(titleText, "Fizzwidget", "GFW");		-- shorter so it fits in the list width
@@ -1302,6 +1303,7 @@ function GFW_FeedOMatic:SetupOptions()
 	self.optionsFrames = {}
 	-- The ordering here matters, it determines the order in the Blizzard Interface Options
 	self.optionsFrames.general = AceConfigDialog:AddToBlizOptions(addonName, titleText, nil, "general")
+	self.optionsFrames.button = AceConfigDialog:AddToBlizOptions('Feed Button', 'Feed Pet button', titleText)
 	self.optionsFrames.profile = AceConfigDialog:AddToBlizOptions(addonName, options.args.profile.name, titleText, "profile")
 
 	FOM_BuildFoodsUI(self.optionsFrames.general);
