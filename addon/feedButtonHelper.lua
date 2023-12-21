@@ -19,6 +19,26 @@ function feedButtonHelper.getDefaultPosition()
             frame = _G.XPerl_Player_Pet
         }
     end
+    if _G.SUI_UF_pet ~= nil then
+        return {
+            w = 24,
+            h = 24,
+            x = 0,
+            y = 0,
+            addon = 'SpartanUI',
+            frame = _G.SUI_UF_pet
+        }
+    end
+    if _G.ElvUF_Pet ~= nil then
+        return {
+            w = 24,
+            h = 24,
+            x = 8,
+            y = -1,
+            addon = 'ElvUI',
+            frame = _G.ElvUF_Pet
+        }
+    end
     if _G.PetFrameHappiness ~= nil then
         --Classic with happiness
         return {
