@@ -386,7 +386,7 @@ function FOM_Initialize(self)
 	end
 
 	-- create feed button
-	FOM_FeedButton = CreateFrame("Button", "FOM_FeedButton", PetFrame, "ActionButtonTemplate,SecureActionButtonTemplate");
+	FOM_FeedButton = CreateFrame("Button", "FOM_FeedButton", nil, "ActionButtonTemplate,SecureActionButtonTemplate");
 	FOM_FeedButton:SetMovable(true)
 	FOM_FeedButton:EnableMouse(true)
 	FOM_FeedButton:SetClampedToScreen(true)
