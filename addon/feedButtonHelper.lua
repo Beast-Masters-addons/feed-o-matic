@@ -98,6 +98,13 @@ function feedButtonHelper.setPosition(x, y, relative)
     addon.db.profile['buttonY'] = y
 end
 
+---Reset button position
+function feedButtonHelper.resetPosition()
+    local default = feedButtonHelper.getDefaultPosition()
+    feedButtonHelper.setPosition(default['x'], default['y'], default['frame'])
+    addon.db.profile['buttonRelative'] = default['addon']
+end
+
 function feedButtonHelper.getSize()
     return FOM_FeedButton:GetWidth(), FOM_FeedButton:GetHeight()
 end

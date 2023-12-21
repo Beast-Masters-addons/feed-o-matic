@@ -201,8 +201,7 @@ options.feedButtonOptions = {
             name = 'Reset button position',
             order = 30,
             func = function()
-                local default = feedButton.getDefaultPosition()
-                feedButton.setPosition(default['x'], default['y'], default['frame'])
+                feedButton.resetPosition()
                 reg:NotifyChange('Feed Button')
             end
         },
