@@ -85,3 +85,14 @@ function feedButtonHelper.setSize(height, width)
     addon.db.profile['buttonH'] = height
     addon.db.profile['buttonW'] = width
 end
+
+---Toggle feed button visibility
+function feedButtonHelper.toggle()
+    if (addon.db.profile.NoButton) then
+        _G.FOM_FeedButton:Hide();
+        addon.db.profile.NoButton = true
+    else
+        _G.FOM_FeedButton:Show();
+        addon.db.profile.NoButton = false
+    end
+end
