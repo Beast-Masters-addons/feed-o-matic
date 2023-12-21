@@ -370,13 +370,10 @@ function FOM_Initialize(self)
 	self:RegisterEvent("SPELL_UPDATE_COOLDOWN");
 	self:RegisterEvent("SPELL_UPDATE_USABLE");
 
-	if (XPerl_Player_Pet ~= nil) then
-		PetFrame = XPerl_Player_Pet
-	end
 
+	local defaultPosition = feedButton.getDefaultPosition()
 	local feedButtonParentFrame, feedButtonX, feedButtonY
 	if FOM_Config.buttonX == nil or FOM_Config.buttonY == nil then
-		local defaultPosition = feedButton.getDefaultPosition()
 		feedButtonParentFrame = defaultPosition['frame']
 		feedButtonX = defaultPosition['x']
 		feedButtonY = defaultPosition['y']
@@ -398,23 +395,9 @@ function FOM_Initialize(self)
         local offsetX, offsetY = feedButton.getPosition()
 		FOM_Config.buttonX = offsetX
 		FOM_Config.buttonY = offsetY
+		FOM_Config['buttonRelative'] = 'absolute'
 		self2:StopMovingOrSizing()
 	end)
-
-
-	if (XPerl_Player_Pet ~= nil) then
-		--@debug@
-		print('Z-perl detected')
-		--@end-debug@
-		FOM_FeedButton:SetWidth(27);
-		FOM_FeedButton:SetHeight(27);
-	else
-		FOM_FeedButton:SetWidth(21);
-		FOM_FeedButton:SetHeight(20);
-	end
-
-	feedButton.OnEnable()
-	feedButton.setPosition(feedButtonX, feedButtonY, feedButtonParentFrame)
 
 	FOM_FeedButtonNormalTexture:SetTexture("");
 	FOM_FeedButton:RegisterForClicks("LeftButtonUp", "RightButtonUp");
@@ -426,6 +409,29 @@ function FOM_Initialize(self)
 		FOM_FeedButton:Hide();
 	end
 
+	feedButton.OnEnable()
+	if FOM_Config['buttonRelative'] ~= 'absolute' then
+		--Position relative to frame
+		print('Button position relative to', FOM_Config['buttonRelative'])
+		feedButton.setPosition(feedButtonX, feedButtonY, defaultPosition['frame'])
+	else
+		--Absolute position
+		feedButton.setPosition(feedButtonX, feedButtonY)
+	end
+
+	if FOM_Config['buttonH'] ~= nil and FOM_Config['buttonW'] ~= nil then
+		--Saved size
+		--@debug@
+		print('Set Feed Pet button size to saved size', FOM_Config['buttonH'], FOM_Config['buttonW'])
+		--@end-debug@
+		feedButton.setSize(FOM_Config['buttonH'], FOM_Config['buttonW'])
+	else
+		--Default size
+		--@debug@
+		print('Set Feed Pet button size to default size', defaultPosition['h'], defaultPosition['w'])
+		--@end-debug@
+		feedButton.setSize(defaultPosition['h'], defaultPosition['w'])
+	end
 
 	-- set key binding to click FOM_FeedButton
 	FOM_UpdateBindings();

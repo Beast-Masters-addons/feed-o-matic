@@ -2,6 +2,7 @@
 local feedButtonHelper = _G.GFW_FeedOMatic:NewModule("feedButtonHelper", "AceEvent-3.0")
 local addon = _G.GFW_FeedOMatic
 
+---@type Frame
 local FOM_FeedButton
 
 function feedButtonHelper.OnEnable()
@@ -46,6 +47,7 @@ function feedButtonHelper.getDefaultPosition()
             h = _G.PetFrameHappiness:GetHeight(),
             x = 5,
             y = 0,
+            addon = 'Classic',
             frame = _G.PetFrameHappiness
         }
     else
@@ -55,6 +57,7 @@ function feedButtonHelper.getDefaultPosition()
             h = 25,
             x = 10,
             y = 0,
+            addon = 'Retail',
             frame = _G.PetFrame,
         }
     end
@@ -68,7 +71,7 @@ function feedButtonHelper.getPosition()
     return ('%d'):format(offsetX), ('%d'):format(offsetY)
 end
 
----setPosition
+---Set feed pet button position
 ---@param x number
 ---@param y number
 ---@param relative Frame
@@ -83,7 +86,7 @@ function feedButtonHelper.setPosition(x, y, relative)
         --@end-debug@
     else
         --@debug@
-        print(('Set feed button to position X %d Y %d'):format(x, y))
+        print(('Set feed button to absolute position X %d Y %d'):format(x, y))
         --@end-debug@
     end
     --FOM_FeedButton:SetPoint("LEFT", PetFrame, "RIGHT", -10, -15);
