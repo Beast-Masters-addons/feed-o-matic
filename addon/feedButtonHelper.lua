@@ -1,5 +1,6 @@
 ---@class feedButtonHelper
 local feedButtonHelper = _G.GFW_FeedOMatic:NewModule("feedButtonHelper", "AceEvent-3.0")
+local addon = _G.GFW_FeedOMatic
 
 local FOM_FeedButton
 
@@ -69,6 +70,9 @@ function feedButtonHelper.setPosition(x, y, relative)
 
     FOM_FeedButton:ClearAllPoints()
     FOM_FeedButton:SetPoint(point, relative, relativeToPoint, x, y)
+
+    addon.db.profile['buttonX'] = x
+    addon.db.profile['buttonY'] = y
 end
 
 function feedButtonHelper.getSize()
@@ -78,4 +82,6 @@ end
 function feedButtonHelper.setSize(height, width)
     FOM_FeedButton:SetHeight(height)
     FOM_FeedButton:SetWidth(width)
+    addon.db.profile['buttonH'] = height
+    addon.db.profile['buttonW'] = width
 end
