@@ -437,9 +437,12 @@ function FOM_Initialize(self)
 	FOM_UpdateBindings();
 	self:RegisterEvent("UPDATE_BINDINGS");
 
-	FOM_HookTooltip(GameTooltip);
-	FOM_HookTooltip(ItemRefTooltip);
-	FOM_HookTooltip(FOM_FeedTooltip);
+	if _G.WOW_PROJECT_ID ~= _G.WOW_PROJECT_MAINLINE then
+		--Do not hook tooltips on retail, API has changed
+		FOM_HookTooltip(GameTooltip);
+		FOM_HookTooltip(ItemRefTooltip);
+		FOM_HookTooltip(FOM_FeedTooltip);
+	end
 
 	Frame_GFW_FeedOMatic:SetScript("OnUpdate", FOM_OnUpdate);
 
