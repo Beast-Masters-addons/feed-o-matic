@@ -442,6 +442,7 @@ FOM_Foods = {
 		[ 82449] = F.BASIC,
 		[ 86073] = F.BASIC,
 		[  5476] = F.BONUS,
+		[  5525] = F.BONUS, --boiled clams!
 		[  5527] = F.BONUS,
 		[  6038] = F.BONUS,
 		[ 12216] = F.BONUS,
