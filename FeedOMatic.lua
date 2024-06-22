@@ -9,12 +9,7 @@ local tableUtils = addon.tableUtils
 ---@type BMUtils
 local utils = addon.utils
 
-local C_Container
-if _G.GetContainerNumSlots ~= nil then
-    C_Container = utils.container
-else
-    C_Container = _G.C_Container
-end
+local C_Container = _G.C_Container
 
 ---@type feedButtonHelper
 local feedButton = _G.GFW_FeedOMatic:GetModule("feedButtonHelper")
