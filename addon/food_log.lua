@@ -1,5 +1,6 @@
-_G['FOMFoodLogger'] = {}
-local log = _G['FOMFoodLogger']
+local addon = _G.GFW_FeedOMatic
+---@class FOM_FoodLogger
+local log = addon:NewModule("FOM_FoodLogger")
 
 function log.get(species, itemId)
     local statuses = {}

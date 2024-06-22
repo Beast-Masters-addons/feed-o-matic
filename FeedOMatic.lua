@@ -18,6 +18,9 @@ local feedButton = _G.GFW_FeedOMatic:GetModule("feedButtonHelper")
 local FOM_Config, FOM_IsInDiet, FOM_IsKnownFood, FOM_CategoryNames, FOM_FoodsUIList
 ---@type FOMOptions
 local FOMOptions = _G.GFW_FeedOMatic:GetModule("FOMOptions")
+---@type FOM_FoodLogger
+local foodLogger = _G.GFW_FeedOMatic:GetModule("FOM_FoodLogger")
+
 -- Food quality by itemLevel
 --
 -- levelDelta = petLevel - foodItemLevel
@@ -853,7 +856,7 @@ function FOM_NewFindFood(fallback)
 	for _, foodInfo in pairs(SortedFoodList) do
 		local foodItemID = utils:ItemIdFromLink(foodInfo.link)
 		--Check if food item is logged as not eaten by current pet
-		if _G['FOMFoodLogger'].is_good(foodItemID) ~= false then
+		if foodLogger.is_good(foodItemID) ~= false then
 			return foodInfo.bag, foodInfo.slot, foodInfo.link, foodInfo.icon;
 		end
 	end
