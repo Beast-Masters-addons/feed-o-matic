@@ -716,7 +716,7 @@ function FOM_SetupButton(bag, slot, modifier)
 	if (not FOM_GetFeedPetSpellName()) then
 		return;
 	end
-	if (modifier) then
+	if not utils:empty(modifier) then
 		modifier = modifier.."-";
 	else
 		modifier = "";
@@ -773,7 +773,7 @@ function FOM_FlatFoodList(fallback)
 		-- skip bags that can't contain food
 			for itemNum = 1, C_Container.GetContainerNumSlots(bagNum) do
 				local itemInfo = C_Container.GetContainerItemInfo(bagNum, itemNum);
-				if itemInfo ~= nil then
+				if not utils:empty(itemInfo) then
 					local itemID = utils:ItemIdFromLink(itemInfo['hyperlink']);
 
 					-- debug
