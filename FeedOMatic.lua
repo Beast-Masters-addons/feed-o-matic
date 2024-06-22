@@ -261,6 +261,7 @@ function FOM_HookTooltip(frame)
 	end
 end
 
+---@param self Frame
 function FOM_OnTooltipSetItem(self)
 
 	if FOM_Config.Tooltip then
@@ -410,7 +411,9 @@ function FOM_Initialize(self)
 	feedButton.OnEnable()
 	if FOM_Config['buttonRelative'] ~= 'absolute' then
 		--Position relative to frame
+		--@debug@
 		print('Button position relative to', FOM_Config['buttonRelative'])
+		--@end-debug@
 		feedButton.setPosition(feedButtonX, feedButtonY, defaultPosition['frame'])
 	else
 		--Absolute position
@@ -654,6 +657,7 @@ function FOM_ChatCommandHandler(msg)
 	FOM_ChatCommandHandler("help");
 end
 
+---Find food and set variables foodBag, foodSlot, foodIcon and FOM_NextFoodLink
 function FOM_PickFoodForButton()
 
 	if (not FOM_GetFeedPetSpellName()) then
