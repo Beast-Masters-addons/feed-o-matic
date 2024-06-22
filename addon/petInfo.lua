@@ -59,7 +59,7 @@ function lib:CHAT_MSG_PET_INFO(event, message)
         --@end-debug@
     elseif match_feed then
         local itemName, itemLink, _, itemLevel = _G.GetItemInfo(match_feed)
-        local itemId = utils.itemIdFromLink(itemLink)
+        local itemId = utils:ItemIdFromLink(itemLink)
         self.foodLog.save(self.petFamily, itemId, itemName, 'good')
         --@debug@
         print(('%s eats %s delta %d'):format(self.petFamily, itemLink, self.petLevel - itemLevel))
