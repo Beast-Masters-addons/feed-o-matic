@@ -1,0 +1,8 @@
+wow_constants.lua
+build_utils/wow_api/mixin.lua
+build_utils/wow_api/Color.lua
+build_utils/wow_api/constants.lua
+build_utils/wow_api/functions.lua
+build_utils/wow_api/text.lua
+build_utils/wow_api/texture.lua
+build_utils/wow_api/frame.lua
