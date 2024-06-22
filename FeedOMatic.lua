@@ -8,6 +8,7 @@ _G['FeedOMatic'] = {}
 local tableUtils = addon.tableUtils
 ---@type BMUtils
 local utils = addon.utils
+local is_classic = _G.WOW_PROJECT_ID ~= _G.WOW_PROJECT_MAINLINE
 
 local C_Container = _G.C_Container
 
@@ -585,7 +586,7 @@ end
 
 -- Update our list of quest objectives so we can avoid consuming food we want to accumulate for a quest.
 function FOM_ScanQuests()
-	if not utils:IsWoWClassic() then
+	if not is_classic then
 		return FOM_ScanQuests_retail()
 	end
 
