@@ -1,6 +1,6 @@
 local addon = _G.GFW_FeedOMatic
----@class PetInfo
-local lib = addon:NewModule("PetInfo", "AceEvent-3.0")
+---@class FOM_PetInfo
+local lib = addon:NewModule("FOM_PetInfo", "AceEvent-3.0")
 ---@type BMUtils
 local utils = _G.LibStub('BM-utils-1')
 
