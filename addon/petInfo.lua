@@ -18,7 +18,7 @@ function lib:UNIT_PET(event, unit)
         return
     end
     self:updatePetInfo()
-    if UnitExists("pet") then
+    if _G.UnitExists("pet") then
         print(('%s level %d summoned'):format(self.petName, self.petLevel))
     else
         print('Pet dismissed')
@@ -27,12 +27,12 @@ function lib:UNIT_PET(event, unit)
 end
 
 function lib:updatePetInfo()
-    if UnitExists("pet") then
-        self.petName = UnitName("pet")
-        self.petLevel = UnitLevel("pet")
-        self.petGender = UnitSex("pet")
+    if _G.UnitExists("pet") then
+        self.petName = _G.UnitName("pet")
+        self.petLevel = _G.UnitLevel("pet")
+        self.petGender = _G.UnitSex("pet")
         self.petFamily = _G.UnitCreatureFamily("pet");
-        self.petDiet = { GetPetFoodTypes() }
+        self.petDiet = { _G.GetPetFoodTypes() }
     else
         self.petName = nil
         self.petLevel = nil
@@ -44,7 +44,7 @@ end
 
 function lib:UNIT_NAME_UPDATE(event, unit)
     if unit == "pet" then
-        self.petName = UnitName("pet")
+        self.petName = _G.UnitName("pet")
     end
 end
 
@@ -58,7 +58,7 @@ function lib:CHAT_MSG_PET_INFO(event, message)
         print('Pet dismissed', match_dismissed)
         --@end-debug@
     elseif match_feed then
-        local itemName, itemLink, _, itemLevel, itemMinLevel = GetItemInfo(match_feed)
+        local itemName, itemLink, _, itemLevel = _G.GetItemInfo(match_feed)
         local itemId = utils.itemIdFromLink(itemLink)
         self.foodLog.save(self.petFamily, itemId, itemName, 'good')
         --@debug@
