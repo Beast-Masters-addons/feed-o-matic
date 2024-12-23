@@ -48,7 +48,7 @@ jobs:
           luacheck --no-unused --ignore 631 614 612 611 542 -g localization.lua
 
       - name: Build the addon
-        uses: BigWigsMods/packager@v2.3.1
+        uses: BigWigsMods/packager@v2.4.1
         with:
           args: -g ${{ matrix.game_version }} -z -d
 
@@ -67,8 +67,9 @@ jobs:
         env:
           GAME_VERSION: ${{ matrix.game_version }}
 
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v3
+      - uses: codecov/codecov-action@v5
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
 
   build:
     runs-on: ubuntu-latest
