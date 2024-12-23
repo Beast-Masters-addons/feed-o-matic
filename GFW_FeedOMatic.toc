@@ -23,6 +23,8 @@ libs\LibStub\LibStub.lua
 Libs.xml
 #@end-no-lib-strip@
 
+LocaleSupport.lua
+addon\constants.lua
 addon\common.lua
 addon\food_log.lua
 addon\feedButtonHelper.lua
@@ -30,7 +32,6 @@ GFWUtils.lua
 addon\table_utils.lua
 addon\petInfo.lua
 
-LocaleSupport.lua
 # addon\foodDebug.lua
 localization.lua
 addon\options.lua

@@ -3,9 +3,9 @@
 ------------------------------------------------------
 -- LOCALIZATION: nothing locale-specific here (any localized names are all in comments)
 ------------------------------------------------------
-local F = FOM_FoodTypes;
+local F = _G.FOM_FoodTypes --Defined in FOM_Foods.lua
 
-FOM_Foods_classic = {
+_G.FOM_Foods_classic = {
 	[FOM_DIET_MEAT] = {
 		-- Mists and before
 		[   117] = F.BASIC,
