@@ -21,6 +21,8 @@ local FOM_Config, FOM_IsInDiet, FOM_IsKnownFood, FOM_CategoryNames, FOM_FoodsUIL
 local FOMOptions = _G.GFW_FeedOMatic:GetModule("FOMOptions")
 ---@type FOM_FoodLogger
 local foodLogger = _G.GFW_FeedOMatic:GetModule("FOM_FoodLogger")
+---@type FOM_PetInfo
+local petInfo = _G.GFW_FeedOMatic:GetModule("FOM_PetInfo")
 
 -- Food quality by itemLevel
 --
@@ -37,6 +39,7 @@ addon.utils:SetDefaultFontColor {0.25, 1.0, 1.0};
 
 -- Variables
 FOM_LastPetName = nil;
+local foodBag, foodSlot, foodIcon;
 
 FOM_DifficultyColors = {
 	QuestDifficultyColors["trivial"],
@@ -118,7 +121,7 @@ function FOM_FeedButton_PostClick(self, button, down)
 end
 
 function FOM_GetColoredDiet()
-	local dietList = {GetPetFoodTypes()};
+	local dietList = petInfo.petDiet;
 	local coloredDiets = {};
 	for _, dietName in pairs(dietList) do
 		local color = FOM_DietColors[dietName];
@@ -137,9 +140,8 @@ function FOM_FeedButton_OnEnter()
 	if (FOM_NextFoodLink) then
 
 		-- food to be used on click
-		local bag = FOM_FeedButton:GetAttribute("target-bag");
-		local slot = FOM_FeedButton:GetAttribute("target-slot");
-		FOM_FeedTooltip:SetBagItem(bag,slot);
+		local itemName = utils:ItemNameFromLink(FOM_NextFoodLink)
+		FOM_FeedTooltip:SetBagItem(foodBag, foodSlot, itemName);
 
 		if (FOM_NoFoodError) then
 			-- fallback instructions
@@ -282,7 +284,7 @@ function FOM_OnTooltipSetItem(self)
 
 		-- if edible by current pet, add line for quality
 		if (link and UnitExists("pet")) then
-			for _, petDiet in pairs({GetPetFoodTypes()}) do
+			for _, petDiet in pairs(petInfo.petDiet) do
 				if petDiet == foodDiet then
 					return FOM_TooltipAddFoodQuality(self, itemID);
 				end
@@ -298,8 +300,8 @@ end
 function FOM_TooltipAddFoodQuality(self, itemID)
 	local _, _, _, itemLevel = GetItemInfo(itemID);
 	if (itemLevel) then
-		local levelDelta = UnitLevel("pet") - itemLevel;
-		local petName = UnitName("pet");
+		local levelDelta = petInfo.petLevel - itemLevel;
+		local petName = petInfo.petName
 		if (levelDelta >= FOM_DELTA_EATS) then
 			color = QuestDifficultyColors["trivial"];
 			self:AddLine(string.format(FOM_QUALITY_UNDER, petName), color.r, color.g, color.b);
@@ -669,7 +671,7 @@ function FOM_PickFoodForButton()
 		FOM_PickFoodQueued = true;
 		return;
 	end
-	local dietList = {GetPetFoodTypes()};
+	local dietList = petInfo.petDiet
 	if ( dietList == nil or #dietList == 0) then
 		FOM_PickFoodQueued = true;
 		FOM_FeedButton:Hide();
@@ -678,7 +680,6 @@ function FOM_PickFoodForButton()
 		FOM_FeedButton:Show();
 	end
 
-	local foodBag, foodSlot, foodIcon;
 	foodBag, foodSlot, FOM_NextFoodLink, foodIcon = FOM_NewFindFood();
 	FOM_SetupButton(foodBag, foodSlot);
 
@@ -775,7 +776,7 @@ end
 
 function FOM_FlatFoodList(fallback)
 	local foodList = {};
-	local petLevel = UnitLevel("pet");
+	local petLevel = petInfo.petLevel
 	for bagNum = 0, 4 do
 		if (not FOM_IsSpecialBag(bagNum)) then
 		-- skip bags that can't contain food
@@ -906,7 +907,7 @@ function FOM_IsInDiet(foodItemID, dietList)
 
 	-- pass no dietList to query against current pet's diets
 	if ( dietList == nil ) then
-		dietList = {GetPetFoodTypes()};
+		dietList = petInfo.petDiet
 	end
 	-- no current pet means try again later
 	if ( dietList == nil or #dietList == 0) then
@@ -1058,7 +1059,7 @@ function FOM_FoodListUI_UpdateList()
 		local list = {};
 		local uniqueList = {};
 		-- build list of foods from matching criteria
-		local petLevel = UnitLevel("player");	-- pet level is always == player level now
+		local petLevel = petInfo.petLevel
 		local itemNamesCache = {};
 		for diet, table in pairs(FOM_Foods) do
 			for itemID, foodType in pairs(table) do
@@ -1144,10 +1145,7 @@ function FOM_FoodListUIUpdate()
 
 	FauxScrollFrame_Update(FOM_FoodListScrollFrame, numListItems, FOM_MAX_LIST_DISPLAYED, FOM_LIST_HEIGHT);
 
-	local petLevel = UnitLevel("player"); -- pet level is always == player level now
-	if (UnitExists("pet")) then
-		petLevel = UnitLevel("pet");
-	end
+	local petLevel = petInfo.petLevel
 	for i=1, FOM_MAX_LIST_DISPLAYED, 1 do
 		local listIndex = i + listOffset;
 		local listItem = FOM_FoodsUIList[listIndex];

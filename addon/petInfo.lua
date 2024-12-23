@@ -29,6 +29,7 @@ end
 function lib:updatePetInfo()
     if _G.UnitExists("pet") then
         self.petName = _G.UnitName("pet")
+        ---@type number Pet level
         self.petLevel = _G.UnitLevel("pet")
         self.petGender = _G.UnitSex("pet")
         self.petFamily = _G.UnitCreatureFamily("pet");
