@@ -1350,8 +1350,8 @@ function GFW_FeedOMatic:OnInitialize()
 end
 
 function GFW_FeedOMatic:ShowConfig()
-	InterfaceOptionsFrame_OpenToCategory(self.optionsFrames.general)
+	Settings.OpenToCategory(self.optionsFrames.general) --TODO: Does not work
 	--Call a second time to work around bug: https://www.wowinterface.com/forums/showthread.php?t=54599
-	InterfaceOptionsFrame_OpenToCategory(self.optionsFrames.general)
+	Settings.OpenToCategory(self.optionsFrames.general)
 end
 
