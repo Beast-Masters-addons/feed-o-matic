@@ -4,6 +4,25 @@ local lib = addon:NewModule("FOM_Food", "AceEvent-3.0")
 ---@type FOM_PetInfo
 local petInfo = _G.GFW_FeedOMatic:GetModule("FOM_PetInfo")
 
+function lib.getFoodList()
+    if _G.WOW_PROJECT_ID == _G.WOW_PROJECT_CLASSIC then
+        --@debug@
+        print('WoW classic detected, using classic food list')
+        --@end-debug@
+        return _G.FOM_Foods_classic
+    elseif _G.WOW_PROJECT_ID == _G.WOW_PROJECT_WRATH_CLASSIC then
+        --@debug@
+        print('WoW wrath classic detected, using wrath food list')
+        --@end-debug@
+        return _G.FOM_Foods_wrath
+        --TODO: Add cataclysm foods
+    else
+        return _G.FOM_Foods
+    end
+end
+
+local foodList = lib.getFoodList()
+
 function lib.isInDiet(foodItemID, dietList)
     -- pass no dietList to query against current pet's diets
     if (dietList == nil) then
@@ -19,7 +38,7 @@ function lib.isInDiet(foodItemID, dietList)
     end
 
     for _, diet in pairs(dietList) do
-        local table = _G.FOM_Foods[diet];
+        local table = foodList[diet];
         if (table and table[foodItemID] ~= nil) then
             return diet;
         end

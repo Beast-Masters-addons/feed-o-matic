@@ -24,16 +24,3 @@ FOM_DietColors = { -- convenient reuse of familiar colors?
     [FOM_DIET_FUNGUS]	= RAID_CLASS_COLORS.WARLOCK,
     [FOM_DIET_MECH]		= RAID_CLASS_COLORS.PRIEST,
 };
-
-if _G.WOW_PROJECT_ID == _G.WOW_PROJECT_CLASSIC then
-    --@debug@
-    print('WoW classic detected, using classic food list')
-    --@end-debug@
-    FOM_Foods = _G.FOM_Foods_classic
-elseif _G.WOW_PROJECT_ID == _G.WOW_PROJECT_WRATH_CLASSIC then
-    --@debug@
-    print('WoW wrath classic detected, using wrath food list')
-    --@end-debug@
-    FOM_Foods = _G.FOM_Foods_wrath
-    --TODO: Add cataclysm foods
-end

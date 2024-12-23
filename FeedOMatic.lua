@@ -42,6 +42,7 @@ addon.utils:SetDefaultFontColor {0.25, 1.0, 1.0};
 -- Variables
 FOM_LastPetName = nil;
 local foodBag, foodSlot, foodIcon;
+local FOM_Foods = FOM_Food.getFoodList()
 
 if utils:empty(FOM_Foods) then
 	error('Food list empty')
