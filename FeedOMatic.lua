@@ -16,13 +16,15 @@ local C_Container = _G.C_Container
 local feedButton = _G.GFW_FeedOMatic:GetModule("feedButtonHelper")
 
 -- letting these be global inside Ace callbacks causes bugs
-local FOM_Config, FOM_IsInDiet, FOM_IsKnownFood, FOM_CategoryNames, FOM_FoodsUIList
+local FOM_Config, FOM_CategoryNames, FOM_FoodsUIList
 ---@type FOMOptions
 local FOMOptions = _G.GFW_FeedOMatic:GetModule("FOMOptions")
 ---@type FOM_FoodLogger
 local foodLogger = _G.GFW_FeedOMatic:GetModule("FOM_FoodLogger")
 ---@type FOM_PetInfo
 local petInfo = _G.GFW_FeedOMatic:GetModule("FOM_PetInfo")
+---@type FOM_Food
+local FOM_Food =  _G.GFW_FeedOMatic:GetModule("FOM_Food")
 
 -- Food quality by itemLevel
 --
@@ -236,7 +238,7 @@ function FOM_OnTooltipSetItem(self)
 		if not link then return false; end
 
 		local itemID = utils:ItemIdFromLink(link);
-		local foodDiet = FOM_IsKnownFood(itemID);
+		local foodDiet = FOM_Food.isKnownFood(itemID);
 		if not foodDiet then return false; end
 
 		-- if edible at all, label diet in tooltip
@@ -541,7 +543,7 @@ local function FOM_ScanQuests_retail()
                 if objective['type'] == 'item' then
                     local _, _, _, numRequired, itemName = objective['text']:find("(%d+)/(%d+) (.+)");
                     local itemID, _, _, _, _, _, _ = _G.GetItemInfoInstant(itemName)
-                    if itemID and FOM_IsKnownFood(itemID) then
+                    if itemID and FOM_Food.isKnownFood(itemID) then
                         FOM_SetQuestFood(itemID, numRequired)
                     end
                 end
@@ -568,7 +570,7 @@ function FOM_ScanQuests()
 						-- not guaranteed to get us a link if we don't have the item,
 						-- but we shouldn't be here unless we have the item anyway.
 						local itemID = utils:ItemIdFromLink(link);
-						if (itemID and FOM_IsKnownFood(itemID)) then
+						if (itemID and FOM_Food.isKnownFood(itemID)) then
                             FOM_SetQuestFood(itemID, numRequired)
 						end
 					end
@@ -725,7 +727,7 @@ function FOM_RandomEmote(foodLink)
 		if (itemID) then
 			randomEmotes = tableUtils.Merge(randomEmotes, localeEmotes[itemID]);
 
-			local diet = FOM_DietForFood(itemID);
+			local diet = FOM_Food.isInDiet(itemID);
 			randomEmotes = tableUtils.Merge(randomEmotes, localeEmotes[diet]);
 		end
 
@@ -757,7 +759,7 @@ function FOM_FlatFoodList(fallback)
 						-- make sure it's cached for future runs
 						FOMTooltip:SetHyperlink("item:"..itemID);
 					elseif (petLevel - level < FOM_DELTA_EATS) then
-						local diet = FOM_IsInDiet(itemID);
+						local diet = FOM_Food.isInDiet(itemID);
 						if ( diet ) then
 							local avoid = FOM_ShouldAvoidFood(itemID, itemInfo['stackCount'], diet);
 							if (fallback or not avoid) then
@@ -865,37 +867,6 @@ function FOM_IsQuestFood(itemID, quantity)
 	if (FOM_QuestFood and FOM_QuestFood[itemID]) then
 		return GetItemCount(itemID) <= FOM_QuestFood[itemID];
 	end
-end
-
-function FOM_IsInDiet(foodItemID, dietList)
-
-	-- pass no dietList to query against current pet's diets
-	if ( dietList == nil ) then
-		dietList = petInfo.petDiet
-	end
-	-- no current pet means try again later
-	if ( dietList == nil or #dietList == 0) then
-		FOM_PickFoodQueued = true;
-		return nil;
-	end
-	if (type(dietList) ~= "table") then
-		dietList = {dietList};
-	end
-
-	for _, diet in pairs(dietList) do
-		local table = FOM_Foods[diet];
-		if (table and table[foodItemID] ~= nil) then
-			return diet;
-		end
-	end
-
-	return nil;
-
-end
-FOM_DietForFood = FOM_IsInDiet
-
-function FOM_IsKnownFood(itemID)
-	return FOM_IsInDiet(itemID, {FOM_DIET_MEAT, FOM_DIET_FISH, FOM_DIET_BREAD, FOM_DIET_CHEESE, FOM_DIET_FRUIT, FOM_DIET_FUNGUS, FOM_DIET_MECH});
 end
 
 function FOM_IsSpecialBag(bagNum)
@@ -1041,7 +1012,7 @@ function FOM_FoodListUI_UpdateList()
 					local dietChecked = false;
 					if (not skip and FOM_Config.ShowOnlyPetFoods) then
 						if (UnitExists("pet")) then
-							if (not FOM_IsInDiet(itemID)) then
+							if (not FOM_Food.isInDiet(itemID)) then
 								skip = true;
 							end
 							dietChecked = true;

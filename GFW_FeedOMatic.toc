@@ -40,5 +40,6 @@ FOM_Foods_classic.lua
 FOM_Foods_wrath.lua
 FeedOMatic_Emotes.lua
 FOM_CookingScan.lua
+addon\food.lua
 FeedOMatic.lua
 FeedOMatic.xml
