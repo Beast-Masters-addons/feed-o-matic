@@ -954,7 +954,7 @@ function FOM_BuildFoodsUI(panel)
 
 	FOM_FoodsPanel = panel;
 
-	local borderFrame = CreateFrame("Frame", "FOM_FoodListBorder", panel, "OptionsBoxTemplate");
+	local borderFrame = CreateFrame("Frame", "FOM_FoodListBorder", panel);
 	borderFrame:SetHeight(273);
 	borderFrame:SetPoint("BOTTOMLEFT", panel, "BOTTOMLEFT", 15, 15);
 	borderFrame:SetPoint("RIGHT", panel, -15, 0);
