@@ -21,6 +21,8 @@ local FOM_Config, FOM_CategoryNames, FOM_FoodsUIList
 local FOMOptions = _G.GFW_FeedOMatic:GetModule("FOMOptions")
 ---@type FOM_FoodLogger
 local foodLogger = _G.GFW_FeedOMatic:GetModule("FOM_FoodLogger")
+---@type FOM_ItemTooltip
+local itemTooltip = _G.GFW_FeedOMatic:GetModule("FOM_ItemTooltip")
 ---@type FOM_PetInfo
 local petInfo = _G.GFW_FeedOMatic:GetModule("FOM_PetInfo")
 ---@type FOM_Food
@@ -408,12 +410,9 @@ function FOM_Initialize(self)
 	FOM_UpdateBindings();
 	self:RegisterEvent("UPDATE_BINDINGS");
 
-	if _G.WOW_PROJECT_ID ~= _G.WOW_PROJECT_MAINLINE then
-		--Do not hook tooltips on retail, API has changed
-		FOM_HookTooltip(GameTooltip);
-		FOM_HookTooltip(ItemRefTooltip);
-		FOM_HookTooltip(FOM_FeedTooltip);
-	end
+	itemTooltip:hook(GameTooltip);
+	itemTooltip:hook(ItemRefTooltip);
+	itemTooltip:hook(FOM_FeedTooltip);
 
 	Frame_GFW_FeedOMatic:SetScript("OnUpdate", FOM_OnUpdate);
 
