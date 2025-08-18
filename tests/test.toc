@@ -6,3 +6,5 @@ build_utils/wow_api/functions.lua
 build_utils/wow_api/text.lua
 build_utils/wow_api/texture.lua
 build_utils/wow_api/frame.lua
+build_utils/wow_api/container.lua
+build_utils/wow_api/container_classic.lua
