@@ -10,7 +10,7 @@ local FOM_Food = _G.GFW_FeedOMatic:GetModule("FOM_Food")
 ---@type FOM_PetInfo
 local petInfo = _G.GFW_FeedOMatic:GetModule("FOM_PetInfo")
 
-local utils, minor = _G.LibStub("BM-utils-1")
+local utils = _G.LibStub("BM-utils-1")
 local QuestDifficultyColors = _G.QuestDifficultyColors
 
 local function FOM_TooltipAddFoodQuality(self, itemID)
