@@ -1,7 +1,7 @@
 local lu = require('luaunit')
 
 loadfile('build_utils/utils/load_toc.lua')('./test.toc')
-loadfile('build_utils/utils/load_toc.lua')('../GFW_FeedOMatic.toc')
+loadfile('build_utils/utils/load_toc.lua')('../GFW_FeedOMatic.toc', { 'CurrentProfession.lua', 'LibProfessions.lua' })
 local addon = _G.GFW_FeedOMatic
 ---@type FOM_PetInfo
 local info = addon:GetModule('FOM_PetInfo')
