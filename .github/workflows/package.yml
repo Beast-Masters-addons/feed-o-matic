@@ -38,7 +38,7 @@ jobs:
 
       - name: Run luacheck
         run: |
-          luacheck --no-self -a addon
+          luacheck --no-self -a -g addon
           luacheck -g FOM_CookingScan.lua
           luacheck --ignore 612 611 -g FeedOMatic_Emotes.lua
           luacheck --no-unused --ignore 631 542 431 -g FeedOMatic.lua
