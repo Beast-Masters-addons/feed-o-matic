@@ -50,5 +50,6 @@ end
 
 ---Is the item a known eatable food item?
 function lib.isKnownFood(itemID)
-    return lib.isInDiet(itemID, { FOM_DIET_MEAT, FOM_DIET_FISH, FOM_DIET_BREAD, FOM_DIET_CHEESE, FOM_DIET_FRUIT, FOM_DIET_FUNGUS, FOM_DIET_MECH });
+    return lib.isInDiet(itemID, { FOM_DIET_MEAT, FOM_DIET_FISH, FOM_DIET_BREAD,
+                                  FOM_DIET_CHEESE, FOM_DIET_FRUIT, FOM_DIET_FUNGUS, FOM_DIET_MECH });
 end
