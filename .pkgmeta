@@ -30,6 +30,9 @@ externals:
   libs/BM-utils:
     url: https://github.com/Beast-Masters-addons/BM-utils.git
     tag: v1.10
+  libs/BM-utils2:
+    url: https://github.com/Beast-Masters-addons/BM-utils.git
+    tag: v2.0-alpha2
 
 ignore:
   - libs/BM-utils/tests
