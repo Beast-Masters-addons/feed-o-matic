@@ -32,7 +32,7 @@ externals:
     tag: v1.10
   libs/BM-utils2:
     url: https://github.com/Beast-Masters-addons/BM-utils.git
-    tag: v2.0-alpha2
+    branch: ace_addon
 
 ignore:
   - libs/BM-utils/tests
