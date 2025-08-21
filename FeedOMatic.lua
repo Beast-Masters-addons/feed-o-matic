@@ -5,6 +5,10 @@
 local addonName, addon = ...
 _G['FeedOMatic'] = {}
 
+local ace_addon = _G.LibStub("AceAddon-3.0"):GetAddon(addonName)
+---@type FOM_Constants
+local const = ace_addon:GetModule("FOM_Constants")
+
 local tableUtils = addon.tableUtils
 ---@type BMUtils
 local utils = addon.utils
@@ -16,7 +20,7 @@ local C_Container = _G.C_Container
 local feedButton = _G.GFW_FeedOMatic:GetModule("feedButtonHelper")
 
 -- letting these be global inside Ace callbacks causes bugs
-local FOM_Config, FOM_CategoryNames, FOM_FoodsUIList
+local FOM_Config, FOM_FoodsUIList
 ---@type FOMOptions
 local FOMOptions = _G.GFW_FeedOMatic:GetModule("FOMOptions")
 ---@type FOM_FoodLogger
@@ -979,7 +983,7 @@ end
 
 function FOM_FoodListUI_UpdateList()
 	FOM_FoodsUIList = {};
-	for header = 1, #FOM_CategoryNames do
+	for header = 1, #const.FOM_CategoryNames do
 		local list = {};
 		local uniqueList = {};
 		-- build list of foods from matching criteria
@@ -1095,7 +1099,7 @@ function FOM_FoodListUIUpdate()
 				listButton.categoryLeft:Show();
 				listButton.icon:SetTexture("");
 				listButton.name:SetText("");
-				listButton:SetText(FOM_CategoryNames[listItem]);
+				listButton:SetText(const.FOM_CategoryNames[listItem]);
 
 				for iconIndex = 1, MAX_COOKING_RESULTS do
 					listButton.cookingIcons[iconIndex]:SetTexture("");

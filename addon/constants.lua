@@ -1,3 +1,8 @@
+local addonName = ...
+local addon = _G.LibStub("AceAddon-3.0"):GetAddon(addonName)
+---@class FOM_Constants
+local const = addon:NewModule("FOM_Constants")
+
 WOW_MAJOR = math.floor(tonumber(select(4, _G.GetBuildInfo()) / 10000))
 
 
@@ -21,7 +26,7 @@ FOM_DifficultyColors = {
     QuestDifficultyColors["impossible"],
 };
 
-FOM_CategoryNames = { -- localized keys for FOM_FoodTypes indexes
+const.FOM_CategoryNames = { -- localized keys for FOM_FoodTypes indexes
     FOM_OPTIONS_FOODS_CONJURED,
     FOM_OPTIONS_FOODS_BASIC,
     FOM_OPTIONS_FOODS_BONUS,
