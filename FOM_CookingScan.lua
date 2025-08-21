@@ -22,10 +22,11 @@ function FOM_ScanTradeSkill()
 		local difficulty = addon.utils:DifficultyToNum(recipeInfo["difficulty"]);
 
 		local createdItemLink = recipeInfo["link"]
-		local _, _, id = string.find(createdItemLink, "item:(%d+)");
-		local createdItemID = tonumber(id);
+		if createdItemLink ~= nil then
+			local _, _, id = string.find(createdItemLink, "item:(%d+)");
+			local createdItemID = tonumber(id);
 
-		local reagents = addon.professions.currentProfession:GetReagents(recipeID)
+			local reagents = addon.professions.currentProfession:GetReagents(recipeID)
 
 			for _, reagent in pairs(reagents) do
 				local reagentLink = reagent["reagentLink"]
@@ -38,5 +39,6 @@ function FOM_ScanTradeSkill()
 					FOM_Cooking[reagentItemID][createdItemID] = difficulty;
 				end
 			end
+		end
 	end
 end
