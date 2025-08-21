@@ -27,7 +27,7 @@ end
 
 function test:testIsKnownFood()
     lu.assertEquals(food.isKnownFood(12202), "Meat")
-    lu.assertEquals(food.isKnownFood(6889), "Fish")
+    lu.assertEquals(food.isKnownFood(13546), "Fish")
     lu.assertNil(food.isKnownFood(99999))
 end
 
