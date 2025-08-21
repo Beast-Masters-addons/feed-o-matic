@@ -1241,7 +1241,7 @@ function GFW_FeedOMatic:SetupOptions()
 	-- Setup Blizzard option frames
 	self.optionsFrames = {}
 	-- The ordering here matters, it determines the order in the Blizzard Interface Options
-	self.optionsFrames.general = AceConfigDialog:AddToBlizOptions(addonName, shortTitle, nil, "general")
+	self.optionsFrames.general, self.optionsFrames.general_id = AceConfigDialog:AddToBlizOptions(addonName, shortTitle, nil, "general")
 	self.optionsFrames.button = AceConfigDialog:AddToBlizOptions('Feed Button', 'Feed Pet button', shortTitle)
 	self.optionsFrames.profile = AceConfigDialog:AddToBlizOptions(addonName, options.args.profile.name, shortTitle, "profile")
 
@@ -1273,8 +1273,5 @@ function GFW_FeedOMatic:OnInitialize()
 end
 
 function GFW_FeedOMatic:ShowConfig()
-	Settings.OpenToCategory(self.optionsFrames.general) --TODO: Does not work
-	--Call a second time to work around bug: https://www.wowinterface.com/forums/showthread.php?t=54599
-	Settings.OpenToCategory(self.optionsFrames.general)
+	_G.Settings.OpenToCategory(self.optionsFrames.general_id)
 end
-
