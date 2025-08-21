@@ -57,14 +57,12 @@ end
 
 function FOM_FeedButton_PostClick(self, button, down)
 	if (not FOM_GetFeedPetSpellName()) then
-		local GetAddOnMetadata = C_AddOns and C_AddOns.GetAddOnMetadata or GetAddOnMetadata
-		local version = GetAddOnMetadata(addonName, "Version");
 		local level = GetSpellLevelLearned(slotID);
 		local diagnostic = "";
 		if ( level and level > UnitLevel("player") ) then
 			diagnostic = "This spell requires level "..level..".";
 		end
-		GFWUtils.PrintOnce(GFWUtils.Red("Feed-O-Matic v."..version.." error:").."Can't find Feed Pet spell. "..diagnostic);
+		GFWUtils.PrintOnce(GFWUtils.Red("Feed-O-Matic v."..ace_addon.version.." error:").."Can't find Feed Pet spell. "..diagnostic);
 		return;
 	end
 	if (not down) then
@@ -210,7 +208,7 @@ function FOM_OnLoad(self)
 		FOM_ChatCommandHandler(msg);
 	end
 
-	BINDING_HEADER_GFW_FEEDOMATIC = GetAddOnMetadata(addonName, "Title"); -- gets us the localized title if needed
+	BINDING_HEADER_GFW_FEEDOMATIC = addon.title -- gets us the localized title if needed
 
 	--@debug@
 	GFWUtils.Debug = true;
@@ -582,7 +580,7 @@ function FOM_ChatCommandHandler(msg)
 
 	-- Print Help
 	if ( msg == "help" ) then
-		local version = GetAddOnMetadata(addonName, "Version");
+		local version = ace_addon.version
 		GFWUtils.Print("Fizzwidget Feed-O-Matic "..version..":");
 		GFWUtils.Print("/feedomatic /fom <command>");
 		GFWUtils.Print("- "..GFWUtils.Hilite("help").." - Print this helplist.");
@@ -592,7 +590,7 @@ function FOM_ChatCommandHandler(msg)
 	end
 
 	if ( msg == "version" ) then
-		local version = GetAddOnMetadata(addonName, "Version");
+		local version = ace_addon.version
 		GFWUtils.Print("Fizzwidget Feed-O-Matic "..version..":");
 		return;
 	end
@@ -1209,10 +1207,6 @@ function GFW_FeedOMatic:OnProfileChanged(event, database, newProfileKey)
 	end
 end
 
-local titleText = GetAddOnMetadata(addonName, "Title");
-local version = GetAddOnMetadata(addonName, "Version");
-titleText = titleText .. " " .. version;
-
 local profileDefault = {
 	Tooltip				= true,
 	UseLowLevelFirst	= true,
@@ -1240,15 +1234,16 @@ function GFW_FeedOMatic:SetupOptions()
 	AceConfig:RegisterOptionsTable(addonName, options)
 	AceConfig:RegisterOptionsTable('Feed Button', FOMOptions.feedButtonOptions)
 
-	local titleText = GetAddOnMetadata(addonName, "Title");
-	titleText = string.gsub(titleText, "Fizzwidget", "GFW");		-- shorter so it fits in the list width
+	-- Shorten name to fit in the list width
+	local shortTitle = string.gsub(ace_addon.title, "Fizzwidget", "GFW");
+	shortTitle = shortTitle .. " " .. ace_addon.version
 
 	-- Setup Blizzard option frames
 	self.optionsFrames = {}
 	-- The ordering here matters, it determines the order in the Blizzard Interface Options
-	self.optionsFrames.general = AceConfigDialog:AddToBlizOptions(addonName, titleText, nil, "general")
-	self.optionsFrames.button = AceConfigDialog:AddToBlizOptions('Feed Button', 'Feed Pet button', titleText)
-	self.optionsFrames.profile = AceConfigDialog:AddToBlizOptions(addonName, options.args.profile.name, titleText, "profile")
+	self.optionsFrames.general = AceConfigDialog:AddToBlizOptions(addonName, shortTitle, nil, "general")
+	self.optionsFrames.button = AceConfigDialog:AddToBlizOptions('Feed Button', 'Feed Pet button', shortTitle)
+	self.optionsFrames.profile = AceConfigDialog:AddToBlizOptions(addonName, options.args.profile.name, shortTitle, "profile")
 
 	FOM_BuildFoodsUI(self.optionsFrames.general);
 	local aceRefresh = self.optionsFrames.general.refresh;
