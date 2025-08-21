@@ -1,5 +1,18 @@
 WOW_MAJOR = math.floor(tonumber(select(4, _G.GetBuildInfo()) / 10000))
 
+
+-- Food quality by itemLevel
+--
+-- levelDelta = petLevel - foodItemLevel
+-- levelDelta > 30 = won't eat
+FOM_DELTA_EATS = 30;    -- 30 >= levelDelta > 20 = 8 happiness per tick
+FOM_DELTA_LIKES = 20;   -- 20 >= levelDelta > 10 = 17 happiness per tick
+FOM_DELTA_LOVES = 10;   -- 10 >= levelDelta = 35 happiness per tick
+
+-- constants
+MAX_KEEPOPEN_SLOTS = 150;
+FOM_FEED_PET_SPELL_ID = 6991;
+
 FOM_DifficultyColors = {
     QuestDifficultyColors["trivial"],
     QuestDifficultyColors["standard"],
