@@ -8,10 +8,10 @@ _G['FeedOMatic'] = {}
 local ace_addon = _G.LibStub("AceAddon-3.0"):GetAddon(addonName)
 ---@type FOM_Constants
 local const = ace_addon:GetModule("FOM_Constants")
-
+---@type TableUtils
 local tableUtils = addon.tableUtils
 ---@type BMUtils
-local utils = addon.utils
+local utils = _G.LibStub("BMUtils")
 local is_classic = _G.WOW_PROJECT_ID ~= _G.WOW_PROJECT_MAINLINE
 
 local C_Container = _G.C_Container
@@ -31,15 +31,15 @@ local itemTooltip = _G.GFW_FeedOMatic:GetModule("FOM_ItemTooltip")
 local petInfo = _G.GFW_FeedOMatic:GetModule("FOM_PetInfo")
 ---@type FOM_Food
 local FOM_Food =  _G.GFW_FeedOMatic:GetModule("FOM_Food")
-
-addon.utils:SetDefaultFontColor { 0.25, 1.0, 1.0 };
+---@type BMUtilsBasic
+local basic = _G.LibStub('BMUtilsBasic')
 
 -- Variables
 FOM_LastPetName = nil;
 local foodBag, foodSlot, foodIcon;
 local FOM_Foods = FOM_Food.getFoodList()
 
-if utils:empty(FOM_Foods) then
+if basic.empty(FOM_Foods) then
 	error('Food list empty')
 end
 
@@ -100,7 +100,7 @@ function FOM_FeedButton_OnEnter()
 	if (FOM_NextFoodLink) then
 
 		-- food to be used on click
-		local itemName = utils:ItemNameFromLink(FOM_NextFoodLink)
+		local itemName = utils.itemNameFromLink(FOM_NextFoodLink)
 		FOM_FeedTooltip:SetBagItem(foodBag, foodSlot, itemName);
 
 		if (FOM_NoFoodError) then
@@ -231,7 +231,7 @@ function FOM_OnTooltipSetItem(self)
 		local _, link = self:GetItem();
 		if not link then return false; end
 
-		local itemID = utils:ItemIdFromLink(link);
+		local itemID = utils.itemIdFromLink(link);
 		local foodDiet = FOM_Food.isKnownFood(itemID);
 		if not foodDiet then return false; end
 
@@ -466,7 +466,7 @@ function FOM_OnEvent(self, event, arg1, arg2)
 		local _, _, foodEaten = string.find(arg1, FOM_FEEDPET_LOG_FIRSTPERSON);
 		if (foodEaten) then
 			local foodName = foodEaten;
-			if (FOM_NextFoodLink and utils:ItemNameFromLink(FOM_NextFoodLink) == foodEaten) then
+			if (FOM_NextFoodLink and utils.itemNameFromLink(FOM_NextFoodLink) == foodEaten) then
 				foodName = FOM_NextFoodLink;
 			end
 			local pet = UnitName("pet");
@@ -560,7 +560,7 @@ function FOM_ScanQuests()
 						local _, link = GetItemInfo(objectiveName);
 						-- not guaranteed to get us a link if we don't have the item,
 						-- but we shouldn't be here unless we have the item anyway.
-						local itemID = utils:ItemIdFromLink(link);
+						local itemID = utils.itemIdFromLink(link);
 						if (itemID and FOM_Food.isKnownFood(itemID)) then
                             FOM_SetQuestFood(itemID, numRequired)
 						end
@@ -682,7 +682,7 @@ function FOM_SetupButton(bag, slot, modifier)
 	if (not FOM_GetFeedPetSpellName()) then
 		return;
 	end
-	if not utils:empty(modifier) then
+	if not basic.empty(modifier) then
 		modifier = modifier.."-";
 	else
 		modifier = "";
@@ -714,7 +714,7 @@ function FOM_RandomEmote(foodLink)
 			randomEmotes = tableUtils.Merge(randomEmotes, localeEmotes["female"]);
 		end
 
-		local itemID = utils:ItemIdFromLink(foodLink);
+		local itemID = utils.itemIdFromLink(foodLink);
 		if (itemID) then
 			randomEmotes = tableUtils.Merge(randomEmotes, localeEmotes[itemID]);
 
@@ -739,8 +739,8 @@ function FOM_FlatFoodList(fallback)
 		-- skip bags that can't contain food
 			for itemNum = 1, C_Container.GetContainerNumSlots(bagNum) do
 				local itemInfo = C_Container.GetContainerItemInfo(bagNum, itemNum);
-				if not utils:empty(itemInfo) then
-					local itemID = utils:ItemIdFromLink(itemInfo['hyperlink']);
+				if not basic.empty(itemInfo) then
+					local itemID = utils.itemIdFromLink(itemInfo['hyperlink']);
 
 					-- debug
 					--if (bagNum == 0 and itemNum == 1) then itemCount = 10; end
@@ -817,7 +817,7 @@ function FOM_NewFindFood(fallback)
 		end
 	end
 	for _, foodInfo in pairs(SortedFoodList) do
-		local foodItemID = utils:ItemIdFromLink(foodInfo.link)
+		local foodItemID = utils.itemIdFromLink(foodInfo.link)
 		--Check if food item is logged as not eaten by current pet
 		if foodLogger.is_good(foodItemID) ~= false then
 			return foodInfo.bag, foodInfo.slot, foodInfo.link, foodInfo.icon;

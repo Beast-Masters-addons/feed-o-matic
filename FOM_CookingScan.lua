@@ -5,6 +5,9 @@
 ---@type FeedOMatic
 local _, addon = ...
 
+---@type BMUtils
+local utils = _G.LibStub('BMUtils')
+
 FOM_Cooking = {};
 
 function FOM_ScanTradeSkill()
@@ -19,7 +22,7 @@ function FOM_ScanTradeSkill()
 
 	for recipeID, recipeInfo in pairs(addon.professions.currentProfession:GetRecipes()) do
 
-		local difficulty = addon.utils:DifficultyToNum(recipeInfo["difficulty"]);
+		local difficulty = utils.difficultyNameToNum(recipeInfo["difficulty"]);
 
 		local createdItemLink = recipeInfo["link"]
 		if createdItemLink ~= nil then
