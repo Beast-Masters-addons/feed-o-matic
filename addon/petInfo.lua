@@ -2,7 +2,7 @@ local addon = _G.GFW_FeedOMatic
 ---@class FOM_PetInfo
 local lib = addon:NewModule("FOM_PetInfo", "AceEvent-3.0")
 ---@type BMUtils
-local utils = _G.LibStub('BM-utils-1')
+local utils = _G.LibStub('BMUtils')
 
 function lib:OnEnable()
     self:RegisterEvent("UNIT_PET")
@@ -60,7 +60,7 @@ function lib:CHAT_MSG_PET_INFO(event, message)
         --@end-debug@
     elseif match_feed then
         local itemName, itemLink, _, itemLevel = _G.GetItemInfo(match_feed)
-        local itemId = utils:ItemIdFromLink(itemLink)
+        local itemId = utils.itemIdFromLink(itemLink)
         self.foodLog.save(self.petFamily, itemId, itemName, 'good')
         --@debug@
         print(('%s eats %s delta %d'):format(self.petFamily, itemLink, self.petLevel - itemLevel))
