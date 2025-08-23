@@ -29,7 +29,7 @@ externals:
     tag: v0.16
   libs/BM-utils:
     url: https://github.com/Beast-Masters-addons/BM-utils.git
-    branch: multistub
+    branch: v2.0
 
 ignore:
   - libs/BM-utils/tests
