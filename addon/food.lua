@@ -10,7 +10,7 @@ function lib.getFoodList()
         print('WoW classic detected, using classic food list')
         --@end-debug@
         return _G.FOM_Foods_classic
-    elseif _G.WOW_PROJECT_ID >= _G.WOW_PROJECT_WRATH_CLASSIC then
+    elseif _G.WOW_PROJECT_ID > 1 then
         --@debug@
         print('WoW wrath classic detected, using wrath food list')
         --@end-debug@
