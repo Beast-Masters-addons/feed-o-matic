@@ -21,11 +21,9 @@ function FOM_ScanTradeSkill()
 	end
 
 	for recipeID, recipeInfo in pairs(addon.professions.currentProfession:GetRecipes()) do
-
-		local difficulty = utils.difficultyNameToNum(recipeInfo["difficulty"]);
-
 		local createdItemLink = recipeInfo["link"]
 		if createdItemLink ~= nil then
+			local difficulty = utils.difficultyNameToNum(recipeInfo["difficulty"]);
 			local _, _, id = string.find(createdItemLink, "item:(%d+)");
 			local createdItemID = tonumber(id);
 
