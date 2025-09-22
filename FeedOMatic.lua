@@ -285,7 +285,9 @@ end
 function FOM_GetFeedPetSpellName()
 	-- we can get the spell name from the ID
 	local _;
-	FOM_FeedPetSpellName, _, FOM_FeedPetSpellIcon = _G.C_Spell.GetSpellInfo(FOM_FEED_PET_SPELL_ID);
+	local spellInfo = _G.C_Spell.GetSpellInfo(FOM_FEED_PET_SPELL_ID);
+	_G.FOM_FeedPetSpellName = spellInfo['name']
+	_G.FOM_FeedPetSpellIcon = spellInfo['iconID']
 
 	BINDING_NAME_FOM_FEED = FOM_FeedPetSpellName;
 
@@ -479,8 +481,8 @@ function FOM_OnEvent(self, event, arg1, arg2)
 			end
 		end
 	elseif (event == "SPELL_UPDATE_COOLDOWN") then
-		local start, duration, enable = _G.C_Spell.GetSpellCooldown(FOM_FEED_PET_SPELL_ID);
-		CooldownFrame_Set(FOM_FeedButtonCooldown, start, duration, enable);
+		local cooldown = _G.C_Spell.GetSpellCooldown(FOM_FEED_PET_SPELL_ID);
+		CooldownFrame_Set(FOM_FeedButtonCooldown, cooldown['startTime'], cooldown['duration'], cooldown['isEnabled']);
 	elseif (event == "SPELL_UPDATE_USABLE") then
 		local isUsable, notEnoughtMana = _G.C_Spell.IsSpellUsable(FOM_FEED_PET_SPELL_ID);
 		if (not isUsable) then
