@@ -20,6 +20,7 @@ Libs.xml
 #@end-no-lib-strip@
 
 addon\common.lua
+data\food_info.lua
 localization.lua
 LocaleSupport.lua
 addon\constants.lua
@@ -31,9 +32,6 @@ addon\petInfo.lua
 
 # addon\foodDebug.lua
 addon\options.lua
-FOM_Foods.lua
-FOM_Foods_classic.lua
-FOM_Foods_wrath.lua
 FeedOMatic_Emotes.lua
 FOM_CookingScan.lua
 addon\food.lua

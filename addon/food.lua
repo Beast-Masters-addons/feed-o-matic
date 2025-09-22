@@ -4,27 +4,53 @@ local lib = addon:NewModule("FOM_Food", "AceEvent-3.0")
 ---@type FOM_PetInfo
 local petInfo = _G.GFW_FeedOMatic:GetModule("FOM_PetInfo")
 
+local WOW_MAJOR = math.floor(tonumber(select(4, _G.GetBuildInfo()) / 10000))
+
+function lib.getFoodPriority(category)
+    local foodTypes = { -- used to set priority
+        ["conjured"] = 1, -- mage food etc, preferable because it's free!
+        ["basic"] = 2, -- includes combo health/mana food, because hunters don't care about mana anymore
+        ["wellfed"] = 3, -- food with "well fed" bonuses
+        ["inedible"] = 4, -- usually cooking mats
+    }
+    assert(foodTypes[category], 'Invalid food category')
+    return foodTypes[category]
+end
+
+function lib.localizeDiet(diet)
+    local diets = {
+        ["Meat"] = _G.FOM_DIET_MEAT,
+        ["Fish"] = _G.FOM_DIET_FISH,
+        ["Bread"] = _G.FOM_DIET_BREAD,
+        ["Cheese"] = _G.FOM_DIET_CHEESE,
+        ["Fruit"] = _G.FOM_DIET_FRUIT,
+        ["Fungus"] = _G.FOM_DIET_FUNGUS,
+        ["Mechanical Bits"] = _G.FOM_DIET_MECH,
+    }
+    assert(diets[diet], 'Invalid diet')
+    return diets[diet]
+end
+
 function lib.getFoodList()
-    if _G.WOW_PROJECT_ID == _G.WOW_PROJECT_CLASSIC then
-        --@debug@
-        print('WoW classic detected, using classic food list')
-        --@end-debug@
-        return _G.FOM_Foods_classic
-    elseif _G.WOW_PROJECT_ID > 1 then
-        --@debug@
-        print('WoW wrath classic detected, using wrath food list')
-        --@end-debug@
-        return _G.FOM_Foods_wrath
-        --TODO: Add cataclysm foods
-    else
-        return _G.FOM_Foods
+    local foods = {}
+    for itemId, properties in pairs(_G.FOM_FoodInfo) do
+        if properties['major'] <= WOW_MAJOR then
+            local localizedDiet = lib.localizeDiet(properties['diet'])
+            if foods[localizedDiet] == nil then
+                foods[localizedDiet] = {}
+            end
+            foods[localizedDiet][itemId] = properties['priority']
+        end
     end
+    return foods
 end
 
 local foodList = lib.getFoodList()
 
+---Check if the given foodItemID is in the given diet or the current pets diet if none is specified
+---@param foodItemID number Food item ID
+---@param dietList table Pass nil to query against current pet's diets
 function lib.isInDiet(foodItemID, dietList)
-    -- pass no dietList to query against current pet's diets
     if (dietList == nil) then
         dietList = petInfo.petDiet
     end
