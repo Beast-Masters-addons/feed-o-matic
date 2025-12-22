@@ -47,7 +47,7 @@ jobs:
           luacheck --no-unused --ignore 631 614 612 611 542 -g localization.lua
 
       - name: Build the addon
-        uses: BigWigsMods/packager@v2.4.1
+        uses: BigWigsMods/packager@v2.5.1
         with:
           args: -g ${{ matrix.game_version }} -z -d
 
