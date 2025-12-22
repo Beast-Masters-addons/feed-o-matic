@@ -3,6 +3,8 @@ local addon = _G.GFW_FeedOMatic
 local lib = addon:NewModule("FOM_PetInfo", "AceEvent-3.0")
 ---@type BMUtils
 local utils = _G.LibStub('BMUtils')
+---@type FOM_Food
+local food
 
 function lib:OnEnable()
     self:RegisterEvent("UNIT_PET")
@@ -11,6 +13,7 @@ function lib:OnEnable()
     self:RegisterEvent("UI_ERROR_MESSAGE")
     ---@type FOM_FoodLogger
     self.foodLog = addon:GetModule("FOM_FoodLogger")
+    food = addon:GetModule("FOM_Food")
 end
 
 function lib:UNIT_PET(event, unit)
@@ -34,6 +37,13 @@ function lib:updatePetInfo()
         self.petGender = _G.UnitSex("pet")
         self.petFamily = _G.UnitCreatureFamily("pet");
         self.petDiet = { _G.GetPetFoodTypes() }
+        self.petDietEn = {}
+        local petDietLocalized = _G.GetPetFoodTypes()
+        if petDietLocalized then
+            for _, dietLocale in ipairs({_G.GetPetFoodTypes()}) do
+                table.insert(self.petDietEn, food.unLocalizeDiet(dietLocale))
+            end
+        end
     else
         self.petName = nil
         self.petLevel = nil

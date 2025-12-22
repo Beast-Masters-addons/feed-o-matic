@@ -21,6 +21,7 @@ Libs.xml
 
 addon\common.lua
 data\food_info.lua
+data\food_locale.lua
 localization.lua
 LocaleSupport.lua
 addon\constants.lua

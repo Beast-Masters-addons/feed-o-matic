@@ -5,6 +5,8 @@ local lib = addon:NewModule("FOM_Food", "AceEvent-3.0")
 local petInfo = _G.GFW_FeedOMatic:GetModule("FOM_PetInfo")
 
 local WOW_MAJOR = math.floor(tonumber(select(4, _G.GetBuildInfo()) / 10000))
+local locale = _G.GetLocale()
+local food_locale = _G.FOM_FoodLocale[locale]
 
 function lib.getFoodPriority(category)
     local foodTypes = { -- used to set priority
@@ -31,6 +33,14 @@ function lib.localizeDiet(diet)
     return diets[diet]
 end
 
+function lib.unLocalizeDiet(diet)
+    if locale == 'enUS' then
+        return diet
+    end
+    assert(food_locale[diet], ("Unable to unlocalize diet %s"):format(diet))
+    return food_locale[diet]
+end
+
 function lib.getFoodList()
     local foods = {}
     for itemId, properties in pairs(_G.FOM_FoodInfo) do
@@ -52,7 +62,7 @@ local foodList = lib.getFoodList()
 ---@param dietList table Pass nil to query against current pet's diets
 function lib.isInDiet(foodItemID, dietList)
     if (dietList == nil) then
-        dietList = petInfo.petDiet
+        dietList = petInfo.petDietEn
     end
     -- no current pet means try again later
     if (dietList == nil or #dietList == 0) then
@@ -76,6 +86,5 @@ end
 
 ---Is the item a known eatable food item?
 function lib.isKnownFood(itemID)
-    return lib.isInDiet(itemID, { FOM_DIET_MEAT, FOM_DIET_FISH, FOM_DIET_BREAD,
-                                  FOM_DIET_CHEESE, FOM_DIET_FRUIT, FOM_DIET_FUNGUS, FOM_DIET_MECH });
+    return lib.isInDiet(itemID, { "Meat", "Fish", "Bread", "Cheese", "Fruit", "Fungus", "Mechanical Bits" });
 end
