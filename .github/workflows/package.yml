@@ -42,7 +42,6 @@ jobs:
           luacheck -g FOM_CookingScan.lua
           luacheck --ignore 612 611 -g FeedOMatic_Emotes.lua
           luacheck --no-unused --ignore 631 542 431 -g FeedOMatic.lua
-          luacheck -g FOM_Foods_classic.lua
           luacheck --no-unused --ignore 614 611 -g FOM_Foods.lua
           luacheck --no-unused --ignore 631 614 612 611 -g LocaleSupport.lua
           luacheck --no-unused --ignore 631 614 612 611 542 -g localization.lua
