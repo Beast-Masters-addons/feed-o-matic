@@ -988,6 +988,9 @@ function FOM_FoodListUI_UpdateList()
 		local uniqueList = {};
 		-- build list of foods from matching criteria
 		local petLevel = petInfo.petLevel
+		if not petLevel then
+			return
+		end
 		local itemNamesCache = {};
 		for diet, table in pairs(FOM_Foods) do
 			for itemID, foodType in pairs(table) do
