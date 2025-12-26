@@ -92,7 +92,6 @@ function feedButtonHelper:setPosition(x, y, relative)
         print(('Set feed button to absolute position X %d Y %d'):format(x, y))
         --@end-debug@
     end
-    --FOM_FeedButton:SetPoint("LEFT", PetFrame, "RIGHT", -10, -15);
 
     self.button.btn:ClearAllPoints()
     self.button:setPoint(point, relative, relativeToPoint, x, y)
@@ -104,8 +103,11 @@ end
 ---Reset button position
 function feedButtonHelper:resetPosition()
     local default = self.getDefaultPosition()
+    --@debug@
+    print('Set Feed Pet button position to default', default['x'], default['y'], default['frame'])
+    --@end-debug@
     self:setPosition(default['x'], default['y'], default['frame'])
-    addon.db.profile['buttonRelative'] = default['addon']
+    addon.db.profile['buttonRelative'] = default['frame']:GetName()
 end
 
 function feedButtonHelper:getSize()
@@ -120,6 +122,9 @@ end
 
 function feedButtonHelper:resetSize()
     local default = self.getDefaultPosition()
+    --@debug@
+    print('Set Feed Pet button size to default', default['h'], default['w'])
+    --@end-debug@
     self:setSize(default['h'], default['w'])
 end
 

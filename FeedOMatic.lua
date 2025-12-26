@@ -337,7 +337,7 @@ function FOM_Initialize(self)
 
 	if FOM_Config['buttonRelative'] ~= 'absolute' then
 		--Position relative to frame
-		feedButton:setPosition(feedButtonX, feedButtonY, defaultPosition['frame'])
+		feedButton:setPosition(feedButtonX, feedButtonY, _G[FOM_Config['buttonRelative']])
 	else
 		--Absolute position
 		feedButton:setPosition(feedButtonX, feedButtonY)
@@ -348,13 +348,10 @@ function FOM_Initialize(self)
 		--@debug@
 		print('Set Feed Pet button size to saved size', FOM_Config['buttonH'], FOM_Config['buttonW'])
 		--@end-debug@
-		feedButton.setSize(FOM_Config['buttonH'], FOM_Config['buttonW'])
+		feedButton:setSize(FOM_Config['buttonH'], FOM_Config['buttonW'])
 	else
 		--Default size
-		--@debug@
-		print('Set Feed Pet button size to default size', defaultPosition['h'], defaultPosition['w'])
-		--@end-debug@
-		feedButton.setSize(defaultPosition['h'], defaultPosition['w'])
+		feedButton:resetSize()
 	end
 
 	-- set key binding to click FOM_FeedButton
@@ -576,10 +573,6 @@ end
 
 ---Find food and set variables foodBag, foodSlot, foodIcon and FOM_NextFoodLink
 function FOM_PickFoodForButton()
-
-	if (not FOM_GetFeedPetSpellName()) then
-		return;
-	end
 	local pet = UnitName("pet");
 	if (not pet) then
 		feedButton.button:Hide()
@@ -616,31 +609,6 @@ function FOM_PickFoodForButton()
 		FOM_NoFoodError = nil;
 		feedButton:SetVertexColor(1, 1, 1);
 	end
-end
-
-function FOM_SetupButton(bag, slot, modifier)
-	if (not FOM_GetFeedPetSpellName()) then
-		return;
-	end
-	if not basic.empty(modifier) then
-		modifier = modifier.."-";
-	else
-		modifier = "";
-	end
-	if (bag and slot) then
-		FOM_FeedButton:SetAttribute(modifier.."type1", "spell");
-		FOM_FeedButton:SetAttribute(modifier.."spell1", FOM_FeedPetSpellName);
-		FOM_FeedButton:SetAttribute("target-bag", bag);
-		FOM_FeedButton:SetAttribute("target-slot", slot);
-	else
-		FOM_FeedButton:SetAttribute(modifier.."type", ATTRIBUTE_NOOP);
-		FOM_FeedButton:SetAttribute(modifier.."spell", ATTRIBUTE_NOOP);
-		FOM_FeedButton:SetAttribute(modifier.."type1", ATTRIBUTE_NOOP);
-		FOM_FeedButton:SetAttribute(modifier.."spell1", ATTRIBUTE_NOOP);
-		FOM_FeedButton:SetAttribute("target-bag", nil);
-		FOM_FeedButton:SetAttribute("target-slot", nil);
-	end
-	FOM_PickFoodQueued = nil;
 end
 
 function FOM_RandomEmote(foodLink)
