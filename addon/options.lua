@@ -91,13 +91,13 @@ options.options = {
                     name = _G.FOM_OPTIONS_NO_BUTTON,
                     desc = _G.FOM_OPTIONS_NO_BUTTON_TIP,
                     arg = "NoButton",
-                    set = function(self, value)
-                        setProfileOption(self, value)
-                        if (addon.db.profile.NoButton) then
-                            _G.FOM_FeedButton:Hide();
+                    set = function(info, value)
+                        if value then
+                            feedButton.button:Hide()
                         else
-                            _G.FOM_FeedButton:Show();
+                            feedButton.button:Show()
                         end
+                        setProfileOption(info, value)
                     end
                 },
                 blank = {
@@ -151,21 +151,63 @@ options.feedButtonOptions = {
             name = _G.FOM_OPTIONS_NO_BUTTON,
             desc = _G.FOM_OPTIONS_NO_BUTTON_TIP,
             arg = "NoButton",
-            set = function()
-                feedButton.toggle()
+            set = function(info, value)
+                if value then
+                    feedButton.button:Hide()
+                else
+                    feedButton.button:Show()
+                end
+                setProfileOption(info, value)
             end
+        },
+        positionHeader = {
+            type = "header",
+            name = "Button position",
+            order = 9,
         },
         buttonX = {
             type = "input",
             name = "Feed button X position",
             arg = 'buttonX',
             order = 10,
+            set = function(info, value)
+                feedButton:setPosition(value, addon.db.profile['buttonY'], _G[addon.db.profile['buttonRelative']])
+                setProfileOption(info, value)
+            end
         },
         buttonY = {
             type = "input",
             name = "Feed button Y position",
             arg = 'buttonY',
             order = 11,
+            set = function(info, value)
+                feedButton:setPosition(addon.db.profile['buttonX'], value, _G[addon.db.profile['buttonRelative']])
+                setProfileOption(info, value)
+            end
+        },
+--[[        buttonRelative = {
+            type = "input",
+            name = "Relative to frame",
+            arg = "buttonRelative",
+            order = 12,
+            set = function(info, value)
+                feedButton:setPosition(addon.db.profile['buttonX'], addon.db.profile['buttonY'], _G[value])
+                setProfileOption(info, value)
+            end
+        },]]
+        resetPosition = {
+            type = 'execute',
+            name = 'Reset button position',
+            order = 13,
+            func = function()
+                feedButton:resetPosition()
+                reg:NotifyChange('Feed Button')
+            end
+        },
+        sizeHeader = {
+            type = "header",
+            name = "Button size",
+            order = 19,
         },
         buttonH = {
             type = 'range',
@@ -173,12 +215,12 @@ options.feedButtonOptions = {
             arg = 'buttonH',
             order = 20,
             min = 10,
-            max = 60,
+            max = 64,
             step = 1,
             set = function(info, value)
                 local width = addon.db.profile['buttonW']
                 setProfileOption(info, value)
-                feedButton.setSize(value, width)
+                feedButton:setSize(value, width)
             end
         },
         buttonW = {
@@ -187,31 +229,21 @@ options.feedButtonOptions = {
             arg = 'buttonW',
             order = 21,
             min = 10,
-            max = 60,
+            max = 64,
             step = 1,
             set = function(info, value)
                 local height = addon.db.profile['buttonH']
                 setProfileOption(info, value)
-                feedButton.setSize(height, value)
-            end
-        },
-
-        resetPosition = {
-            type = 'execute',
-            name = 'Reset button position',
-            order = 30,
-            func = function()
-                feedButton.resetPosition()
-                reg:NotifyChange('Feed Button')
+                feedButton:setSize(height, value)
             end
         },
         resetSize = {
             type = 'execute',
-            name = 'Reset button size',
-            order = 31,
+            name = 'Reset size',
+            order = 22,
             func = function()
-                local default = feedButton.getDefaultPosition()
-                feedButton.setSize(default['h'], default['w'])
+                local default = feedButton:getDefaultPosition()
+                feedButton:setSize(default['h'], default['w'])
                 reg:NotifyChange('Feed Button')
             end
         }

@@ -9,10 +9,11 @@
 ## X-Category: Hunter
 ## SavedVariables: GFW_FeedOMatic_DB, FOM_Cooking, FOM_FoodLog
 ## LoadManagers: AddonLoader
-## OptionalDeps: BM-utils
+## OptionalDeps: BM-utils, LibSpellButton
 ## X-LoadOn-Class: Hunter
 ## X-WoWI-ID: 25427
 ## X-Wago-ID: qv63XBKb
+## IconTexture: 132165
 
 #@no-lib-strip@
 libs\LibStub\LibStub.lua

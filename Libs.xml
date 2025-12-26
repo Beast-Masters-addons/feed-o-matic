@@ -12,5 +12,6 @@
     <Include file="libs\AceConfig-3.0\AceConfig-3.0.xml"/>
     <Include file="libs\BM-utils\lib.xml"/>
     <Include file="libs\LibProfessions\lib.xml"/>
+    <Script file="libs\LibSpellButton\LibSpellButton.lua"/>
 
 </Ui>

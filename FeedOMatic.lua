@@ -43,20 +43,8 @@ if basic.empty(FOM_Foods) then
 	error('Food list empty')
 end
 
-function FOM_FeedButton_PreClick(self)
-	local bag = self:GetAttribute('target-bag')
-	local slot = self:GetAttribute('target-slot')
-	if bag == nil or slot == nil then
-		return
-	end
-	local itemInfo = C_Container.GetContainerItemInfo(bag, slot)
-	_G['FOMFeedItemId'] = itemInfo['itemID']
-	_G['FOMFeedItemLink'] = itemInfo['hyperlink']
-	_G['FOMButtonPressed'] = true
-end
-
 function FOM_FeedButton_PostClick(self, button, down)
-	if (not FOM_GetFeedPetSpellName()) then
+--[[	if (not feedButton:getFeedPetSpellName()) then
 		local level = GetSpellLevelLearned(slotID);
 		local diagnostic = "";
 		if ( level and level > UnitLevel("player") ) then
@@ -64,7 +52,7 @@ function FOM_FeedButton_PostClick(self, button, down)
 		end
 		GFWUtils.PrintOnce(GFWUtils.Red("Feed-O-Matic v."..ace_addon.version.." error:").."Can't find Feed Pet spell. "..diagnostic);
 		return;
-	end
+	end]]
 	if (not down) then
 		if (button == "RightButton") then
 			GFW_FeedOMatic:ShowConfig();
@@ -94,7 +82,7 @@ end
 function FOM_FeedButton_OnEnter()
 	if (FOM_Config.NoFeedButtonTooltip) then return; end
 
-	FOM_FeedTooltip:SetOwner(FOM_FeedButton, "ANCHOR_RIGHT");
+	FOM_FeedTooltip:SetOwner(feedButton.button.btn, "ANCHOR_RIGHT");
 	local blankLine = false;
 	local linesAdded = 0;
 	if (FOM_NextFoodLink) then
@@ -330,59 +318,29 @@ function FOM_Initialize(self)
 	self:RegisterEvent("PET_UI_UPDATE");
 	self:RegisterEvent("PLAYER_REGEN_ENABLED");
 
-	-- events for managing feed button
-	self:RegisterEvent("SPELL_UPDATE_COOLDOWN");
-	self:RegisterEvent("SPELL_UPDATE_USABLE");
-
-
 	local defaultPosition = feedButton.getDefaultPosition()
 	local feedButtonParentFrame, feedButtonX, feedButtonY
 	if FOM_Config.buttonX == nil or FOM_Config.buttonY == nil then
 		feedButtonParentFrame = defaultPosition['frame']
 		feedButtonX = defaultPosition['x']
 		feedButtonY = defaultPosition['y']
+		feedButton:resetPosition()
 	else
 		feedButtonX = FOM_Config.buttonX
 		feedButtonY = FOM_Config.buttonY
 	end
 
-	-- create feed button
-	FOM_FeedButton = CreateFrame("Button", "FOM_FeedButton", nil, "ActionButtonTemplate,SecureActionButtonTemplate");
-	FOM_FeedButton:SetMovable(true)
-	FOM_FeedButton:EnableMouse(true)
-	FOM_FeedButton:SetClampedToScreen(true)
-	FOM_FeedButton:RegisterForDrag("LeftButton")
-	FOM_FeedButton:SetScript("OnDragStart", function(self2)
-		self2:StartMoving()
-	end)
-	FOM_FeedButton:SetScript("OnDragStop", function(self2)
-        local offsetX, offsetY = feedButton.getPosition()
-		FOM_Config.buttonX = offsetX
-		FOM_Config.buttonY = offsetY
-		FOM_Config['buttonRelative'] = 'absolute'
-		self2:StopMovingOrSizing()
-	end)
-
-	FOM_FeedButtonNormalTexture:SetTexture("");
-	FOM_FeedButton:RegisterForClicks("LeftButtonUp", "RightButtonUp");
-	FOM_FeedButton:SetScript("PreClick", FOM_FeedButton_PreClick)
-	FOM_FeedButton:SetScript("PostClick", FOM_FeedButton_PostClick);
-	FOM_FeedButton:SetScript("OnEnter", FOM_FeedButton_OnEnter);
-	FOM_FeedButton:SetScript("OnLeave", FOM_FeedButton_OnLeave);
+	feedButton:SetScript("PostClick", FOM_FeedButton_PostClick);
 	if (FOM_Config.NoButton) then
-		FOM_FeedButton:Hide();
+		feedButton.button:Hide();
 	end
 
-	feedButton.OnEnable()
 	if FOM_Config['buttonRelative'] ~= 'absolute' then
 		--Position relative to frame
-		--@debug@
-		print('Button position relative to', FOM_Config['buttonRelative'])
-		--@end-debug@
-		feedButton.setPosition(feedButtonX, feedButtonY, defaultPosition['frame'])
+		feedButton:setPosition(feedButtonX, feedButtonY, defaultPosition['frame'])
 	else
 		--Absolute position
-		feedButton.setPosition(feedButtonX, feedButtonY)
+		feedButton:setPosition(feedButtonX, feedButtonY)
 	end
 
 	if FOM_Config['buttonH'] ~= nil and FOM_Config['buttonW'] ~= nil then
@@ -480,17 +438,14 @@ function FOM_OnEvent(self, event, arg1, arg2)
 				end
 			end
 		end
-	elseif (event == "SPELL_UPDATE_COOLDOWN") then
-		local cooldown = _G.C_Spell.GetSpellCooldown(FOM_FEED_PET_SPELL_ID);
-		CooldownFrame_Set(FOM_FeedButtonCooldown, cooldown['startTime'], cooldown['duration'], cooldown['isEnabled']);
 	elseif (event == "SPELL_UPDATE_USABLE") then
 		local isUsable, notEnoughtMana = _G.C_Spell.IsSpellUsable(FOM_FEED_PET_SPELL_ID);
 		if (not isUsable) then
-			FOM_FeedButtonIcon:SetVertexColor(0.4, 0.4, 0.4);
+			feedButton:SetVertexColor(0.4, 0.4, 0.4);
 		elseif (FOM_NoFoodError) then
-			FOM_FeedButtonIcon:SetVertexColor(0.5, 0.5, 0.1);
+			feedButton:SetVertexColor(0.5, 0.5, 0.1);
 		else
-			FOM_FeedButtonIcon:SetVertexColor(1, 1, 1);
+			feedButton:SetVertexColor(1, 1, 1);
 		end
 	end
 
@@ -507,10 +462,10 @@ end
 
 function FOM_UpdateBindings()
 	if (not InCombatLockdown()) then
-		ClearOverrideBindings(FOM_FeedButton);
+		ClearOverrideBindings(feedButton.button.btn);
 		local key = GetBindingKey("FOM_FEED");
 		if (key) then
-			SetOverrideBindingClick(FOM_FeedButton, nil, key, "FOM_FeedButton");
+			SetOverrideBindingClick(feedButton.button.btn, nil, key, "FOM_FeedButton");
 		end
 	end
 end
@@ -627,56 +582,39 @@ function FOM_PickFoodForButton()
 	end
 	local pet = UnitName("pet");
 	if (not pet) then
+		feedButton.button:Hide()
 		FOM_PickFoodQueued = true;
 		return;
 	end
 	local dietList = petInfo.petDiet
 	if ( dietList == nil or #dietList == 0) then
 		FOM_PickFoodQueued = true;
-		FOM_FeedButton:Hide();
+		feedButton.button:Hide()
 		return;
 	elseif (not FOM_Config.NoButton) then
-		FOM_FeedButton:Show();
+		feedButton.button:Show()
 	end
 
 	foodBag, foodSlot, FOM_NextFoodLink, foodIcon = FOM_NewFindFood();
-	FOM_SetupButton(foodBag, foodSlot);
+	feedButton:setFood(foodBag, foodSlot)
 
 	if ( foodBag == nil) then
 		local fallbackBag, fallbackSlot;
 		fallbackBag, fallbackSlot, FOM_NextFoodLink, foodIcon = FOM_NewFindFood(1);
 		if (fallbackBag) then
 			FOM_NoFoodError = string.format(FOM_ERROR_NO_FOOD_NO_FALLBACK, pet);
-			FOM_SetupButton(fallbackBag, fallbackSlot, "alt");
-			FOM_FeedButtonIcon:SetTexture(foodIcon);
-			FOM_FeedButtonCount:SetText(GetItemCount(FOM_NextFoodLink))
+			feedButton:setFood(fallbackBag, fallbackSlot, "alt");
 		else
 			-- No Food Could be Found
 			FOM_NoFoodError = string.format(FOM_ERROR_NO_FOOD, pet);
 			FOM_NextFoodLink = nil;
-			FOM_FeedButtonIcon:SetTexture(FOM_FeedPetSpellIcon);
-			--GFWUtils.Print("Can't feed? #SortedFoodList:"..#SortedFoodList);
-			--DevTools_Dump(GetPetFoodTypes());
-			FOM_FeedButtonCount:SetText("")
-
+			feedButton.button:removeItem()
 		end
 
-		FOM_FeedButtonIcon:SetVertexColor(0.5, 0.5, 1);
+		feedButton:SetVertexColor(0.5, 0.5, 1);
 	else
 		FOM_NoFoodError = nil;
-		FOM_FeedButtonIcon:SetVertexColor(1, 1, 1);
-		FOM_FeedButtonIcon:SetTexture(foodIcon);
-		FOM_FeedButtonCount:SetText(GetItemCount(FOM_NextFoodLink))
-
-	end
-
-	-- debug
-	if (false and FOM_NextFoodLink) then
-		if (FOM_NoFoodError) then
-			GFWUtils.PrintOnce("Next food (fallback):"..FOM_NextFoodLink, 1);
-		else
-			GFWUtils.PrintOnce("Next food:"..FOM_NextFoodLink, 1);
-		end
+		feedButton:SetVertexColor(1, 1, 1);
 	end
 end
 

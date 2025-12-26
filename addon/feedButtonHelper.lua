@@ -2,11 +2,18 @@
 local feedButtonHelper = _G.GFW_FeedOMatic:NewModule("feedButtonHelper", "AceEvent-3.0")
 local addon = _G.GFW_FeedOMatic
 
----@type Frame
-local FOM_FeedButton
+local FOM_FEED_PET_SPELL_ID = 6991
 
-function feedButtonHelper.OnEnable()
-    FOM_FeedButton = _G.FOM_FeedButton
+function feedButtonHelper:OnInitialize()
+    --[[    if not _G.IsPlayerSpell(FOM_FEED_PET_SPELL_ID) then
+            return
+        end]]
+    local pos = self.getDefaultPosition()
+    ---@type SpellButton
+    self.button = _G.LibStub('LibSpellButton-1').CreateSpellButton(FOM_FEED_PET_SPELL_ID, "FeedPetButton", pos['h'], pos['w'])
+    self.button:setPoint("LEFT", pos['frame'], "RIGHT", pos['x'], pos['y']);
+    self.button:setScript("OnEnter", _G.FOM_FeedButton_OnEnter);
+    self.button:setScript("OnLeave", _G.FOM_FeedButton_OnLeave);
 end
 
 function feedButtonHelper.getDefaultPosition()
@@ -63,19 +70,15 @@ function feedButtonHelper.getDefaultPosition()
     end
 end
 
-function feedButtonHelper.getPosition()
-    local point, relativeTo, relativePoint, offsetX, offsetY = FOM_FeedButton:GetPoint(1)
-    --@debug@
-    print('Button position', point, relativeTo, relativePoint, offsetX, offsetY)
-    --@end-debug@
-    return ('%d'):format(offsetX), ('%d'):format(offsetY)
+function feedButtonHelper:getPosition()
+    return self.button:getPosition()
 end
 
 ---Set feed pet button position
 ---@param x number
 ---@param y number
 ---@param relative Frame
-function feedButtonHelper.setPosition(x, y, relative)
+function feedButtonHelper:setPosition(x, y, relative)
     local point = 'TOPLEFT'
     local relativeToPoint = 'TOPLEFT'
     if relative ~= nil then
@@ -91,38 +94,68 @@ function feedButtonHelper.setPosition(x, y, relative)
     end
     --FOM_FeedButton:SetPoint("LEFT", PetFrame, "RIGHT", -10, -15);
 
-    FOM_FeedButton:ClearAllPoints()
-    FOM_FeedButton:SetPoint(point, relative, relativeToPoint, x, y)
+    self.button.btn:ClearAllPoints()
+    self.button:setPoint(point, relative, relativeToPoint, x, y)
 
     addon.db.profile['buttonX'] = x
     addon.db.profile['buttonY'] = y
 end
 
 ---Reset button position
-function feedButtonHelper.resetPosition()
-    local default = feedButtonHelper.getDefaultPosition()
-    feedButtonHelper.setPosition(default['x'], default['y'], default['frame'])
+function feedButtonHelper:resetPosition()
+    local default = self.getDefaultPosition()
+    self:setPosition(default['x'], default['y'], default['frame'])
     addon.db.profile['buttonRelative'] = default['addon']
 end
 
-function feedButtonHelper.getSize()
-    return FOM_FeedButton:GetWidth(), FOM_FeedButton:GetHeight()
+function feedButtonHelper:getSize()
+    return self.button.btn:GetSize()
 end
 
-function feedButtonHelper.setSize(height, width)
-    FOM_FeedButton:SetHeight(height)
-    FOM_FeedButton:SetWidth(width)
+function feedButtonHelper:setSize(height, width)
+    self.button.btn:SetSize(width, height)
     addon.db.profile['buttonH'] = height
     addon.db.profile['buttonW'] = width
 end
 
+function feedButtonHelper:resetSize()
+    local default = self.getDefaultPosition()
+    self:setSize(default['h'], default['w'])
+end
+
 ---Toggle feed button visibility
-function feedButtonHelper.toggle()
+function feedButtonHelper:toggle()
     if (addon.db.profile.NoButton) then
-        _G.FOM_FeedButton:Hide();
+        self.button:Hide();
         addon.db.profile.NoButton = true
     else
-        _G.FOM_FeedButton:Show();
+        self.button:Show();
         addon.db.profile.NoButton = false
     end
+end
+
+function feedButtonHelper:setFood(bag, slot, modifier)
+    if bag == nil then
+        self.button:setCount("")
+    else
+        self.button:setItem(bag, slot)
+    end
+end
+
+function feedButtonHelper:updateFood()
+    local foodBag, foodSlot, FOM_NextFoodLink, foodIcon = _G.FOM_NewFindFood();
+    if foodBag == nil then
+        foodBag, foodSlot, FOM_NextFoodLink, foodIcon = _G.FOM_NewFindFood(true);
+        self:setFood(foodBag, foodSlot, "alt");
+    else
+        self:setFood(foodBag, foodSlot)
+    end
+end
+
+function feedButtonHelper:SetScript(event, callback)
+    self.button.btn:SetScript(event, callback)
+end
+
+function feedButtonHelper:SetVertexColor(r, g, b)
+    self.button.icon:SetVertexColor(r, g, b)
 end
