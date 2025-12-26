@@ -21,11 +21,7 @@ local function setProfileOption(info, value)
     if (_G.FOM_FoodListBorder and _G.FOM_FoodListBorder:IsVisible()) then
         _G.FOM_FoodListUI_UpdateList();
     end
-    if (_G.InCombatLockdown()) then
-        _G.FOM_PickFoodQueued = true;
-    else
-        _G.FOM_PickFoodForButton();
-    end
+    feedButton:updateFood()
 end
 
 function options.notifyChange()
