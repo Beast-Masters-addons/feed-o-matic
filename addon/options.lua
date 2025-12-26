@@ -24,10 +24,6 @@ local function setProfileOption(info, value)
     feedButton:updateFood()
 end
 
-function options.notifyChange()
-    reg:NotifyChange('Feed Button')
-end
-
 options.options = {
     type = 'group',
     get = getProfileOption,
