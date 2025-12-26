@@ -10,7 +10,8 @@ function feedButtonHelper:OnInitialize()
         end]]
     local pos = self.getDefaultPosition()
     ---@type SpellButton
-    self.button = _G.LibStub('LibSpellButton-1').CreateSpellButton(FOM_FEED_PET_SPELL_ID, "FeedPetButton", pos['h'], pos['w'])
+    self.button = _G.LibStub('LibSpellButton-1').CreateSpellButton(
+            FOM_FEED_PET_SPELL_ID, "FeedPetButton", pos['h'], pos['w'])
     self.button:setPoint("LEFT", pos['frame'], "RIGHT", pos['x'], pos['y']);
     self.button:setScript("OnEnter", _G.FOM_FeedButton_OnEnter);
     self.button:setScript("OnLeave", _G.FOM_FeedButton_OnLeave);
@@ -148,9 +149,9 @@ function feedButtonHelper:setFood(bag, slot, modifier)
 end
 
 function feedButtonHelper:updateFood()
-    local foodBag, foodSlot, FOM_NextFoodLink, foodIcon = _G.FOM_NewFindFood();
+    local foodBag, foodSlot = _G.FOM_NewFindFood();
     if foodBag == nil then
-        foodBag, foodSlot, FOM_NextFoodLink, foodIcon = _G.FOM_NewFindFood(true);
+        foodBag, foodSlot = _G.FOM_NewFindFood(true);
         self:setFood(foodBag, foodSlot, "alt");
     else
         self:setFood(foodBag, foodSlot)
