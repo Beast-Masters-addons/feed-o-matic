@@ -5,6 +5,8 @@ local lib = addon:NewModule("FOM_PetInfo", "AceEvent-3.0")
 local utils = _G.LibStub('BMUtils')
 ---@type FOM_Food
 local food
+---@type feedButtonHelper
+local feedButton = addon:GetModule("feedButtonHelper")
 
 function lib:OnEnable()
     self:RegisterEvent("UNIT_PET")
@@ -22,9 +24,17 @@ function lib:UNIT_PET(event, unit)
     end
     self:updatePetInfo()
     if _G.UnitExists("pet") then
+        self:updatePetInfo()
+        feedButton:updateFood()
+        feedButton.button:Show()
+        --@debug@
         print(('%s level %d summoned'):format(self.petName, self.petLevel))
+        --@end-debug@
     else
+        --@debug@
         print('Pet dismissed')
+        --@end-debug@
+        feedButton.button:Hide()
     end
 
 end
@@ -40,7 +50,7 @@ function lib:updatePetInfo()
         self.petDietEn = {}
         local petDietLocalized = _G.GetPetFoodTypes()
         if petDietLocalized then
-            for _, dietLocale in ipairs({_G.GetPetFoodTypes()}) do
+            for _, dietLocale in ipairs({ _G.GetPetFoodTypes() }) do
                 table.insert(self.petDietEn, food.unLocalizeDiet(dietLocale))
             end
         end
