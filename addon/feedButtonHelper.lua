@@ -15,6 +15,7 @@ function feedButtonHelper:OnInitialize()
     self.button:setPoint("LEFT", pos['frame'], "RIGHT", pos['x'], pos['y']);
     self.button:setScript("OnEnter", _G.FOM_FeedButton_OnEnter);
     self.button:setScript("OnLeave", _G.FOM_FeedButton_OnLeave);
+    self.button:Hide()
 end
 
 function feedButtonHelper.getDefaultPosition()
@@ -141,19 +142,33 @@ function feedButtonHelper:toggle()
 end
 
 function feedButtonHelper:setFood(bag, slot, modifier)
+    self.foodBag = bag
+    self.foodSlot = slot
+
     if bag == nil then
-        self.button:setCount("")
+        self.button:removeItem()
+        self.foodLocation = nil
     else
         self.button:setItem(bag, slot)
+        self.foodLocation = _G.ItemLocation:CreateFromBagAndSlot(bag, slot)
     end
 end
 
 function feedButtonHelper:updateFood()
     local foodBag, foodSlot = _G.FOM_NewFindFood();
     if foodBag == nil then
-        foodBag, foodSlot = _G.FOM_NewFindFood(true);
-        self:setFood(foodBag, foodSlot, "alt");
+        local fallbackFoodBag, fallbackFoodSlot = _G.FOM_NewFindFood(true);
+        self:setFood(fallbackFoodBag, fallbackFoodSlot, "alt");
+        local pet = _G.UnitName("pet")
+        if fallbackFoodBag then
+            _G.FOM_NoFoodError = string.format(_G.FOM_ERROR_NO_FOOD_NO_FALLBACK, pet);
+        else
+            _G.FOM_NoFoodError = string.format(_G.FOM_ERROR_NO_FOOD, pet);
+        end
+        self:SetVertexColor(0.5, 0.5, 1)
     else
+        _G.FOM_NoFoodError = nil;
+        self:SetVertexColor(1, 1, 1);
         self:setFood(foodBag, foodSlot)
     end
 end

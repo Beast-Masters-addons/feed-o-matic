@@ -13,9 +13,26 @@ function lib:OnEnable()
     self:RegisterEvent("CHAT_MSG_PET_INFO")
     self:RegisterEvent("UNIT_NAME_UPDATE")
     self:RegisterEvent("UI_ERROR_MESSAGE")
+    self:RegisterEvent("PLAYER_REGEN_DISABLED")
+    self:RegisterEvent("PLAYER_REGEN_ENABLED")
+    self:RegisterEvent("BAG_UPDATE_DELAYED")
     ---@type FOM_FoodLogger
     self.foodLog = addon:GetModule("FOM_FoodLogger")
     food = addon:GetModule("FOM_Food")
+end
+
+function lib:PLAYER_REGEN_DISABLED()
+    self:UnregisterEvent("BAG_UPDATE_DELAYED")
+end
+
+function lib:PLAYER_REGEN_ENABLED()
+    self:RegisterEvent("BAG_UPDATE_DELAYED")
+end
+
+function lib:BAG_UPDATE_DELAYED()
+    if self.petLevel then
+        feedButton:updateFood()
+    end
 end
 
 function lib:UNIT_PET(event, unit)
@@ -24,7 +41,6 @@ function lib:UNIT_PET(event, unit)
     end
     self:updatePetInfo()
     if _G.UnitExists("pet") then
-        self:updatePetInfo()
         feedButton:updateFood()
         feedButton.button:Show()
         --@debug@
@@ -106,7 +122,7 @@ function lib:UI_ERROR_MESSAGE(event, errorType, message)
 
             _G['FOMButtonPressed'] = false
             self.foodLog.save(self.petFamily, _G['FOMFeedItemId'], itemName, 'bad')
-            _G.FOM_PickFoodForButton(); --Update button with new food
+            feedButton:updateFood()
 
             --@debug@
             print(('%s does not like %s'):format(self.petFamily, _G['FOMFeedItemLink']))
