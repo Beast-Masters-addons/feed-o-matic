@@ -6,6 +6,8 @@ local emotes = addon:NewModule("FOM_Emotes")
 local tableUtils = addon:GetModule("TableUtils")
 ---@type BMUtils
 local utils = _G.LibStub("BMUtils")
+---@type BMUtilsBasic
+local basic = _G.LibStub("BMUtilsBasic")
 ---@type FOM_Food
 local FOM_Food = _G.GFW_FeedOMatic:GetModule("FOM_Food")
 
@@ -152,23 +154,19 @@ function emotes:getRandomEmote(foodLink)
     local specificEmotes = {}
     if (itemID) then
         specificEmotes = tableUtils:Merge(specificEmotes, self.emotes[itemID])
-        --DevTools_Dump(randomEmotes)
 
         local diet = FOM_Food.isInDiet(itemID)
         specificEmotes = tableUtils:Merge(specificEmotes, self.emotes[diet])
-        --DevTools_Dump(randomEmotes)
     end
 
     specificEmotes = tableUtils:Merge(specificEmotes, self.emotes[UnitCreatureFamily("pet")])
-    --randomEmotes = tableUtils.Merge(randomEmotes, self.emotes["any"])
 
     local randomEmotes
-    if specificEmotes then
+    if not basic.empty(specificEmotes) then
         randomEmotes = specificEmotes
     else
         randomEmotes = genericEmotes
     end
-    DevTools_Dump(randomEmotes)
     return randomEmotes[math.random(table.getn(randomEmotes))]
 
 end
