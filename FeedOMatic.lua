@@ -73,12 +73,9 @@ function FOM_FeedButton_PostClick(self, button, down)
 end
 
 function FOM_GetColoredDiet()
-	local dietList = petInfo.petDietEn;
 	local coloredDiets = {};
-	for _, dietName in pairs(dietList) do
-		assert(FOM_DietColors[dietName], ('No color for diet %s'):format(dietName))
-		local color = FOM_DietColors[dietName];
-		local coloredText = CreateColor(color.r, color.g, color.b):WrapTextInColorCode(dietName);
+	for _, dietName in pairs(petInfo.petDiet) do
+		local coloredText = FOM_Food:dietColor(dietName):WrapTextInColorCode(dietName);
 		table.insert(coloredDiets, coloredText);
 	end
 	return table.concat(coloredDiets, ", ");

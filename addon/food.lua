@@ -8,6 +8,7 @@ local WOW_MAJOR = math.floor(tonumber(select(4, _G.GetBuildInfo()) / 10000))
 local locale = _G.GetLocale()
 local food_locale = _G.FOM_FoodLocale[locale]
 local food_locale_reverse = {}
+local FOM_DietColors = _G.FOM_DietColors
 
 function lib:OnInitialize()
     if locale ~= 'enUS' then
@@ -42,6 +43,15 @@ function lib.unLocalizeDiet(diet)
     end
     assert(food_locale_reverse[diet], ("Unable to unlocalize diet %s"):format(diet))
     return food_locale_reverse[diet]
+end
+
+---Get color for a diet
+---@param diet string
+---@return ColorMixin
+function lib:dietColor(diet)
+    diet = self.unLocalizeDiet(diet)
+    assert(FOM_DietColors[diet], ('No color for diet %s'):format(diet))
+    return FOM_DietColors[diet]
 end
 
 function lib.getFoodList()
