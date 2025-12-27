@@ -10,8 +10,10 @@ local food_locale = _G.FOM_FoodLocale[locale]
 local food_locale_reverse = {}
 
 function lib:OnInitialize()
-    for eng, loc in pairs(food_locale) do
-        food_locale_reverse[loc] = eng
+    if locale ~= 'enUS' then
+        for eng, loc in pairs(food_locale) do
+            food_locale_reverse[loc] = eng
+        end
     end
 end
 
@@ -27,15 +29,9 @@ function lib.getFoodPriority(category)
 end
 
 function lib.localizeDiet(diet)
-    local diets = {
-        ["Meat"] = _G.FOM_DIET_MEAT,
-        ["Fish"] = _G.FOM_DIET_FISH,
-        ["Bread"] = _G.FOM_DIET_BREAD,
-        ["Cheese"] = _G.FOM_DIET_CHEESE,
-        ["Fruit"] = _G.FOM_DIET_FRUIT,
-        ["Fungus"] = _G.FOM_DIET_FUNGUS,
-        ["Mechanical Bits"] = _G.FOM_DIET_MECH,
-    }
+    if locale == 'enUS' then
+        return diet
+    end
     assert(food_locale[diet], ("Unable to localize diet %s"):format(diet))
     return food_locale[diet]
 end
