@@ -12,8 +12,9 @@ function feedButtonHelper:OnInitialize()
     local pos = self.getDefaultPosition()
     ---@type SpellButton
     self.button = _G.LibStub('LibSpellButton-1').CreateSpellButton(
-            FOM_FEED_PET_SPELL_ID, "FeedPetButton", pos['h'], pos['w'])
+            FOM_FEED_PET_SPELL_ID, "FOM_FeedButton", pos['h'], pos['w'])
     self.button:setPoint("LEFT", pos['frame'], "RIGHT", pos['x'], pos['y']);
+    self.button.btn.NormalTexture:Hide()
     self.button:setScript("OnEnter", _G.FOM_FeedButton_OnEnter);
     self.button:setScript("OnLeave", _G.FOM_FeedButton_OnLeave);
     self.button:Hide()
@@ -172,6 +173,7 @@ function feedButtonHelper:updateFood()
         self:SetVertexColor(1, 1, 1);
         self:setFood(foodBag, foodSlot)
     end
+    self.button.btn.NormalTexture:Hide()
 end
 
 function feedButtonHelper:SetScript(event, callback)
