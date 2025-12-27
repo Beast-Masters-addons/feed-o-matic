@@ -97,10 +97,10 @@ function lib.isInDiet(foodItemID, dietList)
 end
 
 ---Is the item a known eatable food item?
----@return string Diet name in english or false if the item is not food
+---@return string Diet name in english or nil if the item is not food
 function lib.isKnownFood(itemID)
     if _G.FOM_FoodInfo[itemID] == nil then
-        return false
+        return nil
     end
     return _G.FOM_FoodInfo[itemID]["diet"]
 end
