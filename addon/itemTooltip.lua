@@ -11,6 +11,7 @@ local FOM_Food = _G.GFW_FeedOMatic:GetModule("FOM_Food")
 local petInfo = _G.GFW_FeedOMatic:GetModule("FOM_PetInfo")
 
 local utils = _G.LibStub("BMUtils")
+local L = _G.LibStub("AceLocale-3.0"):GetLocale("GFW_FeedOMatic")
 local QuestDifficultyColors = _G.QuestDifficultyColors
 
 function lib:OnEnable()
@@ -27,19 +28,19 @@ local function FOM_TooltipAddFoodQuality(self, itemID)
         local petName = petInfo.petName
         if (levelDelta >= FOM_DELTA_EATS) then
             color = QuestDifficultyColors["trivial"];
-            self:AddLine(string.format(FOM_QUALITY_UNDER, petName), color.r, color.g, color.b);
+            self:AddLine(string.format(L["%s doesn't like this anymore."], petName), color.r, color.g, color.b);
             return true;
         elseif (levelDelta >= FOM_DELTA_LIKES and levelDelta < FOM_DELTA_EATS) then
             color = QuestDifficultyColors["standard"];
-            self:AddLine(string.format(FOM_QUALITY_WILL, petName), color.r, color.g, color.b);
+            self:AddLine(string.format(L["%s will eat this."], petName), color.r, color.g, color.b);
             return true;
         elseif (levelDelta >= FOM_DELTA_LOVES and levelDelta < FOM_DELTA_LIKES) then
             color = QuestDifficultyColors["difficult"];
-            self:AddLine(string.format(FOM_QUALITY_LIKE, petName), color.r, color.g, color.b);
+            self:AddLine(string.format(L["%s likes to eat this."], petName), color.r, color.g, color.b);
             return true;
         elseif (levelDelta < FOM_DELTA_LOVES) then
             color = QuestDifficultyColors["verydifficult"];
-            self:AddLine(string.format(FOM_QUALITY_LOVE, petName), color.r, color.g, color.b);
+            self:AddLine(string.format(L["%s loves to eat this."], petName), color.r, color.g, color.b);
             return true;
         end
     end

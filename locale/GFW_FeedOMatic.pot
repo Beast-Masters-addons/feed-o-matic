@@ -1,0 +1,428 @@
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: 1.0\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: addon\constants.lua:31 addon\food_strings_placeholder.lua:1
+#: locale.bckp\enUS.lua:8
+msgid "Conjured Foods"
+msgstr "Conjured Foods"
+
+#: addon\constants.lua:32 addon\food_strings_placeholder.lua:3
+#: locale.bckp\enUS.lua:5
+msgid "Basic Foods"
+msgstr "Basic Foods"
+
+#: addon\constants.lua:33 addon\food_strings_placeholder.lua:5
+#: locale.bckp\enUS.lua:40
+msgid "“Well Fed” Foods"
+msgstr "“Well Fed” Foods"
+
+#: addon\constants.lua:34 addon\food_strings_placeholder.lua:6
+#: locale.bckp\enUS.lua:27
+msgid "Raw Foods"
+msgstr "Raw Foods"
+
+#: addon\constants.lua:49
+msgid "Trivial"
+msgstr "Trivial"
+
+#: addon\constants.lua:50
+msgid "Easy"
+msgstr "Easy"
+
+#: addon\constants.lua:51
+msgid "Medium"
+msgstr "Medium"
+
+#: addon\constants.lua:52
+msgid "Difficult"
+msgstr "Difficult"
+
+#: addon\constants.lua:53
+msgid "Unknown"
+msgstr "Unknown"
+
+#: addon\emotes.lua:17 locale.bckp\enUS.lua:39
+msgid "Yum!"
+msgstr "Yum!"
+
+#: addon\emotes.lua:18 locale.bckp\enUS.lua:19
+msgid "Mmm, good stuff."
+msgstr "Mmm, good stuff."
+
+#: addon\emotes.lua:19 locale.bckp\enUS.lua:16
+msgid "Hey! Watch the fingers!"
+msgstr "Hey! Watch the fingers!"
+
+#: addon\emotes.lua:20 locale.bckp\enUS.lua:25
+msgid "Om nom nom nom…"
+msgstr "Om nom nom nom…"
+
+#: addon\emotes.lua:21 locale.bckp\enUS.lua:26
+msgid "One gulp and it's gone!"
+msgstr "One gulp and it's gone!"
+
+#: addon\emotes.lua:22 locale.bckp\enUS.lua:18
+msgid "Mmm, delicious."
+msgstr "Mmm, delicious."
+
+#: addon\emotes.lua:23 locale.bckp\enUS.lua:6
+msgid "Burp!"
+msgstr "Burp!"
+
+#: addon\emotes.lua:24 locale.bckp\enUS.lua:37
+msgid "Yay, bag space!"
+msgstr "Yay, bag space!"
+
+#: addon\emotes.lua:28 locale.bckp\enUS.lua:13
+msgid "Good boy!"
+msgstr "Good boy!"
+
+#: addon\emotes.lua:29 locale.bckp\enUS.lua:2
+msgid "Atta boy!"
+msgstr "Atta boy!"
+
+#: addon\emotes.lua:30 locale.bckp\enUS.lua:23
+msgid "No more Mister Grumpy!"
+msgstr "No more Mister Grumpy!"
+
+#: addon\emotes.lua:33 locale.bckp\enUS.lua:15
+msgid "Good girl!"
+msgstr "Good girl!"
+
+#: addon\emotes.lua:34 locale.bckp\enUS.lua:3
+msgid "Atta girl!"
+msgstr "Atta girl!"
+
+#: addon\emotes.lua:35 locale.bckp\enUS.lua:22
+msgid "No more Miss Grumpy!"
+msgstr "No more Miss Grumpy!"
+
+#: addon\emotes.lua:41 locale.bckp\enUS.lua:20
+msgid "Mmm, zesty!"
+msgstr "Mmm, zesty!"
+
+#: addon\emotes.lua:44 addon\emotes.lua:50 addon\emotes.lua:56
+#: locale.bckp\enUS.lua:28
+msgid "Tastes like chicken."
+msgstr "Tastes like chicken."
+
+#: addon\emotes.lua:45 addon\emotes.lua:51 addon\emotes.lua:57
+#: locale.bckp\enUS.lua:29
+msgid "Tastes like tallstrider!"
+msgstr "Tastes like tallstrider!"
+
+#: addon\emotes.lua:46 addon\emotes.lua:52 addon\emotes.lua:58
+#: locale.bckp\enUS.lua:30
+msgid "Tastes like well-aged gnome."
+msgstr "Tastes like well-aged gnome."
+
+#: addon\emotes.lua:47 addon\emotes.lua:53 addon\emotes.lua:59
+#: locale.bckp\enUS.lua:31
+msgid "Tastes like… spider?"
+msgstr "Tastes like… spider?"
+
+#: addon\emotes.lua:62 locale.bckp\enUS.lua:38
+msgid "Yow, spicy!"
+msgstr "Yow, spicy!"
+
+#: addon\emotes.lua:65 locale.bckp\enUS.lua:35
+msgid "What a big mouth!"
+msgstr "What a big mouth!"
+
+#: addon\emotes.lua:68 locale.bckp\enUS.lua:32
+msgid "Tastes so good, makes a grown man cry."
+msgstr "Tastes so good, makes a grown man cry."
+
+#: addon\emotes.lua:71 locale.bckp\enUS.lua:24
+msgid "Now how about some Nether Ray Fries?"
+msgstr "Now how about some Nether Ray Fries?"
+
+#: addon\emotes.lua:74 locale.bckp\enUS.lua:10
+msgid "Crunchy!"
+msgstr "Crunchy!"
+
+#: addon\emotes.lua:77 addon\emotes.lua:80 locale.bckp\enUS.lua:7
+msgid "Can has bigger fish?"
+msgstr "Can has bigger fish?"
+
+#: addon\emotes.lua:87 addon\emotes.lua:90
+msgid "Tastes great, less filling!"
+msgstr "Tastes great, less filling!"
+
+#: addon\emotes.lua:93
+msgid "Mmm, sashimi!"
+msgstr "Mmm, sashimi!"
+
+#: addon\emotes.lua:98 locale.bckp\enUS.lua:34
+msgid "Trippy…"
+msgstr "Trippy…"
+
+#: addon\emotes.lua:104
+msgid "Good piggy!"
+msgstr "Good piggy!"
+
+#: addon\emotes.lua:107 locale.bckp\enUS.lua:21
+msgid "Nice kitty!"
+msgstr "Nice kitty!"
+
+#: addon\emotes.lua:110 addon\emotes.lua:113 locale.bckp\enUS.lua:14
+msgid "Good dog!"
+msgstr "Good dog!"
+
+#: addon\emotes.lua:116 locale.bckp\enUS.lua:11
+msgid "Do you really have to wrap it up before eating it?"
+msgstr "Do you really have to wrap it up before eating it?"
+
+#: addon\emotes.lua:119 addon\emotes.lua:122 locale.bckp\enUS.lua:12
+msgid "Down, dino!"
+msgstr "Down, dino!"
+
+#: addon\emotes.lua:125 locale.bckp\enUS.lua:9
+msgid "Crikey, it snapped that up fast!"
+msgstr "Crikey, it snapped that up fast!"
+
+#: addon\emotes.lua:128 locale.bckp\enUS.lua:36
+msgid "What a good little puppy!"
+msgstr "What a good little puppy!"
+
+#: addon\emotes.lua:129 locale.bckp\enUS.lua:4
+msgid "Aww, they're sharing."
+msgstr "Aww, they're sharing."
+
+#: addon\emotes.lua:130 addon\emotes.lua:133 locale.bckp\enUS.lua:17
+msgid "Hey, don't fight over it!"
+msgstr "Hey, don't fight over it!"
+
+#: addon\feedButtonHelper.lua:165
+msgid "Found no food for %s that you haven't told Feed-O-Matic to avoid."
+msgstr "Found no food for %s that you haven't told Feed-O-Matic to avoid."
+
+#: addon\feedButtonHelper.lua:167
+msgid "Found no food for %s."
+msgstr "Found no food for %s."
+
+#: addon\food_strings_placeholder.lua:2
+msgid "Conjured Mana Restoring Foods"
+msgstr "Conjured Mana Restoring Foods"
+
+#: addon\food_strings_placeholder.lua:4
+msgid "Mana Restoring Foods"
+msgstr "Mana Restoring Foods"
+
+#: addon\frames\foodList.lua:12 FeedOMatic.lua:668
+msgid "Recipe status:"
+msgstr "Recipe status:"
+
+#: addon\itemTooltip.lua:31
+msgid "%s doesn't like this anymore."
+msgstr "%s doesn't like this anymore."
+
+#: addon\itemTooltip.lua:35
+msgid "%s will eat this."
+msgstr "%s will eat this."
+
+#: addon\itemTooltip.lua:39
+msgid "%s likes to eat this."
+msgstr "%s likes to eat this."
+
+#: addon\itemTooltip.lua:43
+msgid "%s loves to eat this."
+msgstr "%s loves to eat this."
+
+#: addon\options.lua:28
+msgid "Foods of a level closer to your pet's restore more health."
+msgstr "Foods of a level closer to your pet's restore more health."
+
+#: addon\options.lua:39
+msgid "General Options"
+msgstr "General Options"
+
+#: addon\options.lua:44 locale.bckp\enUS.lua:33
+msgid ""
+"To feed your pet with Feed-O-Matic, click the button next to your pet's "
+"health bar, bind a key to Feed Pet in the Key Bindings menu, or put '/click "
+"FOM_FeedButton' in a macro."
+msgstr ""
+"To feed your pet with Feed-O-Matic, click the button next to your pet's "
+"health bar, bind a key to Feed Pet in the Key Bindings menu, or put '/click "
+"FOM_FeedButton' in a macro."
+
+#: addon\options.lua:51
+msgid "Show food quality in tooltips"
+msgstr "Show food quality in tooltips"
+
+#: addon\options.lua:52
+msgid ""
+"If enabled, food item tooltips show a quick summary of how much the food "
+"will restore your pet's health."
+msgstr ""
+"If enabled, food item tooltips show a quick summary of how much the food "
+"will restore your pet's health."
+
+#: addon\options.lua:59
+msgid "Prefer lower-level foods"
+msgstr "Prefer lower-level foods"
+
+#: addon\options.lua:60
+msgid ""
+"Enable this option and your pet will quickly dispose of lower-quality foods but require feeding more often.\n"
+"Disable it and your pet will require feeding less often, but your inventory may quickly fill with less-useful foods."
+msgstr ""
+"Enable this option and your pet will quickly dispose of lower-quality foods but require feeding more often.\n"
+"Disable it and your pet will require feeding less often, but your inventory may quickly fill with less-useful foods."
+
+#: addon\options.lua:67
+msgid "Avoid foods needed for quests"
+msgstr "Avoid foods needed for quests"
+
+#: addon\options.lua:68
+msgid ""
+"Some quests require collecting items which are also edible by pets. Enable "
+"this option to prevent your pet's appetite from interfering with your quest "
+"progress."
+msgstr ""
+"Some quests require collecting items which are also edible by pets. Enable "
+"this option to prevent your pet's appetite from interfering with your quest "
+"progress."
+
+#: addon\options.lua:74
+msgid "Notify when feeding:"
+msgstr "Notify when feeding:"
+
+#: addon\options.lua:76
+msgid "With an emote"
+msgstr "With an emote"
+
+#: addon\options.lua:77
+msgid "In chat window"
+msgstr "In chat window"
+
+#: addon\options.lua:78
+msgid "Don't notify"
+msgstr "Don't notify"
+
+#: addon\options.lua:86 addon\options.lua:146
+msgid "Hide Feed Pet button"
+msgstr "Hide Feed Pet button"
+
+#: addon\options.lua:87 addon\options.lua:147
+msgid ""
+"Don't show the button Feed-O-Matic normally puts next to your pet's health bar.\n"
+"(You might find this option useful if using a UI that changes/hides the default pet frame.)"
+msgstr ""
+"Don't show the button Feed-O-Matic normally puts next to your pet's health bar.\n"
+"(You might find this option useful if using a UI that changes/hides the default pet frame.)"
+
+#: addon\options.lua:100
+msgid "Food Preferences"
+msgstr "Food Preferences"
+
+#: addon\options.lua:105
+msgid ""
+"Uncheck individual foods (or food categories) below to prevent Feed-O-Matic from feeding them to your pet.\n"
+"Feed-O-Matic will prefer to use foods from categories closer to the top of the list."
+msgstr ""
+"Uncheck individual foods (or food categories) below to prevent Feed-O-Matic from feeding them to your pet.\n"
+"Feed-O-Matic will prefer to use foods from categories closer to the top of the list."
+
+#: addon\options.lua:112
+msgid "Only show foods for my pet"
+msgstr "Only show foods for my pet"
+
+#: addon\options.lua:115
+msgid "Filters the list to show only foods a level %d %s will eat"
+msgstr "Filters the list to show only foods a level %d %s will eat"
+
+#: addon\options.lua:119
+msgid "Filters the list to show only foods a level %d pet can eat"
+msgstr "Filters the list to show only foods a level %d pet can eat"
+
+#: addon\options.lua:128
+msgid "Only show foods in my inventory"
+msgstr "Only show foods in my inventory"
+
+#: addon\options.lua:160
+msgid "Button position"
+msgstr "Button position"
+
+#: addon\options.lua:165
+msgid "X position"
+msgstr "X position"
+
+#: addon\options.lua:175
+msgid "Y position"
+msgstr "Y position"
+
+#: addon\options.lua:185
+msgid "Relative to frame"
+msgstr "Relative to frame"
+
+#: addon\options.lua:195
+msgid "Reset position"
+msgstr "Reset position"
+
+#: addon\options.lua:204
+msgid "Button size"
+msgstr "Button size"
+
+#: addon\options.lua:209
+msgid "Height"
+msgstr "Height"
+
+#: addon\options.lua:223
+msgid "Width"
+msgstr "Width"
+
+#: addon\options.lua:237
+msgid "Reset size"
+msgstr "Reset size"
+
+#: FeedOMatic.lua:66
+msgid "Hold Alt while pressing the Feed Pet button or key to feed %s anyway."
+msgstr "Hold Alt while pressing the Feed Pet button or key to feed %s anyway."
+
+#: FeedOMatic.lua:97
+msgid "Alt-Left-Click to Feed Pet:"
+msgstr "Alt-Left-Click to Feed Pet:"
+
+#: FeedOMatic.lua:104
+msgid "Left-Click to Feed Pet:"
+msgstr "Left-Click to Feed Pet:"
+
+#: FeedOMatic.lua:108
+msgid "Cannot Feed Pet"
+msgstr "Cannot Feed Pet"
+
+#: FeedOMatic.lua:118
+msgid "%s eats:"
+msgstr "%s eats:"
+
+#: FeedOMatic.lua:122
+msgid "<Right-Click for Options>"
+msgstr "<Right-Click for Options>"
+
+#: FeedOMatic.lua:323
+msgid "Feeding %s a %s…"
+msgstr "Feeding %s a %s…"
+
+#: FeedOMatic.lua:326
+msgid "feeds %s a %s. "
+msgstr "feeds %s a %s. "
+
+#: FeedOMatic.lua:636
+msgid "Food"
+msgstr "Food"
+
+#: FeedOMatic.lua:640
+msgid "Ingredient for"
+msgstr "Ingredient for"
+
+#: FeedOMatic.lua:976
+msgid "Feed Pet button"
+msgstr "Feed Pet button"

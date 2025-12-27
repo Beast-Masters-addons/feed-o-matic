@@ -8,8 +8,6 @@ addon.version = '@project-version@'
 ---@type LibProfessions
 addon.professions, minor = _G.LibStub('LibProfessions-0')
 assert(minor >= 10, ('LibProfessions 0.10 or higher is required, found 0.%d'):format(minor))
----@type TableUtils
-addon.tableUtils = {}
 
 -- AceAddon Initialization
 local ace_addon = _G.LibStub("AceAddon-3.0"):NewAddon(addonName)

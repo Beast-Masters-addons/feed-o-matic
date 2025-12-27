@@ -1,6 +1,7 @@
 ---@class feedButtonHelper
 local feedButtonHelper = _G.GFW_FeedOMatic:NewModule("feedButtonHelper", "AceEvent-3.0")
 local addon = _G.GFW_FeedOMatic
+local L = _G.LibStub("AceLocale-3.0"):GetLocale("GFW_FeedOMatic")
 
 local FOM_FEED_PET_SPELL_ID = 6991
 
@@ -161,9 +162,9 @@ function feedButtonHelper:updateFood()
         self:setFood(fallbackFoodBag, fallbackFoodSlot, "alt");
         local pet = _G.UnitName("pet")
         if fallbackFoodBag then
-            _G.FOM_NoFoodError = string.format(_G.FOM_ERROR_NO_FOOD_NO_FALLBACK, pet);
+            _G.FOM_NoFoodError = string.format(L["Found no food for %s that you haven't told Feed-O-Matic to avoid."], pet);
         else
-            _G.FOM_NoFoodError = string.format(_G.FOM_ERROR_NO_FOOD, pet);
+            _G.FOM_NoFoodError = string.format(L["Found no food for %s."], pet);
         end
         self:SetVertexColor(0.5, 0.5, 1)
     else

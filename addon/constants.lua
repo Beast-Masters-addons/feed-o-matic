@@ -2,6 +2,7 @@ local addonName = ...
 local addon = _G.LibStub("AceAddon-3.0"):GetAddon(addonName)
 ---@class FOM_Constants
 local const = addon:NewModule("FOM_Constants")
+local L = _G.LibStub("AceLocale-3.0"):GetLocale("GFW_FeedOMatic")
 
 WOW_MAJOR = math.floor(tonumber(select(4, _G.GetBuildInfo()) / 10000))
 
@@ -27,10 +28,10 @@ FOM_DifficultyColors = {
 };
 
 const.FOM_CategoryNames = { -- localized keys for FOM_FoodTypes indexes
-    FOM_OPTIONS_FOODS_CONJURED,
-    FOM_OPTIONS_FOODS_BASIC,
-    FOM_OPTIONS_FOODS_BONUS,
-    FOM_OPTIONS_FOODS_INEDIBLE,
+    L["Conjured Foods"],
+    L["Basic Foods"],
+    L["“Well Fed” Foods"],
+    L["Raw Foods"],
 };
 
 FOM_DietColors = { -- convenient reuse of familiar colors?
@@ -44,3 +45,9 @@ FOM_DietColors = { -- convenient reuse of familiar colors?
     ["Fungus"]	= RAID_CLASS_COLORS.WARLOCK,
     ["Mechanical Bits"]		= RAID_CLASS_COLORS.PRIEST,
 };
+
+FOM_DIFFICULTY_1   				= L["Trivial"]
+FOM_DIFFICULTY_2   				= L["Easy"]
+FOM_DIFFICULTY_3				= L["Medium"]
+FOM_DIFFICULTY_4				= L["Difficult"]
+FOM_DIFFICULTY_5	   			= L["Unknown"]

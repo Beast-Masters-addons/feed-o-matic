@@ -1,4 +1,4 @@
-## Interface: 110200, 50500, 40401, 30403, 20504, 11507
+## Interface: 110200, 50500, 40401, 30403, 20505, 11507
 
 ## Version: @project-version@
 ## Author: Gazmik Fizzwidget/datagutten
@@ -20,11 +20,10 @@ libs\LibStub\LibStub.lua
 Libs.xml
 #@end-no-lib-strip@
 
+locale\locale.xml
 addon\common.lua
 data\food_info.lua
 data\food_locale.lua
-localization.lua
-LocaleSupport.lua
 addon\constants.lua
 addon\food_log.lua
 addon\feedButtonHelper.lua
@@ -32,11 +31,10 @@ GFWUtils.lua
 addon\table_utils.lua
 addon\petInfo.lua
 
-# addon\foodDebug.lua
 addon\options.lua
-FeedOMatic_Emotes.lua
 FOM_CookingScan.lua
 addon\food.lua
+addon\emotes.lua
 addon\itemTooltip.lua
 FeedOMatic.lua
 FeedOMatic.xml

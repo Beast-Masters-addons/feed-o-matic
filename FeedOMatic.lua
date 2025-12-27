@@ -8,8 +8,6 @@ _G['FeedOMatic'] = {}
 local ace_addon = _G.LibStub("AceAddon-3.0"):GetAddon(addonName)
 ---@type FOM_Constants
 local const = ace_addon:GetModule("FOM_Constants")
----@type TableUtils
-local tableUtils = addon.tableUtils
 ---@type BMUtils
 local utils = _G.LibStub("BMUtils")
 local is_classic = _G.WOW_PROJECT_ID ~= _G.WOW_PROJECT_MAINLINE
@@ -32,8 +30,11 @@ local itemTooltip = _G.GFW_FeedOMatic:GetModule("FOM_ItemTooltip")
 local petInfo = _G.GFW_FeedOMatic:GetModule("FOM_PetInfo")
 ---@type FOM_Food
 local FOM_Food =  _G.GFW_FeedOMatic:GetModule("FOM_Food")
+---@type FOM_Emotes
+local emotes = _G.GFW_FeedOMatic:GetModule("FOM_Emotes")
 ---@type BMUtilsBasic
 local basic = _G.LibStub('BMUtilsBasic')
+local L = _G.LibStub("AceLocale-3.0"):GetLocale("GFW_FeedOMatic")
 
 -- Variables
 FOM_LastPetName = nil;
@@ -62,6 +63,7 @@ function FOM_FeedButton_PostClick(self, button, down)
 		elseif (FOM_NoFoodError and not IsAltKeyDown()) then
 			if feedButton.foodLocation then
 				local foodLink = C_Item.GetItemLink(feedButton.foodLocation)
+                local FOM_FALLBACK_MESSAGE = L["Hold Alt while pressing the Feed Pet button or key to feed %s anyway."]
 				GFWUtils.Note(FOM_NoFoodError.."\n"..string.format(FOM_FALLBACK_MESSAGE, foodLink))
 			else
 				GFWUtils.Note(FOM_NoFoodError);
@@ -95,18 +97,18 @@ function FOM_FeedButton_OnEnter()
 
 		if (FOM_NoFoodError) then
 			-- fallback instructions
-			FOM_FeedTooltipHeader:SetText(FOM_BUTTON_TOOLTIP1_FALLBACK);
+			FOM_FeedTooltipHeader:SetText(L["Alt-Left-Click to Feed Pet:"]);
 			FOM_FeedTooltip:AddLine(" ");
 			blankLine = true;
 			FOM_FeedTooltip:AddLine(FOM_NoFoodError, RED_FONT_COLOR.r, RED_FONT_COLOR.g, RED_FONT_COLOR.b, 1);
 			linesAdded = linesAdded + 1;
 		else
 			-- left click to feed
-			FOM_FeedTooltipHeader:SetText(FOM_BUTTON_TOOLTIP1);
+			FOM_FeedTooltipHeader:SetText(L["Left-Click to Feed Pet:"]);
 		end
 	else
 		-- no food
-		FOM_FeedTooltipHeader:SetText(FOM_BUTTON_TOOLTIP_NOFOOD);
+		FOM_FeedTooltipHeader:SetText(L["Cannot Feed Pet"]);
 		blankLine = true;
 		FOM_FeedTooltip:AddLine(FOM_NoFoodError, RED_FONT_COLOR.r, RED_FONT_COLOR.g, RED_FONT_COLOR.b, 1);
 		linesAdded = linesAdded + 1;
@@ -116,11 +118,11 @@ function FOM_FeedButton_OnEnter()
 	end
 
 	-- diet summary
-	FOM_FeedTooltip:AddDoubleLine(string.format(FOM_BUTTON_TOOLTIP_DIET, UnitName("pet")), FOM_GetColoredDiet());
+	FOM_FeedTooltip:AddDoubleLine(string.format(L["%s eats:"], UnitName("pet")), FOM_GetColoredDiet());
 	linesAdded = linesAdded + 1;
 
 	-- right click for options
-	FOM_FeedTooltip:AddLine(FOM_BUTTON_TOOLTIP2, GRAY_FONT_COLOR.r, GRAY_FONT_COLOR.g, GRAY_FONT_COLOR.b);
+	FOM_FeedTooltip:AddLine(L["<Right-Click for Options>"], GRAY_FONT_COLOR.r, GRAY_FONT_COLOR.g, GRAY_FONT_COLOR.b);
 	linesAdded = linesAdded + 1;
 
 	-- putting an item in the tooltip shrinks all further text
@@ -316,16 +318,16 @@ function FOM_OnEvent(self, event, arg1, arg2)
 		end
 		local _, _, foodEaten = string.find(arg1, FOM_FEEDPET_LOG_FIRSTPERSON);
 		if (foodEaten) then
+			local _, itemLink = C_Item.GetItemInfo(foodEaten)
 			local foodName = foodEaten;
-			if (feedButton.foodLocation and C_Item.GetItemName(feedButton.foodLocation) == foodEaten) then
-				foodName = C_Item.GetItemLink(feedButton.foodLocation)
-			end
 			local pet = UnitName("pet");
 			if (pet) then
 				if ( FOM_Config.AlertType == 2) then
-					GFWUtils.Print(string.format(FOM_FEEDING_EAT, pet, foodName));
+					GFWUtils.Print(string.format(L["Feeding %s a %s…"], pet, foodName));
 				elseif ( FOM_Config.AlertType == 1) then
 					SendChatMessage(string.format(FOM_FEEDING_FEED, pet, foodName).. FOM_RandomEmote(foodName), "EMOTE");
+					local emote = emotes:getRandomEmote(itemLink)
+					SendChatMessage(string.format(L["feeds %s a %s. "], pet, foodName).. emote, "EMOTE");
 				end
 			end
 		end
@@ -459,34 +461,6 @@ function FOM_ChatCommandHandler(msg)
 
 	-- if we got down to here, we got bad input
 	FOM_ChatCommandHandler("help");
-end
-
-function FOM_RandomEmote(foodLink)
-
-	local localeEmotes = FOM_Emotes[GetLocale()];
-	if (localeEmotes) then
-		local randomEmotes = {};
-		if (UnitSex("pet") == 2) then
-			randomEmotes = tableUtils:Merge(randomEmotes, localeEmotes["male"]);
-		elseif (UnitSex("pet") == 3) then
-			randomEmotes = tableUtils.Merge(randomEmotes, localeEmotes["female"]);
-		end
-
-		local itemID = utils.itemIdFromLink(foodLink);
-		if (itemID) then
-			randomEmotes = tableUtils.Merge(randomEmotes, localeEmotes[itemID]);
-
-			local diet = FOM_Food.isInDiet(itemID);
-			randomEmotes = tableUtils.Merge(randomEmotes, localeEmotes[diet]);
-		end
-
-		randomEmotes = tableUtils.Merge(randomEmotes, localeEmotes[UnitCreatureFamily("pet")]);
-		randomEmotes = tableUtils.Merge(randomEmotes, localeEmotes["any"]);
-
-		return randomEmotes[math.random(table.getn(randomEmotes))];
-	else
-		return "";
-	end
 end
 
 function FOM_FlatFoodList(fallback)
@@ -663,11 +637,11 @@ function FOM_BuildFoodsUI(panel)
 
 	local s = panel:CreateFontString("FOM_FoodList_NameHeader", "OVERLAY", "GameFontNormalSmall");
 	s:SetPoint("TOPLEFT", borderFrame, "TOPLEFT", 53, -12);
-	s:SetText(FOM_OPTIONS_FOODS_NAME);
+	s:SetText(L["Food"]);
 
 	s = panel:CreateFontString("FOM_FoodList_CookingHeader", "OVERLAY", "GameFontNormalSmall");
 	s:SetPoint("TOPRIGHT", borderFrame, "TOPRIGHT", -26, -12);
-	s:SetText(FOM_OPTIONS_FOODS_COOKING);
+	s:SetText(L["Ingredient for"]);
 
 	local listItem = CreateFrame("Button", "FOM_FoodList1", panel, "FOM_FoodListItemTemplate");
 	listItem:SetPoint("TOPLEFT", borderFrame, "TOPLEFT", 5, -29);
@@ -695,7 +669,7 @@ function FOM_FoodListShowTooltip(button)
 	GameTooltip:SetHyperlink("item:"..button.item);
 	if (button.recipe) then
 		local c = FOM_DifficultyColors[button.difficulty];
-		GameTooltip:AddDoubleLine(FOM_DIFFICULTY_HEADER, getglobal("FOM_DIFFICULTY_"..button.difficulty), c.r,c.g,c.b, c.r,c.g,c.b);
+		GameTooltip:AddDoubleLine(L["Recipe status:"], getglobal("FOM_DIFFICULTY_"..button.difficulty), c.r,c.g,c.b, c.r,c.g,c.b);
 	end
 	GameTooltip:Show();
 end
@@ -1003,7 +977,7 @@ function GFW_FeedOMatic:SetupOptions()
 	self.optionsFrames = {}
 	-- The ordering here matters, it determines the order in the Blizzard Interface Options
 	self.optionsFrames.general, self.optionsFrames.general_id = AceConfigDialog:AddToBlizOptions(addonName, shortTitle, nil, "general")
-	self.optionsFrames.button = AceConfigDialog:AddToBlizOptions('Feed Button', 'Feed Pet button', shortTitle)
+	self.optionsFrames.button = AceConfigDialog:AddToBlizOptions('Feed Button', L["Feed Pet button"], shortTitle)
 	self.optionsFrames.profile = AceConfigDialog:AddToBlizOptions(addonName, options.args.profile.name, shortTitle, "profile")
 
 	FOM_BuildFoodsUI(self.optionsFrames.general);
