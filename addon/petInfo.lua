@@ -87,7 +87,8 @@ end
 
 function lib:CHAT_MSG_PET_INFO(event, message)
     local match_dismissed = message:match(_G['SPELLDISMISSPETSELF']:gsub("%%s", "(.*)"))
-    local match_feed = message:match(_G['FEEDPET_LOG_FIRSTPERSON']:gsub("%%s", "(.+)"))
+    local feed_log_string = _G['FEEDPET_LOG_FIRSTPERSON']:gsub("%%s", "(.+)"):gsub("%%1$s", ("(.+)"))
+    local match_feed = message:match(feed_log_string)
 
     if match_dismissed then
         self:updatePetInfo()
