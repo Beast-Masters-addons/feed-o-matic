@@ -15,6 +15,7 @@ local utils = _G.LibStub("BMUtils")
 local is_classic = _G.WOW_PROJECT_ID ~= _G.WOW_PROJECT_MAINLINE
 
 local C_Container = _G.C_Container
+local C_Item = _G.C_Item
 
 ---@type feedButtonHelper
 local feedButton = _G.GFW_FeedOMatic:GetModule("feedButtonHelper")
@@ -56,11 +57,12 @@ function FOM_FeedButton_PostClick(self, button, down)
 	if (not down) then
 		if (button == "RightButton") then
 			GFW_FeedOMatic:ShowConfig();
-		elseif (FOM_NextFoodLink and not FOM_NoFoodError and not InCombatLockdown()) then
+		elseif (feedButton.foodBag and not FOM_NoFoodError and not InCombatLockdown()) then
 			-- successful feed, messages are produced elsewhere
 		elseif (FOM_NoFoodError and not IsAltKeyDown()) then
-			if (FOM_NextFoodLink) then
-				GFWUtils.Note(FOM_NoFoodError.."\n"..string.format(FOM_FALLBACK_MESSAGE, FOM_NextFoodLink));
+			if feedButton.foodLocation then
+				local foodLink = C_Item.GetItemLink(feedButton.foodLocation)
+				GFWUtils.Note(FOM_NoFoodError.."\n"..string.format(FOM_FALLBACK_MESSAGE, foodLink))
 			else
 				GFWUtils.Note(FOM_NoFoodError);
 			end
@@ -69,9 +71,10 @@ function FOM_FeedButton_PostClick(self, button, down)
 end
 
 function FOM_GetColoredDiet()
-	local dietList = petInfo.petDiet;
+	local dietList = petInfo.petDietEn;
 	local coloredDiets = {};
 	for _, dietName in pairs(dietList) do
+		assert(FOM_DietColors[dietName], ('No color for diet %s'):format(dietName))
 		local color = FOM_DietColors[dietName];
 		local coloredText = CreateColor(color.r, color.g, color.b):WrapTextInColorCode(dietName);
 		table.insert(coloredDiets, coloredText);
@@ -85,11 +88,10 @@ function FOM_FeedButton_OnEnter()
 	FOM_FeedTooltip:SetOwner(feedButton.button.btn, "ANCHOR_RIGHT");
 	local blankLine = false;
 	local linesAdded = 0;
-	if (FOM_NextFoodLink) then
+	if (feedButton.foodBag) then
 
 		-- food to be used on click
-		local itemName = utils.itemNameFromLink(FOM_NextFoodLink)
-		FOM_FeedTooltip:SetBagItem(foodBag, foodSlot, itemName);
+		FOM_FeedTooltip:SetBagItem(feedButton.foodBag, feedButton.foodSlot);
 
 		if (FOM_NoFoodError) then
 			-- fallback instructions
@@ -123,7 +125,7 @@ function FOM_FeedButton_OnEnter()
 
 	-- putting an item in the tooltip shrinks all further text
 	-- set it back only if we've set an item
-	if (FOM_NextFoodLink) then
+	if (feedButton.foodBag) then
 		local numLines = FOM_FeedTooltip:NumLines();
 		for lineNum = numLines - linesAdded + 1, numLines do
 			local line = _G["FOM_FeedTooltipTextLeft"..lineNum];
@@ -240,18 +242,6 @@ function FOM_Initialize(self)
 	-- Catch when feeding happened so we can notify/emote
 	self:RegisterEvent("CHAT_MSG_PET_INFO");
 
-	-- Only subscribe to inventory updates once we're in the world
-	self:RegisterEvent("PLAYER_ENTERING_WORLD");
-	self:RegisterEvent("PLAYER_LEAVING_WORLD");
-
-	-- Events for trying to catch when the pet needs feeding
-	self:RegisterEvent("UNIT_PET");
-	self:RegisterEvent("PET_BAR_SHOWGRID");
-	self:RegisterEvent("UNIT_NAME_UPDATE");
-	self:RegisterEvent("PET_BAR_UPDATE");
-	self:RegisterEvent("PET_UI_UPDATE");
-	self:RegisterEvent("PLAYER_REGEN_ENABLED");
-
 	local defaultPosition = feedButton.getDefaultPosition()
 	local feedButtonParentFrame, feedButtonX, feedButtonY
 	if FOM_Config.buttonX == nil or FOM_Config.buttonY == nil then
@@ -307,37 +297,11 @@ function FOM_OnEvent(self, event, arg1, arg2)
 	if ( event == "VARIABLES_LOADED" or event == "SPELLS_CHANGED") then
 
 		if (not FOM_Initialized) then FOM_Initialize(self); end
-		FOM_PickFoodQueued = true;
 
 	elseif ( event == "UPDATE_BINDINGS" ) then
 
 		FOM_UpdateBindings();
 		return;
-
-	elseif ( event == "PLAYER_ENTERING_WORLD" ) then
-
-		self:RegisterEvent("BAG_UPDATE");
-		if (InCombatLockdown()) then
-			FOM_PickFoodQueued = true;
-		else
-			FOM_PickFoodForButton();
-		end
-		return;
-
-	elseif ( event == "PLAYER_LEAVING_WORLD" ) then
-
-		self:UnregisterEvent("BAG_UPDATE");
-
-	elseif (event == "BAG_UPDATE" ) then
-
-		if (arg1 < 0 or arg1 > 4) then return; end	-- don't bother looking in keyring, bank, etc for food
-		if (FOM_IsSpecialBag(arg1)) then return; end	-- don't look in bags that can't hold food, either
-
-		FOM_PickFoodQueued = true;
-
-	elseif ((event == "UNIT_NAME_UPDATE" and arg1 == "pet") or event == "PET_BAR_UPDATE" or event == "PLAYER_REGEN_ENABLED") then
-
-		FOM_PickFoodQueued = true;
 
 	elseif event == "TRADE_SKILL_SHOW"
 	  or event == "TRADE_SKILL_DETAILS_UPDATE"
@@ -353,8 +317,8 @@ function FOM_OnEvent(self, event, arg1, arg2)
 		local _, _, foodEaten = string.find(arg1, FOM_FEEDPET_LOG_FIRSTPERSON);
 		if (foodEaten) then
 			local foodName = foodEaten;
-			if (FOM_NextFoodLink and utils.itemNameFromLink(FOM_NextFoodLink) == foodEaten) then
-				foodName = FOM_NextFoodLink;
+			if (feedButton.foodLocation and C_Item.GetItemName(feedButton.foodLocation) == foodEaten) then
+				foodName = C_Item.GetItemLink(feedButton.foodLocation)
 			end
 			local pet = UnitName("pet");
 			if (pet) then
@@ -374,10 +338,6 @@ function FOM_OnEvent(self, event, arg1, arg2)
 		else
 			feedButton:SetVertexColor(1, 1, 1);
 		end
-	end
-
-	if (FOM_PickFoodQueued and not InCombatLockdown()) then
-		FOM_PickFoodForButton();
 	end
 
 	if (FOM_FoodListBorder and FOM_FoodListBorder:IsVisible()) then
@@ -499,46 +459,6 @@ function FOM_ChatCommandHandler(msg)
 
 	-- if we got down to here, we got bad input
 	FOM_ChatCommandHandler("help");
-end
-
----Find food and set variables foodBag, foodSlot, foodIcon and FOM_NextFoodLink
-function FOM_PickFoodForButton()
-	local pet = UnitName("pet");
-	if (not pet) then
-		feedButton.button:Hide()
-		FOM_PickFoodQueued = true;
-		return;
-	end
-	local dietList = petInfo.petDiet
-	if ( dietList == nil or #dietList == 0) then
-		FOM_PickFoodQueued = true;
-		feedButton.button:Hide()
-		return;
-	elseif (not FOM_Config.NoButton) then
-		feedButton.button:Show()
-	end
-
-	foodBag, foodSlot, FOM_NextFoodLink, foodIcon = FOM_NewFindFood();
-	feedButton:setFood(foodBag, foodSlot)
-
-	if ( foodBag == nil) then
-		local fallbackBag, fallbackSlot;
-		fallbackBag, fallbackSlot, FOM_NextFoodLink, foodIcon = FOM_NewFindFood(1);
-		if (fallbackBag) then
-			FOM_NoFoodError = string.format(FOM_ERROR_NO_FOOD_NO_FALLBACK, pet);
-			feedButton:setFood(fallbackBag, fallbackSlot, "alt");
-		else
-			-- No Food Could be Found
-			FOM_NoFoodError = string.format(FOM_ERROR_NO_FOOD, pet);
-			FOM_NextFoodLink = nil;
-			feedButton.button:removeItem()
-		end
-
-		feedButton:SetVertexColor(0.5, 0.5, 1);
-	else
-		FOM_NoFoodError = nil;
-		feedButton:SetVertexColor(1, 1, 1);
-	end
 end
 
 function FOM_RandomEmote(foodLink)
@@ -813,7 +733,7 @@ function FOM_FoodListButton_OnClick(self)
 	if (InCombatLockdown()) then
 		FOM_PickFoodQueued = true;
 	else
-		FOM_PickFoodForButton();
+		feedButton:updateFood()
 	end
 end
 
@@ -1044,7 +964,7 @@ function GFW_FeedOMatic:OnProfileChanged(event, database, newProfileKey)
 	if (InCombatLockdown()) then
 		FOM_PickFoodQueued = true;
 	else
-		FOM_PickFoodForButton();
+		feedButton:updateFood()
 	end
 end
 
