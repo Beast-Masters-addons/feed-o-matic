@@ -322,7 +322,6 @@ function FOM_OnEvent(self, event, arg1, arg2)
 				if ( FOM_Config.AlertType == 2) then
 					GFWUtils.Print(string.format(L["Feeding %s a %s…"], pet, foodName));
 				elseif ( FOM_Config.AlertType == 1) then
-					SendChatMessage(string.format(FOM_FEEDING_FEED, pet, foodName).. FOM_RandomEmote(foodName), "EMOTE");
 					local emote = emotes:getRandomEmote(itemLink)
 					SendChatMessage(string.format(L["feeds %s a %s. "], pet, foodName).. emote, "EMOTE");
 				end
