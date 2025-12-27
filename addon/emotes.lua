@@ -83,15 +83,15 @@ emotes.emotes = {
     -- emotes for categories of items
     -- use keys from LibPeriodicTable's Consumable.Food section
     -- TODO: need a PT-less way to key on both food diet and what we now call food type
-     ["Consumable.Food.Edible.Bread.Conjured"] = {
-     	L["Tastes great, less filling!"],
-     },
-     ["Consumable.Food.Edible.Bread.Combo.Conjured"] = {
-     	L["Tastes great, less filling!"],
-     },
-     ["Consumable.Food.Inedible.Fish"] = {
-     	L["Mmm, sashimi!"],
-     },
+    ["Consumable.Food.Edible.Bread.Conjured"] = {
+        L["Tastes great, less filling!"],
+    },
+    ["Consumable.Food.Edible.Bread.Combo.Conjured"] = {
+        L["Tastes great, less filling!"],
+    },
+    ["Consumable.Food.Inedible.Fish"] = {
+        L["Mmm, sashimi!"],
+    },
 
     -- emotes for entire diets
     ["Fungus"] = {
