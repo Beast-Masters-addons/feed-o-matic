@@ -7,6 +7,13 @@ local petInfo = _G.GFW_FeedOMatic:GetModule("FOM_PetInfo")
 local WOW_MAJOR = math.floor(tonumber(select(4, _G.GetBuildInfo()) / 10000))
 local locale = _G.GetLocale()
 local food_locale = _G.FOM_FoodLocale[locale]
+local food_locale_reverse = {}
+
+function lib:OnInitialize()
+    for eng, loc in pairs(food_locale) do
+        food_locale_reverse[loc] = eng
+    end
+end
 
 function lib.getFoodPriority(category)
     local foodTypes = { -- used to set priority
@@ -29,16 +36,16 @@ function lib.localizeDiet(diet)
         ["Fungus"] = _G.FOM_DIET_FUNGUS,
         ["Mechanical Bits"] = _G.FOM_DIET_MECH,
     }
-    assert(diets[diet], 'Invalid diet')
-    return diets[diet]
+    assert(food_locale[diet], ("Unable to localize diet %s"):format(diet))
+    return food_locale[diet]
 end
 
 function lib.unLocalizeDiet(diet)
     if locale == 'enUS' then
         return diet
     end
-    assert(food_locale[diet], ("Unable to unlocalize diet %s"):format(diet))
-    return food_locale[diet]
+    assert(food_locale_reverse[diet], ("Unable to unlocalize diet %s"):format(diet))
+    return food_locale_reverse[diet]
 end
 
 function lib.getFoodList()
@@ -62,11 +69,10 @@ local foodList = lib.getFoodList()
 ---@param dietList table Pass nil to query against current pet's diets
 function lib.isInDiet(foodItemID, dietList)
     if (dietList == nil) then
-        dietList = petInfo.petDietEn
+        dietList = petInfo.petDiet
     end
     -- no current pet means try again later
     if (dietList == nil or #dietList == 0) then
-        _G.FOM_PickFoodQueued = true;
         return nil;
     end
     if (type(dietList) ~= "table") then
@@ -85,6 +91,10 @@ function lib.isInDiet(foodItemID, dietList)
 end
 
 ---Is the item a known eatable food item?
+---@return string Diet name in english or false if the item is not food
 function lib.isKnownFood(itemID)
-    return lib.isInDiet(itemID, { "Meat", "Fish", "Bread", "Cheese", "Fruit", "Fungus", "Mechanical Bits" });
+    if _G.FOM_FoodInfo[itemID] == nil then
+        return false
+    end
+    return _G.FOM_FoodInfo[itemID]["diet"]
 end

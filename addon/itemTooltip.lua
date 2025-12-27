@@ -50,10 +50,11 @@ local function tooltipText(self, itemId)
     if not foodDiet then
         return false;
     end
+    local foodDietLocal = FOM_Food.localizeDiet(foodDiet)
 
     -- if edible at all, label diet in tooltip
     local color = FOM_DietColors[foodDiet];
-    local coloredText = CreateColor(color.r, color.g, color.b):WrapTextInColorCode(foodDiet);
+    local coloredText = CreateColor(color.r, color.g, color.b):WrapTextInColorCode(foodDietLocal);
     local label = _G[self:GetName() .. "TextRight1"]
     label:SetText(coloredText);
     label:Show();
@@ -61,7 +62,7 @@ local function tooltipText(self, itemId)
     -- if edible by current pet, add line for quality
     if (itemId and UnitExists("pet")) then
         for _, petDiet in pairs(petInfo.petDiet) do
-            if petDiet == foodDiet then
+            if petDiet == foodDietLocal then
                 return FOM_TooltipAddFoodQuality(self, itemId);
             end
         end
