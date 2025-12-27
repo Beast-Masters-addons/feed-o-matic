@@ -13,6 +13,12 @@ local petInfo = _G.GFW_FeedOMatic:GetModule("FOM_PetInfo")
 local utils = _G.LibStub("BMUtils")
 local QuestDifficultyColors = _G.QuestDifficultyColors
 
+function lib:OnEnable()
+    self:hook(_G.GameTooltip);
+    self:hook(_G.ItemRefTooltip);
+    self:hook(_G.FOM_FeedTooltip);
+end
+
 local function FOM_TooltipAddFoodQuality(self, itemID)
     local color
     local _, _, _, itemLevel = GetItemInfo(itemID);

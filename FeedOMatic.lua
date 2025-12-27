@@ -204,72 +204,6 @@ function FOM_OnLoad(self)
 
 end
 
-function FOM_HookTooltip(frame)
-	if (frame:GetScript("OnTooltipSetItem")) then
-		frame:HookScript("OnTooltipSetItem", FOM_OnTooltipSetItem);
-	else
-		frame:SetScript("OnTooltipSetItem", FOM_OnTooltipSetItem);
-	end
-end
-
----@param self Frame
-function FOM_OnTooltipSetItem(self)
-
-	if FOM_Config.Tooltip then
-		local _, link = self:GetItem();
-		if not link then return false; end
-
-		local itemID = utils.itemIdFromLink(link);
-		local foodDiet = FOM_Food.isKnownFood(itemID);
-		if not foodDiet then return false; end
-
-		-- if edible at all, label diet in tooltip
-		local color = FOM_DietColors[foodDiet];
-		local coloredText = CreateColor(color.r, color.g, color.b):WrapTextInColorCode(foodDiet);
-		local label = _G[self:GetName().."TextRight1"]
-		label:SetText(coloredText);
-		label:Show();
-
-		-- if edible by current pet, add line for quality
-		if (link and UnitExists("pet")) then
-			for _, petDiet in pairs(petInfo.petDiet) do
-				if petDiet == foodDiet then
-					return FOM_TooltipAddFoodQuality(self, itemID);
-				end
-			end
-			return true;
-		end
-	else
-		return false;
-	end
-
-end
-
-function FOM_TooltipAddFoodQuality(self, itemID)
-	local _, _, _, itemLevel = GetItemInfo(itemID);
-	if (itemLevel) then
-		local levelDelta = petInfo.petLevel - itemLevel;
-		local petName = petInfo.petName
-		if (levelDelta >= FOM_DELTA_EATS) then
-			color = QuestDifficultyColors["trivial"];
-			self:AddLine(string.format(FOM_QUALITY_UNDER, petName), color.r, color.g, color.b);
-			return true;
-		elseif (levelDelta >= FOM_DELTA_LIKES and levelDelta < FOM_DELTA_EATS) then
-			color = QuestDifficultyColors["standard"];
-			self:AddLine(string.format(FOM_QUALITY_WILL, petName), color.r, color.g, color.b);
-			return true;
-		elseif (levelDelta >= FOM_DELTA_LOVES and levelDelta < FOM_DELTA_LIKES) then
-			color = QuestDifficultyColors["difficult"];
-			self:AddLine(string.format(FOM_QUALITY_LIKE, petName), color.r, color.g, color.b);
-			return true;
-		elseif (levelDelta < FOM_DELTA_LOVES) then
-			color = QuestDifficultyColors["verydifficult"];
-			self:AddLine(string.format(FOM_QUALITY_LOVE, petName), color.r, color.g, color.b);
-			return true;
-		end
-	end
-end
-
 function FOM_GetFeedPetSpellName()
 	-- we can get the spell name from the ID
 	local _;
@@ -357,10 +291,6 @@ function FOM_Initialize(self)
 	-- set key binding to click FOM_FeedButton
 	FOM_UpdateBindings();
 	self:RegisterEvent("UPDATE_BINDINGS");
-
-	itemTooltip:hook(GameTooltip);
-	itemTooltip:hook(ItemRefTooltip);
-	itemTooltip:hook(FOM_FeedTooltip);
 
 	Frame_GFW_FeedOMatic:SetScript("OnUpdate", FOM_OnUpdate);
 
