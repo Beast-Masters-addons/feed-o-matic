@@ -966,8 +966,7 @@ function GFW_FeedOMatic:SetupOptions()
 	AceConfig:RegisterOptionsTable('Feed Button', FOMOptions.feedButtonOptions)
 
 	-- Shorten name to fit in the list width
-	local shortTitle = string.gsub(ace_addon.title, "Fizzwidget", "GFW");
-	shortTitle = shortTitle .. " " .. ace_addon.version
+	local shortTitle = "Feed-O-Matic"
 
 	-- Setup Blizzard option frames
 	self.optionsFrames = {}
