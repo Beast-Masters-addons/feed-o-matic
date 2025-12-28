@@ -25,11 +25,11 @@ addon\common.lua
 data\food_info.lua
 data\food_locale.lua
 addon\constants.lua
+addon\petInfo.lua
 addon\food_log.lua
 addon\feedButtonHelper.lua
 GFWUtils.lua
 addon\table_utils.lua
-addon\petInfo.lua
 
 addon\options.lua
 FOM_CookingScan.lua

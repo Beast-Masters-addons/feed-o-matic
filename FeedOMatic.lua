@@ -462,6 +462,9 @@ end
 function FOM_FlatFoodList(fallback)
 	local foodList = {};
 	local petLevel = petInfo.petLevel
+	if not petLevel then
+		return {} -- Skip food selection if pet level is not set
+	end
 	for bagNum = 0, 4 do
 		if (not FOM_IsSpecialBag(bagNum)) then
 		-- skip bags that can't contain food

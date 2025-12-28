@@ -1,6 +1,10 @@
+local addonName = ...
+local addon = _G.LibStub("AceAddon-3.0"):GetAddon(addonName)
 ---@class feedButtonHelper
-local feedButtonHelper = _G.GFW_FeedOMatic:NewModule("feedButtonHelper", "AceEvent-3.0")
-local addon = _G.GFW_FeedOMatic
+local feedButtonHelper = addon:NewModule("feedButtonHelper", "AceEvent-3.0")
+---@type FOM_PetInfo
+local petInfo = addon:GetModule("FOM_PetInfo")
+
 local L = _G.LibStub("AceLocale-3.0"):GetLocale("GFW_FeedOMatic")
 
 local FOM_FEED_PET_SPELL_ID = 6991
@@ -157,15 +161,17 @@ function feedButtonHelper:setFood(bag, slot, modifier)
 end
 
 function feedButtonHelper:updateFood()
+    if not petInfo.petLevel then
+        return
+    end
     local foodBag, foodSlot = _G.FOM_NewFindFood();
     if foodBag == nil then
         local fallbackFoodBag, fallbackFoodSlot = _G.FOM_NewFindFood(true);
         self:setFood(fallbackFoodBag, fallbackFoodSlot, "alt");
-        local pet = _G.UnitName("pet")
         if fallbackFoodBag then
-            _G.FOM_NoFoodError = string.format(L["Found no food for %s that you haven't told Feed-O-Matic to avoid."], pet);
+            _G.FOM_NoFoodError = string.format(L["Found no food for %s that you haven't told Feed-O-Matic to avoid."], petInfo.petName);
         else
-            _G.FOM_NoFoodError = string.format(L["Found no food for %s."], pet);
+            _G.FOM_NoFoodError = string.format(L["Found no food for %s."], petInfo.petName);
         end
         self:SetVertexColor(0.5, 0.5, 1)
     else

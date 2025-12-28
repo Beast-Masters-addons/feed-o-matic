@@ -1,4 +1,5 @@
-local addon = _G.GFW_FeedOMatic
+local addonName = ...
+local addon = _G.LibStub("AceAddon-3.0"):GetAddon(addonName)
 ---@class FOM_PetInfo
 local lib = addon:NewModule("FOM_PetInfo", "AceEvent-3.0")
 ---@type BMUtils
@@ -6,7 +7,7 @@ local utils = _G.LibStub('BMUtils')
 ---@type FOM_Food
 local food
 ---@type feedButtonHelper
-local feedButton = addon:GetModule("feedButtonHelper")
+local feedButton
 
 function lib:OnEnable()
     if not addon.is_hunter then
@@ -23,6 +24,7 @@ function lib:OnEnable()
     ---@type FOM_FoodLogger
     self.foodLog = addon:GetModule("FOM_FoodLogger")
     food = addon:GetModule("FOM_Food")
+    feedButton = addon:GetModule("feedButtonHelper")
 end
 
 function lib:PLAYER_REGEN_DISABLED()
