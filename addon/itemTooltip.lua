@@ -15,6 +15,9 @@ local L = _G.LibStub("AceLocale-3.0"):GetLocale("GFW_FeedOMatic")
 local QuestDifficultyColors = _G.QuestDifficultyColors
 
 function lib:OnEnable()
+    if not addon.is_hunter then
+        return
+    end
     self:hook(_G.GameTooltip);
     self:hook(_G.ItemRefTooltip);
     self:hook(_G.FOM_FeedTooltip);

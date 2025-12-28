@@ -413,7 +413,7 @@ function FOM_ScanQuests()
 	end
 end
 
-function FOM_ChatCommandHandler(msg)
+function FOM_ChatCommandHandler(msg) --TODO: Replace with AceConsole
 
 	if ( msg == "" ) then
 		GFW_FeedOMatic:ShowConfig();
@@ -987,10 +987,8 @@ function GFW_FeedOMatic:SetupOptions()
 end
 
 function GFW_FeedOMatic:OnInitialize()
-
-	local _, realClass = UnitClass("player");
-	if (realClass ~= "HUNTER") then
-		return;
+	if not ace_addon.is_hunter then
+		return
 	end
 
 	-- Create DB

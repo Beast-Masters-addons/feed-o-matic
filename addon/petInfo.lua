@@ -9,6 +9,10 @@ local food
 local feedButton = addon:GetModule("feedButtonHelper")
 
 function lib:OnEnable()
+    if not addon.is_hunter then
+        return
+    end
+
     self:RegisterEvent("UNIT_PET")
     self:RegisterEvent("CHAT_MSG_PET_INFO")
     self:RegisterEvent("UNIT_NAME_UPDATE")
