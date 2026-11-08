@@ -20,10 +20,10 @@ jobs:
         game_version: [ 'classic', 'wrath', 'cata', 'mists', 'retail' ]
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Get build utils
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           repository: Beast-Masters-addons/build_utils
           path: tests/build_utils
@@ -44,7 +44,7 @@ jobs:
           luacheck --no-unused --ignore 614 611 -g FOM_Foods.lua
 
       - name: Build the addon
-        uses: BigWigsMods/packager@v2.5.1
+        uses: BigWigsMods/packager@v2
         with:
           args: -g ${{ matrix.game_version }} -z -d
 
@@ -80,12 +80,12 @@ jobs:
       WAGO_API_TOKEN: ${{ secrets.WAGO_API_TOKEN }}
 
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
 
       - name: WoW Packager
-        uses: BigWigsMods/packager@v2.5.1
+        uses: BigWigsMods/packager@v2
 
-      - uses: actions/upload-artifact@v6
+      - uses: actions/upload-artifact@v7
         with:
           name: Feed-O-Matic-${{ github.head_ref || github.ref_name }}
           path: ${{ github.workspace }}/.release
